@@ -15,8 +15,8 @@ class Instructor(models.Model):
     organization = models.CharField(max_length=200, blank=False)
     designation = models.CharField(max_length=150, blank=False)
     profit = models.FloatField(blank=False)
-    photo = models.ImageField(blank=True)
-    inst_cv = models.FileField()
+    # photo = models.ImageField(blank=True)
+    # inst_cv = models.FileField()
 
 
 class Category(models.Model):
@@ -34,8 +34,8 @@ class User(models.Model):
     address = models.CharField(max_length=200, blank=False)
     designation = models.CharField(max_length=150, blank=False)
     profit = models.FloatField(blank=False)
-    photo = models.ImageField(blank=True)
-    user_cv = models.FileField()
+    # photo = models.ImageField(blank=True)
+    # user_cv = models.FileField()
 
 
 class Retail_Customer(models.Model):
@@ -80,7 +80,7 @@ class Course(models.Model):
 
 class Batch(models.Model):
     batch_id = models.CharField(
-        max_length=10, blank=False, primary_key=True, unique=True
+        max_length=30, blank=False, primary_key=True, unique=True
     )
     regular_fee = models.IntegerField()
     discount_fee = models.IntegerField()
