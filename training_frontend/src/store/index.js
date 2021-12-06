@@ -7,6 +7,8 @@ export default createStore({
   state: {
     instructorList: [],
     instructorCount: "",
+    userList: [],
+    userCount: "",
   },
   mutations: {
     SET_INSTRUCTOR_LIST(state, instructorList) {
@@ -15,6 +17,14 @@ export default createStore({
 
     SET_INSTRUCTOR_COUNT(state, instructorCount) {
       state.instructorCount = instructorCount;
+    },
+
+    SET_USER_LIST(state, userList) {
+      state.userList = userList;
+    },
+
+    SET_USER_COUNT(state, userCount) {
+      state.userCount = userCount;
     },
   },
   actions: {
@@ -46,6 +56,35 @@ export default createStore({
           console.log(error);
         };
     },
+
+    getUserList({ commit }) {
+      axios("/api/users").then((res) => {
+        commit("SET_USER_LIST", res.data);
+        console.log(res.data);
+      }),
+        (error) => {
+          console.log(error);
+        };
+    },
+
+    addUser({ commit }, data) {
+      axios.post("/api/users", data).then((res) => {
+        console.log(res.data);
+      }),
+        (error) => {
+          console.log(error);
+        };
+    },
+
+    getUserCount({ commit }) {
+      axios("/api/users-count").then((res) => {
+        commit("SET_USER_COUNT", res.data);
+        console.log(res.data);
+      }),
+        (error) => {
+          console.log(error);
+        };
+    },
   },
   getters: {
     instructorList: (state) => {
@@ -54,6 +93,14 @@ export default createStore({
 
     instructorCount: (state) => {
       return state.instructorCount;
+    },
+
+    userList: (state) => {
+      return state.userList;
+    },
+
+    userCount: (state) => {
+      return state.userCount;
     },
   },
   modules: {},

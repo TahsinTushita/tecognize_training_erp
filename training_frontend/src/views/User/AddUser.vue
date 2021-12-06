@@ -1,9 +1,8 @@
 <template>
   <div class="h-screen px-28 py-10">
     <div class="flex items-center justify-center">
-      <form @submit="addInstructor">
+      <form @submit="addUser">
         <div class="space-y-5">
-          <!-- <div v-for="inputField in inputFields" :key="inputField.id"> -->
           <div class="grid grid-rows-1 gap-2 place-items-start">
             <label for="name" class="font-semibold ml-2">Name*</label>
             <input
@@ -189,7 +188,7 @@
             "
             type="submit"
           >
-            Add Instructor
+            Add User
           </button>
         </div>
       </form>
@@ -218,38 +217,37 @@ export default {
       designation: "",
       profit: "",
       showModal: false,
-      message: "Instructor added",
+      message: "User added",
     };
   },
   mounted() {
-    this.$store.dispatch("getInstructorCount");
+    this.$store.dispatch("getUserCount");
   },
   computed: {
-    instructorCount: {
+    userCount: {
       get() {
-        return this.$store.getters.instructorCount;
+        return this.$store.getters.userCount;
       },
     },
   },
   methods: {
-    addInstructor() {
-      let inst_id = this.name.substr(0, 3);
-      inst_id = inst_id.toUpperCase();
-      inst_id = inst_id.concat((this.instructorCount[0] + 1).toString());
+    addUser() {
+      let user_id = this.name.substr(0, 3);
+      user_id = user_id.toUpperCase();
+      user_id = user_id.concat((this.userCount[0] + 1).toString());
 
       const data = {
-        inst_id: inst_id,
+        user_id: user_id,
         name: this.name,
         phone: this.phone,
         email: this.email,
         address: this.address,
-        organization: this.organization,
         designation: this.designation,
         profit: this.profit,
       };
 
       console.log(data);
-      this.$store.dispatch("addInstructor", data);
+      this.$store.dispatch("addUser", data);
       this.showModal = true;
     },
 

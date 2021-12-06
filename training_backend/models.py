@@ -61,7 +61,6 @@ class Corporate_Customer(models.Model):
     phone = models.CharField(max_length=22, blank=False)
     email = models.CharField(max_length=255, blank=False)
     address = models.CharField(max_length=200, blank=False)
-    organization = models.CharField(max_length=200, blank=False)
     total_fee = models.IntegerField()
     paid_fee = models.IntegerField()
     due_fee = models.IntegerField()
@@ -74,14 +73,12 @@ class Course(models.Model):
     )
     name = models.CharField(max_length=100, blank=False)
     regular_price = models.IntegerField()
-    outline = models.FileField()
+    # outline = models.FileField()
     cat_id = models.ForeignKey(Category, db_column="cat_id", on_delete=models.CASCADE)
 
 
 class Batch(models.Model):
-    batch_id = models.CharField(
-        max_length=30, blank=False, primary_key=True, unique=True
-    )
+    batch_id = models.CharField(max_length=30, blank=False)
     regular_fee = models.IntegerField()
     discount_fee = models.IntegerField()
     ad_closed = models.BooleanField()
@@ -90,8 +87,16 @@ class Batch(models.Model):
     )
     user_id = models.ForeignKey(User, db_column="user_id", on_delete=models.CASCADE)
     cust_id = models.ForeignKey(
-        Retail_Customer, db_column="cust_id", on_delete=models.CASCADE
+        Retail_Customer,
+        db_column="cust_id",
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
     )
     corp_id = models.ForeignKey(
-        Corporate_Customer, db_column="corp_id", on_delete=models.CASCADE
+        Corporate_Customer,
+        db_column="corp_id",
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
     )

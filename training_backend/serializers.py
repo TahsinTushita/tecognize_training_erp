@@ -6,7 +6,7 @@ from training_backend.models import (
     Corporate_Customer,
     Category,
     Course,
-    Batch,
+    # Batch,
 )
 
 
@@ -73,7 +73,6 @@ class CorporateCustomerSerializer(serializers.ModelSerializer):
             "phone",
             "email",
             "address",
-            "organization",
             "total_fee",
             "paid_fee",
             "due_fee",
@@ -90,19 +89,19 @@ class CategorySerializer(serializers.ModelSerializer):
 class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
-        fields = ("course_id", "name", "regular_price", "outline", "cat_id")
+        fields = ("course_id", "name", "regular_price", "cat_id")
 
 
-class BatchSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Batch
-        fields = (
-            "batch_id",
-            "regular_fee",
-            "discount_fee",
-            "ad_closed",
-            "corp_id",
-            "cust_id",
-            "inst_id",
-            "user_id",
-        )
+# class BatchSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Batch
+#         fields = (
+#             "batch_id",
+#             "regular_fee",
+#             "discount_fee",
+#             "ad_closed",
+#             "corp_id",
+#             "cust_id",
+#             "inst_id",
+#             "user_id",
+#         )

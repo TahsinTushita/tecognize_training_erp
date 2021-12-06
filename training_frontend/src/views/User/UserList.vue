@@ -2,37 +2,33 @@
   <table class="m-10">
     <thead>
       <tr>
-        <th class="w-1/5 px-4 py-4 text-center border-2">Instructor Name</th>
+        <th class="w-1/5 px-4 py-4 text-center border-2">User Name</th>
         <th class="w-1/5 px-4 py-4 text-center border-2">email</th>
         <th class="w-1/5 px-4 py-4 text-center border-2">Phone</th>
         <th class="w-1/5 px-4 py-4 text-center border-2">Address</th>
-        <th class="w-1/5 px-4 py-4 text-center border-2">Organization</th>
         <th class="w-1/5 px-4 py-4 text-center border-2">Designation</th>
         <th class="w-1/5 px-4 py-4 text-center border-2">Profit</th>
       </tr>
     </thead>
-    <tbody v-if="instructorList.length">
-      <tr v-for="instructor in instructorList" :key="instructor.inst_id">
+    <tbody v-if="userList.length">
+      <tr v-for="user in userList" :key="user.user_id">
         <td class="w-1/5 px-4 py-4 text-center border-2">
-          {{ instructor.name }}
+          {{ user.name }}
         </td>
         <td class="w-1/5 px-4 py-4 text-center border-2">
-          {{ instructor.email }}
+          {{ user.email }}
         </td>
         <td class="w-1/5 px-4 py-4 text-center border-2">
-          {{ instructor.phone }}
+          {{ user.phone }}
         </td>
         <td class="w-1/5 px-4 py-4 text-center border-2">
-          {{ instructor.address }}
+          {{ user.address }}
         </td>
         <td class="w-1/5 px-4 py-4 text-center border-2">
-          {{ instructor.organization }}
+          {{ user.designation }}
         </td>
         <td class="w-1/5 px-4 py-4 text-center border-2">
-          {{ instructor.designation }}
-        </td>
-        <td class="w-1/5 px-4 py-4 text-center border-2">
-          {{ instructor.profit }}
+          {{ user.profit }}
         </td>
       </tr>
     </tbody>
@@ -42,12 +38,12 @@
 <script>
 export default {
   mounted() {
-    this.$store.dispatch("getInstructorList");
+    this.$store.dispatch("getUserList");
   },
   computed: {
-    instructorList: {
+    userList: {
       get() {
-        return this.$store.getters.instructorList;
+        return this.$store.getters.userList;
       },
     },
   },
