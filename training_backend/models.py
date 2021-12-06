@@ -1,5 +1,8 @@
 from django.db import models
 from django.db.models.fields import BLANK_CHOICE_DASH
+import warnings
+
+warnings.filterwarnings("ignore", "Field 'id' doesn't have a default value")
 
 # Create your models here.
 
@@ -77,8 +80,33 @@ class Course(models.Model):
     cat_id = models.ForeignKey(Category, db_column="cat_id", on_delete=models.CASCADE)
 
 
+# class Batch(models.Model):
+#     batch_id = models.CharField(max_length=30, blank=False)
+#     regular_fee = models.IntegerField()
+#     discount_fee = models.IntegerField()
+#     ad_closed = models.BooleanField()
+#     inst_id = models.ForeignKey(
+#         Instructor, db_column="inst_id", on_delete=models.CASCADE
+#     )
+#     user_id = models.ForeignKey(User, db_column="user_id", on_delete=models.CASCADE)
+#     cust_id = models.ForeignKey(
+#         Retail_Customer,
+#         db_column="cust_id",
+#         on_delete=models.CASCADE,
+#         blank=True,
+#         null=True,
+#     )
+#     corp_id = models.ForeignKey(
+#         Corporate_Customer,
+#         db_column="corp_id",
+#         on_delete=models.CASCADE,
+#         blank=True,
+#         null=True,
+#     )
+
+
 class Batch(models.Model):
-    batch_id = models.CharField(max_length=30, blank=False)
+    batch = models.CharField(max_length=30, blank=False)
     regular_fee = models.IntegerField()
     discount_fee = models.IntegerField()
     ad_closed = models.BooleanField()
