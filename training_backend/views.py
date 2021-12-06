@@ -1,9 +1,14 @@
+from django.db.models import query
 from django.shortcuts import render
 
 from django.http.response import JsonResponse
 from rest_framework.parsers import JSONParser
-from rest_framework import status
+from rest_framework import status, serializers
 from rest_framework.relations import ManyRelatedField
+
+from django.core.serializers import serialize
+import json
+from django.db import connection
 
 from training_backend.models import (
     Instructor,
@@ -22,6 +27,7 @@ from training_backend.serializers import (
     CategorySerializer,
     CourseSerializer,
     BatchSerializer,
+    NumberSerializer,
 )
 from rest_framework.decorators import api_view
 
@@ -83,3 +89,31 @@ def instructor_detail(request, pk):
             {"message": "Tutorial was deleted successfully!"},
             status=status.HTTP_204_NO_CONTENT,
         )
+
+
+@api_view(["GET"])
+def instructor_count(request):
+    if request.method == "GET":
+        number_of_instructors = Instructor.objects.raw(
+            "SELECT COUNT(inst_id) AS NumberOfInstructors FROM training_backend_instructor"
+        )
+        # print(number_of_instructors)
+        # instructors_serializer = NumberSerializer(number_of_instructors)
+        # instructors_serializer = serializers.serialize("json", number_of_instructors)
+        # data = serializers.serialize("json", list(number_of_instructors))
+        # print(data)
+
+        # return JsonResponse(data, safe=False)
+        # permission_serialize = json.loads(serialize("json", number_of_instructors))
+        # return JsonResponse({"data": permission_serialize})
+        cursor = connection.cursor()
+        query = "SELECT COUNT(inst_id) AS NumberOfInstructors FROM training_backend_instructor"
+
+        cursor.execute(query)
+        r = cursor.fetchall()
+        print(r)
+        return JsonResponse(r, safe=False)
+
+
+# objectQuerySet = ConventionCard.objects.filter(ownerUser = user)
+# data = serializers.serialize('json', list(objectQuerySet), fields=('fileName','id'))

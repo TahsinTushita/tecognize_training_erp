@@ -10,6 +10,10 @@ from training_backend.models import (
 )
 
 
+class NumberSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+
+
 class InstructorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Instructor
