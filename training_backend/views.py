@@ -94,9 +94,6 @@ def instructor_detail(request, pk):
 @api_view(["GET"])
 def instructor_count(request):
     if request.method == "GET":
-        number_of_instructors = Instructor.objects.raw(
-            "SELECT COUNT(inst_id) AS NumberOfInstructors FROM training_backend_instructor"
-        )
         # print(number_of_instructors)
         # instructors_serializer = NumberSerializer(number_of_instructors)
         # instructors_serializer = serializers.serialize("json", number_of_instructors)
@@ -110,7 +107,7 @@ def instructor_count(request):
         query = "SELECT COUNT(inst_id) AS NumberOfInstructors FROM training_backend_instructor"
 
         cursor.execute(query)
-        r = cursor.fetchall()
+        r = cursor.fetchone()
         print(r)
         return JsonResponse(r, safe=False)
 
