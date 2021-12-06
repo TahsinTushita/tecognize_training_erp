@@ -1,4 +1,5 @@
 <template>
+  <h1 class="pt-10 text-xl font-semibold">User List</h1>
   <table class="m-10">
     <thead>
       <tr>
@@ -11,7 +12,12 @@
       </tr>
     </thead>
     <tbody v-if="userList.length">
-      <tr v-for="user in userList" :key="user.user_id">
+      <tr
+        v-for="user in userList"
+        :key="user.user_id"
+        class="hover:bg-gray-100"
+        @click="navigateToUserDetails(user.user_id)"
+      >
         <td class="w-1/5 px-4 py-4 text-center border-2">
           {{ user.name }}
         </td>
@@ -45,6 +51,15 @@ export default {
       get() {
         return this.$store.getters.userList;
       },
+    },
+  },
+
+  methods: {
+    navigateToUserDetails(user_id) {
+      this.$router.push({
+        name: "UserDetails",
+        params: { id: user_id },
+      });
     },
   },
 };

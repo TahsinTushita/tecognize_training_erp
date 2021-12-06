@@ -9,6 +9,17 @@ export default createStore({
     instructorCount: "",
     userList: [],
     userCount: "",
+    instructor: "",
+    user: "",
+    categoryList: [],
+    category: "",
+    categoryCount: "",
+    courseList: [],
+    course: "",
+    courseCount: "",
+    batchList: [],
+    batch: "",
+    batchCount: "",
   },
   mutations: {
     SET_INSTRUCTOR_LIST(state, instructorList) {
@@ -25,6 +36,50 @@ export default createStore({
 
     SET_USER_COUNT(state, userCount) {
       state.userCount = userCount;
+    },
+
+    SET_INSTRUCTOR(state, instructor) {
+      state.instructor = instructor;
+    },
+
+    SET_USER(state, user) {
+      state.user = user;
+    },
+
+    SET_CATEGORY_LIST(state, categoryList) {
+      state.categoryList = categoryList;
+    },
+
+    SET_CATEGORY(state, category) {
+      state.category = category;
+    },
+
+    SET_CATEGORY_COUNT(state, categoryCount) {
+      state.categoryCount = categoryCount;
+    },
+
+    SET_COURSE_LIST(state, courseList) {
+      state.courseList = courseList;
+    },
+
+    SET_COURSE(state, course) {
+      state.course = course;
+    },
+
+    SET_COURSE_COUNT(state, courseCount) {
+      state.courseCount = courseCount;
+    },
+
+    SET_BATCH_LIST(state, batchList) {
+      state.batchList = batchList;
+    },
+
+    SET_BATCH(state, batch) {
+      state.batch = batch;
+    },
+
+    SET_BATCH_COUNT(state, batchCount) {
+      state.batchCount = batchCount;
     },
   },
   actions: {
@@ -57,6 +112,16 @@ export default createStore({
         };
     },
 
+    getInstructor({ commit }, inst_id) {
+      axios("/api/instructors/" + inst_id).then((res) => {
+        commit("SET_INSTRUCTOR", res.data);
+        console.log(res.data);
+      }),
+        (error) => {
+          console.log(error);
+        };
+    },
+
     getUserList({ commit }) {
       axios("/api/users").then((res) => {
         commit("SET_USER_LIST", res.data);
@@ -76,9 +141,29 @@ export default createStore({
         };
     },
 
+    getUser({ commit }, user_id) {
+      axios("/api/users/" + user_id).then((res) => {
+        commit("SET_USER", res.data);
+        console.log(res.data);
+      }),
+        (error) => {
+          console.log(error);
+        };
+    },
+
     getUserCount({ commit }) {
       axios("/api/users-count").then((res) => {
         commit("SET_USER_COUNT", res.data);
+        console.log(res.data);
+      }),
+        (error) => {
+          console.log(error);
+        };
+    },
+
+    getCategoryList({ commit }) {
+      axios("/api/categories").then((res) => {
+        commit("SET_CATEGORY_LIST", res.data);
         console.log(res.data);
       }),
         (error) => {
@@ -101,6 +186,18 @@ export default createStore({
 
     userCount: (state) => {
       return state.userCount;
+    },
+
+    instructor: (state) => {
+      return state.instructor;
+    },
+
+    user: (state) => {
+      return state.user;
+    },
+
+    categoryList: (state) => {
+      return state.categoryList;
     },
   },
   modules: {},

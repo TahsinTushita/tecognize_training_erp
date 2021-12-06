@@ -1,3 +1,3 @@
 <template>
-  <h1>Batch List</h1>
+  <h1 class="pt-10 text-2xl font-semibold">Batch List</h1>
 </template>

@@ -1,4 +1,5 @@
 <template>
+  <h1 class="pt-10 text-xl font-semibold">Add Instructor</h1>
   <div class="h-screen px-28 py-10">
     <div class="flex items-center justify-center">
       <form @submit="addInstructor">

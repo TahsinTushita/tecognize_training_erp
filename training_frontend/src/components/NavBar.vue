@@ -63,8 +63,30 @@
               </router-link>
             </div>
           </div>
-          <div class="relative">
-            <a href="#" class="text-lg">Courses</a>
+          <div class="relative space-y-6 w-full">
+            <a href="#" class="text-lg" @click="toggleCourseOptions">Course</a>
+            <div
+              class="
+                absolute
+                left-0
+                top-full
+                shadow-md
+                py-3
+                grid grid-rows-1
+                gap-2
+                bg-gray-200
+                w-full
+              "
+              v-if="showCourseOptions"
+            >
+              <router-link :to="{ name: 'AddCategory' }" class="text-lg">
+                Add Category
+              </router-link>
+
+              <router-link :to="{ name: 'CategoryList' }" class="text-lg"
+                >Category List</router-link
+              >
+            </div>
           </div>
           <div class="relative">
             <a href="#" class="text-lg">Customer</a>
@@ -86,6 +108,8 @@ export default {
     return {
       showInstructorOptions: false,
       showUserOptions: false,
+      showCourseOptions: false,
+      showCustomerOptions: false,
     };
   },
   methods: {
@@ -95,6 +119,14 @@ export default {
 
     toggleUserOptions() {
       this.showUserOptions = !this.showUserOptions;
+    },
+
+    toggleCourseOptions() {
+      this.showCourseOptions = !this.showCourseOptions;
+    },
+
+    toggleCustomerOptions() {
+      this.showCustomerOptions = !this.showCustomerOptions;
     },
   },
 };

@@ -8,6 +8,10 @@ import AddUser from "../views/User/AddUser.vue";
 import UserList from "../views/User/UserList.vue";
 import UserLedger from "../views/User/UserLedger.vue";
 import UserDetails from "../views/User/UserDetails.vue";
+import NotFound from "../views/NotFound.vue";
+import AddCategory from "../views/Category/AddCategory.vue";
+import CategoryList from "../views/Category/CategoryList.vue";
+import CategoryDetails from "../views/Category/CategoryDetails.vue";
 
 const routes = [
   // {
@@ -29,6 +33,7 @@ const routes = [
     path: "/instructor-details/:id",
     name: "InstructorDetails",
     component: InstructorDetails,
+    props: true,
   },
   {
     path: "/instructor-ledger",
@@ -54,6 +59,28 @@ const routes = [
     path: "/user-details/:id",
     name: "UserDetails",
     component: UserDetails,
+    props: true,
+  },
+  {
+    path: "/add-category",
+    name: "AddCategory",
+    component: AddCategory,
+  },
+  {
+    path: "/category-list",
+    name: "CategoryList",
+    component: CategoryList,
+  },
+  {
+    path: "/category-details/:id",
+    name: "CategoryDetails",
+    component: CategoryDetails,
+    props: true,
+  },
+  {
+    path: "/:catchAll(.*)",
+    name: "NotFound",
+    component: NotFound,
   },
 ];
 

@@ -1,4 +1,5 @@
 <template>
+  <h1 class="pt-10 text-xl font-semibold">Instructor Ledger</h1>
   <table class="m-10">
     <thead>
       <tr>
