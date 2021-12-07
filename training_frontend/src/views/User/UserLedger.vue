@@ -5,6 +5,7 @@
       <tr>
         <th class="w-1/5 px-4 py-4 text-center border-2">ID</th>
         <th class="w-1/5 px-4 py-4 text-center border-2">User Name</th>
+        <th class="w-1/5 px-4 py-4 text-center border-2">Phone</th>
         <th class="w-1/5 px-4 py-4 text-center border-2">Batch</th>
         <th class="w-1/5 px-4 py-4 text-center border-2">Paid</th>
         <th class="w-1/5 px-4 py-4 text-center border-2">Due</th>
