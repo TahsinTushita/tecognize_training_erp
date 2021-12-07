@@ -24,7 +24,7 @@ class Instructor(models.Model):
 
 class Category(models.Model):
     cat_id = models.CharField(max_length=10, blank=False, primary_key=True, unique=True)
-    name = models.CharField(max_length=100, blank=False)
+    cat_name = models.CharField(max_length=100, blank=False)
 
 
 class User(models.Model):
@@ -74,7 +74,7 @@ class Course(models.Model):
     course_id = models.CharField(
         max_length=10, blank=False, primary_key=True, unique=True
     )
-    name = models.CharField(max_length=100, blank=False)
+    course_name = models.CharField(max_length=100, blank=False, unique=True)
     regular_price = models.IntegerField()
     # outline = models.FileField()
     cat_id = models.ForeignKey(Category, db_column="cat_id", on_delete=models.CASCADE)

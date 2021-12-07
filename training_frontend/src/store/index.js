@@ -179,6 +179,35 @@ export default createStore({
           console.log(error);
         };
     },
+
+    addCourse({ commit }, data) {
+      axios.post("/api/courses", data).then((res) => {
+        console.log(res.data);
+      }),
+        (error) => {
+          console.log(error);
+        };
+    },
+
+    getCourseList({ commit }) {
+      axios("/api/courses").then((res) => {
+        commit("SET_COURSE_LIST", res.data);
+        console.log(res.data);
+      }),
+        (error) => {
+          console.log(error);
+        };
+    },
+
+    getCourseCount({ commit }) {
+      axios("/api/courses-count").then((res) => {
+        commit("SET_COURSE_COUNT", res.data);
+        console.log(res.data);
+      }),
+        (error) => {
+          console.log(error);
+        };
+    },
   },
   getters: {
     instructorList: (state) => {
@@ -207,6 +236,14 @@ export default createStore({
 
     categoryList: (state) => {
       return state.categoryList;
+    },
+
+    courseList: (state) => {
+      return state.courseList;
+    },
+
+    courseCount: (state) => {
+      return state.courseCount;
     },
   },
   modules: {},

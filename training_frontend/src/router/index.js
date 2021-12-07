@@ -13,6 +13,15 @@ import CategoryList from "../views/Category/CategoryList.vue";
 import AddCourse from "../views/Course/AddCourse.vue";
 import CourseList from "../views/Course/CourseList.vue";
 import CourseDetails from "../views/Course/CourseDetails.vue";
+import AddBatch from "../views/BatchFolder/AddBatch.vue";
+import BatchList from "../views/BatchFolder/BatchList.vue";
+import BatchDetails from "../views/BatchFolder/BatchDetails.vue";
+import AddRetailCustomer from "../views/RetailCustomer/AddRetailCustomer.vue";
+import RetailCustomerList from "../views/RetailCustomer/RetailCustomerList.vue";
+import RetailCustomerDetails from "../views/RetailCustomer/RetailCustomerDetails.vue";
+import AddCorporateCustomer from "../views/CorporateCustomer/AddCorporateCustomer.vue";
+import CorporateCustomerList from "../views/CorporateCustomer/CorporateCustomerList.vue";
+import CorporateCustomerDetails from "../views/CorporateCustomer/CorporateCustomerDetails.vue";
 
 const routes = [
   // {
@@ -81,6 +90,51 @@ const routes = [
     path: "/course-details/:id",
     name: "CourseDetails",
     component: CourseDetails,
+  },
+  {
+    path: "/add-batch",
+    name: "AddBatch",
+    component: AddBatch,
+  },
+  {
+    path: "/batch-list",
+    name: "BatchList",
+    component: BatchList,
+  },
+  {
+    path: "/batch-details/:id",
+    name: "BatchDetails",
+    component: BatchDetails,
+  },
+  {
+    path: "/add-retail-customer",
+    name: "AddRetailCustomer",
+    component: AddRetailCustomer,
+  },
+  {
+    path: "/retail-customer-list",
+    name: "RetailCustomerList",
+    component: RetailCustomerList,
+  },
+  {
+    path: "/retail-customer-details/:id",
+    name: "RetailCustomerDetails",
+    component: RetailCustomerDetails,
+  },
+  {
+    path: "/add-corporate-customer",
+    name: "AddCorporateCustomer",
+    component: AddCorporateCustomer,
+  },
+  {
+    path: "/corporate-customer-list",
+    name: "CorporateCustomerList",
+    component: CorporateCustomerList,
+  },
+  {
+    path: "/corporate-customer-detials/:id",
+    name: "CorporateCustomerDetails",
+    component: CorporateCustomerDetails,
   },
   {
     path: "/:catchAll(.*)",

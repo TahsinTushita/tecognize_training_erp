@@ -234,24 +234,26 @@ export default {
   },
   methods: {
     addInstructor() {
-      let inst_id = this.name.substr(0, 3);
-      inst_id = inst_id.toUpperCase();
-      inst_id = inst_id.concat((this.instructorCount[0] + 1).toString());
+      if (this.name.length > 3) {
+        let inst_id = this.name.substr(0, 3);
+        inst_id = inst_id.toUpperCase();
+        inst_id = inst_id.concat((this.instructorCount[0] + 1).toString());
 
-      const data = {
-        inst_id: inst_id,
-        name: this.name,
-        phone: this.phone,
-        email: this.email,
-        address: this.address,
-        organization: this.organization,
-        designation: this.designation,
-        profit: this.profit,
-      };
+        const data = {
+          inst_id: inst_id,
+          name: this.name,
+          phone: this.phone,
+          email: this.email,
+          address: this.address,
+          organization: this.organization,
+          designation: this.designation,
+          profit: this.profit,
+        };
 
-      console.log(data);
-      this.$store.dispatch("addInstructor", data);
-      this.showModal = true;
+        console.log(data);
+        this.$store.dispatch("addInstructor", data);
+        this.showModal = true;
+      }
     },
 
     toggleModal() {

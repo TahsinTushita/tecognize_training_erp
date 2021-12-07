@@ -70,7 +70,7 @@
               {{ category.cat_id }}
             </td>
             <td class="w-1/5 px-4 py-4 text-center border-2">
-              {{ category.name }}
+              {{ category.cat_name }}
             </td>
           </tr>
         </tbody>
@@ -124,7 +124,7 @@ export default {
 
           const data = {
             cat_id: cat_id,
-            name: this.categoryName,
+            cat_name: this.categoryName,
           };
           console.log(data);
           this.$store.dispatch("addCategory", data);

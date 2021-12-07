@@ -83,13 +83,13 @@ class CorporateCustomerSerializer(serializers.ModelSerializer):
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ("cat_id", "name")
+        fields = ("cat_id", "cat_name")
 
 
 class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
-        fields = ("course_id", "name", "regular_price", "cat_id")
+        fields = ("course_id", "course_name", "regular_price", "cat_id")
 
 
 class BatchSerializer(serializers.ModelSerializer):

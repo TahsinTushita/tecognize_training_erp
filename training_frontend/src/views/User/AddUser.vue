@@ -233,23 +233,25 @@ export default {
   },
   methods: {
     addUser() {
-      let user_id = this.name.substr(0, 3);
-      user_id = user_id.toUpperCase();
-      user_id = user_id.concat((this.userCount[0] + 1).toString());
+      if (this.name.length > 3) {
+        let user_id = this.name.substr(0, 3);
+        user_id = user_id.toUpperCase();
+        user_id = user_id.concat((this.userCount[0] + 1).toString());
 
-      const data = {
-        user_id: user_id,
-        name: this.name,
-        phone: this.phone,
-        email: this.email,
-        address: this.address,
-        designation: this.designation,
-        profit: this.profit,
-      };
+        const data = {
+          user_id: user_id,
+          name: this.name,
+          phone: this.phone,
+          email: this.email,
+          address: this.address,
+          designation: this.designation,
+          profit: this.profit,
+        };
 
-      console.log(data);
-      this.$store.dispatch("addUser", data);
-      this.showModal = true;
+        console.log(data);
+        this.$store.dispatch("addUser", data);
+        this.showModal = true;
+      }
     },
 
     toggleModal() {

@@ -5,6 +5,7 @@
       <div class="col-span-5">
         <div class="grid grid-cols-4 place-items-center">
           <!-- <DropDown animation="slide-in-up" color="green"></DropDown> -->
+          <!-- Instructor -->
           <div class="relative space-y-6 w-full">
             <a href="#" class="text-lg" @click="toggleInstructorOptions"
               >Instructor</a
@@ -35,6 +36,9 @@
               </router-link>
             </div>
           </div>
+          <!-- Instructor end -->
+
+          <!-- User -->
           <div class="relative space-y-6 w-full">
             <a href="#" class="text-lg" @click="toggleUserOptions">User</a>
             <div
@@ -63,6 +67,9 @@
               </router-link>
             </div>
           </div>
+          <!-- User end -->
+
+          <!-- Course -->
           <div class="relative space-y-6 w-full">
             <a href="#" class="text-lg" @click="toggleCourseOptions">Course</a>
             <div
@@ -82,11 +89,60 @@
               <router-link :to="{ name: 'CategoryList' }" class="text-lg"
                 >Category List</router-link
               >
+              <router-link :to="{ name: 'AddCourse' }" class="text-lg"
+                >Add Course</router-link
+              >
+              <router-link :to="{ name: 'CourseList' }" class="text-lg"
+                >Course List</router-link
+              >
+              <!-- <router-link :to="{ name: 'AddBatch' }" class="text-lg"
+                >Add Batch</router-link
+              > -->
+              <router-link :to="{ name: 'BatchList' }" class="text-lg"
+                >Batch List</router-link
+              >
             </div>
           </div>
-          <div class="relative">
-            <a href="#" class="text-lg">Customer</a>
+          <!-- Course end -->
+
+          <!-- Customer -->
+          <div class="relative space-y-6 w-full">
+            <a href="#" class="text-lg" @click="toggleCustomerOptions"
+              >Customer</a
+            >
+            <div
+              class="
+                absolute
+                left-0
+                top-full
+                shadow-md
+                py-3
+                grid grid-rows-1
+                gap-2
+                bg-gray-200
+                w-full
+              "
+              v-if="showCustomerOptions"
+            >
+              <router-link :to="{ name: 'AddRetailCustomer' }" class="text-lg"
+                >Add Retail Customer
+              </router-link>
+              <router-link :to="{ name: 'RetailCustomerList' }" class="text-lg"
+                >Retail Customer List
+              </router-link>
+              <router-link
+                :to="{ name: 'AddCorporateCustomer' }"
+                class="text-lg"
+                >Add Corporate Customer
+              </router-link>
+              <router-link
+                :to="{ name: 'CorporateCustomerList' }"
+                class="text-lg"
+                >Corporate Customer List
+              </router-link>
+            </div>
           </div>
+          <!-- Customer end -->
         </div>
       </div>
       <div class="col-span-4"></div>

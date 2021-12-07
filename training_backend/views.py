@@ -200,9 +200,9 @@ def category_list(request):
     if request.method == "GET":
         categories = Category.objects.all()
 
-        name = request.GET.get("name", None)
-        if name is not None:
-            categories = categories.filter(name__icontains=name)
+        cat_name = request.GET.get("cat_name", None)
+        if cat_name is not None:
+            categories = categories.filter(cat_name__icontains=cat_name)
 
         categories_serializer = CategorySerializer(categories, many=True)
         return JsonResponse(categories_serializer.data, safe=False)
@@ -272,14 +272,14 @@ def category_count(request):
 @api_view(["GET", "POST"])
 def course_list(request):
     if request.method == "GET":
-        courses = Course.objects.all()
+        cursor = connection.cursor()
+        query = "SELECT training_backend_course.course_id,training_backend_course.course_name, training_backend_course.regular_price,training_backend_category.cat_name FROM training_backend_course INNER JOIN training_backend_category ON training_backend_course.cat_id=training_backend_category.cat_id"
 
-        name = request.GET.get("name", None)
-        if name is not None:
-            courses = courses.filter(name__icontains=name)
-
-        courses_serializer = CourseSerializer(courses, many=True)
-        return JsonResponse(courses_serializer.data, safe=False)
+        cursor.execute(query)
+        columns = [col[0] for col in cursor.description]
+        return JsonResponse(
+            [dict(zip(columns, row)) for row in cursor.fetchall()], safe=False
+        )
 
     elif request.method == "POST":
         course_data = JSONParser().parse(request)
