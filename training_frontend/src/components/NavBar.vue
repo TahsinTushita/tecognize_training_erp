@@ -79,10 +79,6 @@
               "
               v-if="showCourseOptions"
             >
-              <router-link :to="{ name: 'AddCategory' }" class="text-lg">
-                Add Category
-              </router-link>
-
               <router-link :to="{ name: 'CategoryList' }" class="text-lg"
                 >Category List</router-link
               >

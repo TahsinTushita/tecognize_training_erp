@@ -42,9 +42,9 @@ def instructor_list(request):
     if request.method == "GET":
         instructors = Instructor.objects.all()
 
-        inst_name = request.GET.get("name", None)
-        if inst_name is not None:
-            instructors = instructors.filter(inst_name_icontains=inst_name)
+        name = request.GET.get("name", None)
+        if name is not None:
+            instructors = instructors.filter(name__icontains=name)
 
         instructors_serializer = InstructorSerializer(instructors, many=True)
         return JsonResponse(instructors_serializer.data, safe=False)
@@ -134,9 +134,9 @@ def user_list(request):
     if request.method == "GET":
         users = User.objects.all()
 
-        user_name = request.GET.get("name", None)
-        if user_name is not None:
-            users = users.filter(user_name_icontains=user_name)
+        name = request.GET.get("name", None)
+        if name is not None:
+            users = users.filter(name__icontains=name)
 
         users_serializer = UserSerializer(users, many=True)
         return JsonResponse(users_serializer.data, safe=False)
@@ -200,9 +200,9 @@ def category_list(request):
     if request.method == "GET":
         categories = Category.objects.all()
 
-        category_name = request.GET.get("name", None)
-        if category_name is not None:
-            categories = categories.filter(category_name_icontains=category_name)
+        name = request.GET.get("name", None)
+        if name is not None:
+            categories = categories.filter(name__icontains=name)
 
         categories_serializer = CategorySerializer(categories, many=True)
         return JsonResponse(categories_serializer.data, safe=False)
@@ -274,9 +274,9 @@ def course_list(request):
     if request.method == "GET":
         courses = Course.objects.all()
 
-        course_name = request.GET.get("name", None)
-        if course_name is not None:
-            courses = courses.filter(course_name_icontains=course_name)
+        name = request.GET.get("name", None)
+        if name is not None:
+            courses = courses.filter(name__icontains=name)
 
         courses_serializer = CourseSerializer(courses, many=True)
         return JsonResponse(courses_serializer.data, safe=False)
@@ -346,9 +346,9 @@ def batch_list(request):
     if request.method == "GET":
         batches = Batch.objects.all()
 
-        batch_name = request.GET.get("name", None)
-        if batch_name is not None:
-            batches = batches.filter(batch_name_icontains=batch_name)
+        batch = request.GET.get("batch", None)
+        if batch is not None:
+            batches = batches.filter(batch__icontains=batch)
 
         batches_serializer = BatchSerializer(batches, many=True)
         return JsonResponse(batches_serializer.data, safe=False)
@@ -416,11 +416,9 @@ def retail_customer_list(request):
     if request.method == "GET":
         retail_customers = Retail_Customer.objects.all()
 
-        retail_customer_name = request.GET.get("name", None)
-        if retail_customer_name is not None:
-            retail_customers = retail_customers.filter(
-                retail_customer_name_icontains=retail_customer_name
-            )
+        phone = request.GET.get("phone", None)
+        if phone is not None:
+            retail_customers = retail_customers.filter(phone__icontains=phone)
 
         retail_customers_serializer = RetailCustomerSerializer(
             retail_customers, many=True
@@ -496,11 +494,9 @@ def corporate_customer_list(request):
     if request.method == "GET":
         corporate_customers = Corporate_Customer.objects.all()
 
-        corporate_customer_name = request.GET.get("name", None)
-        if corporate_customer_name is not None:
-            corporate_customers = corporate_customers.filter(
-                corporate_customer_name_icontains=corporate_customer_name
-            )
+        name = request.GET.get("name", None)
+        if name is not None:
+            corporate_customers = corporate_customers.filter(name__icontains=name)
 
         corporate_customers_serializer = CorporateCustomerSerializer(
             corporate_customers, many=True

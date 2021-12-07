@@ -170,6 +170,15 @@ export default createStore({
           console.log(error);
         };
     },
+
+    addCategory({ commit }, data) {
+      axios.post("/api/categories", data).then((res) => {
+        console.log(res.data);
+      }),
+        (error) => {
+          console.log(error);
+        };
+    },
   },
   getters: {
     instructorList: (state) => {
