@@ -19,22 +19,22 @@
         @click="navigateToUserDetails(user.user_id)"
       >
         <td class="w-1/5 px-4 py-4 text-center border-2">
-          {{ user.name }}
+          {{ user.user_name }}
         </td>
         <td class="w-1/5 px-4 py-4 text-center border-2">
-          {{ user.email }}
+          {{ user.user_email }}
         </td>
         <td class="w-1/5 px-4 py-4 text-center border-2">
-          {{ user.phone }}
+          {{ user.user_phone }}
         </td>
         <td class="w-1/5 px-4 py-4 text-center border-2">
-          {{ user.address }}
+          {{ user.user_address }}
         </td>
         <td class="w-1/5 px-4 py-4 text-center border-2">
-          {{ user.designation }}
+          {{ user.user_designation }}
         </td>
         <td class="w-1/5 px-4 py-4 text-center border-2">
-          {{ user.profit }}
+          {{ user.user_profit }}
         </td>
       </tr>
     </tbody>

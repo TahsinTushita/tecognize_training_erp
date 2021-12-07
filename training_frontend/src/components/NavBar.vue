@@ -95,9 +95,9 @@
               <router-link :to="{ name: 'CourseList' }" class="text-lg"
                 >Course List</router-link
               >
-              <!-- <router-link :to="{ name: 'AddBatch' }" class="text-lg"
+              <router-link :to="{ name: 'AddBatch' }" class="text-lg"
                 >Add Batch</router-link
-              > -->
+              >
               <router-link :to="{ name: 'BatchList' }" class="text-lg"
                 >Batch List</router-link
               >

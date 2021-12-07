@@ -134,7 +134,7 @@ export default {
 
         const data = {
           course_id: course_id,
-          name: this.courseName,
+          course_name: this.courseName,
           regular_price: this.regularPrice,
           cat_id: this.cat_id,
         };

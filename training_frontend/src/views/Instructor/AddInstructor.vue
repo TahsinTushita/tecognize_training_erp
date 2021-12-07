@@ -241,13 +241,13 @@ export default {
 
         const data = {
           inst_id: inst_id,
-          name: this.name,
-          phone: this.phone,
-          email: this.email,
-          address: this.address,
-          organization: this.organization,
-          designation: this.designation,
-          profit: this.profit,
+          inst_name: this.name,
+          inst_phone: this.phone,
+          inst_email: this.email,
+          inst_address: this.address,
+          inst_organization: this.organization,
+          inst_designation: this.designation,
+          inst_profit: this.profit,
         };
 
         console.log(data);

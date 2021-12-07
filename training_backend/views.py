@@ -42,9 +42,9 @@ def instructor_list(request):
     if request.method == "GET":
         instructors = Instructor.objects.all()
 
-        name = request.GET.get("name", None)
-        if name is not None:
-            instructors = instructors.filter(name__icontains=name)
+        inst_name = request.GET.get("inst_name", None)
+        if inst_name is not None:
+            instructors = instructors.filter(inst_name__icontains=inst_name)
 
         instructors_serializer = InstructorSerializer(instructors, many=True)
         return JsonResponse(instructors_serializer.data, safe=False)
@@ -134,9 +134,9 @@ def user_list(request):
     if request.method == "GET":
         users = User.objects.all()
 
-        name = request.GET.get("name", None)
-        if name is not None:
-            users = users.filter(name__icontains=name)
+        user_name = request.GET.get("user_name", None)
+        if user_name is not None:
+            users = users.filter(user_name__icontains=user_name)
 
         users_serializer = UserSerializer(users, many=True)
         return JsonResponse(users_serializer.data, safe=False)
@@ -416,9 +416,9 @@ def retail_customer_list(request):
     if request.method == "GET":
         retail_customers = Retail_Customer.objects.all()
 
-        phone = request.GET.get("phone", None)
-        if phone is not None:
-            retail_customers = retail_customers.filter(phone__icontains=phone)
+        cust_phone = request.GET.get("cust_phone", None)
+        if cust_phone is not None:
+            retail_customers = retail_customers.filter(cust_phone__icontains=cust_phone)
 
         retail_customers_serializer = RetailCustomerSerializer(
             retail_customers, many=True
@@ -494,9 +494,11 @@ def corporate_customer_list(request):
     if request.method == "GET":
         corporate_customers = Corporate_Customer.objects.all()
 
-        name = request.GET.get("name", None)
-        if name is not None:
-            corporate_customers = corporate_customers.filter(name__icontains=name)
+        corp_name = request.GET.get("corp_name", None)
+        if corp_name is not None:
+            corporate_customers = corporate_customers.filter(
+                corp_name__icontains=corp_name
+            )
 
         corporate_customers_serializer = CorporateCustomerSerializer(
             corporate_customers, many=True

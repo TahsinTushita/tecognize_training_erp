@@ -19,13 +19,13 @@ class InstructorSerializer(serializers.ModelSerializer):
         model = Instructor
         fields = (
             "inst_id",
-            "name",
-            "phone",
-            "email",
-            "address",
-            "organization",
-            "designation",
-            "profit",
+            "inst_name",
+            "inst_phone",
+            "inst_email",
+            "inst_address",
+            "inst_organization",
+            "inst_designation",
+            "inst_profit",
             # "photo",
             # "inst_cv",
         )
@@ -36,12 +36,12 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = (
             "user_id",
-            "name",
-            "phone",
-            "email",
-            "address",
-            "designation",
-            "profit",
+            "user_name",
+            "user_phone",
+            "user_email",
+            "user_address",
+            "user_designation",
+            "user_profit",
             # "photo",
             # "inst_cv",
         )
@@ -52,15 +52,15 @@ class RetailCustomerSerializer(serializers.ModelSerializer):
         model = Retail_Customer
         fields = (
             "cust_id",
-            "name",
-            "phone",
-            "email",
-            "address",
-            "organization",
-            "designation",
-            "total_fee",
-            "paid_fee",
-            "due_fee",
+            "cust_name",
+            "cust_phone",
+            "cust_email",
+            "cust_address",
+            "cust_organization",
+            "cust_designation",
+            "cust_total_fee",
+            "cust_paid_fee",
+            "cust_due_fee",
         )
 
 
@@ -69,14 +69,14 @@ class CorporateCustomerSerializer(serializers.ModelSerializer):
         model = Corporate_Customer
         fields = (
             "corp_id",
-            "name",
-            "phone",
-            "email",
-            "address",
-            "total_fee",
-            "paid_fee",
-            "due_fee",
-            "units",
+            "corp_name",
+            "corp_phone",
+            "corp_email",
+            "corp_address",
+            "corp_total_fee",
+            "corp_paid_fee",
+            "corp_due_fee",
+            "corp_units",
         )
 
 

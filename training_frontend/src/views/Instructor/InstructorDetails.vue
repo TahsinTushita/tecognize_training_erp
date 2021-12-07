@@ -3,31 +3,31 @@
   <div class="grid grid-rows-1 gap-2 px-28 pt-10">
     <div class="flex gap-5 items-baseline">
       <h1 class="font-semibold text-xl">Instructor Name:</h1>
-      <p class="text-lg">{{ instructor.name }}</p>
+      <p class="text-lg">{{ instructor.inst_name }}</p>
     </div>
     <div class="flex gap-5 items-baseline">
       <h1 class="font-semibold text-xl">Email:</h1>
-      <p class="text-lg">{{ instructor.email }}</p>
+      <p class="text-lg">{{ instructor.inst_email }}</p>
     </div>
     <div class="flex gap-5 items-baseline">
       <h1 class="font-semibold text-xl">Phone:</h1>
-      <p class="text-lg">{{ instructor.phone }}</p>
+      <p class="text-lg">{{ instructor.inst_phone }}</p>
     </div>
     <div class="flex gap-5 items-baseline">
       <h1 class="font-semibold text-xl">Address:</h1>
-      <p class="text-lg">{{ instructor.address }}</p>
+      <p class="text-lg">{{ instructor.inst_address }}</p>
     </div>
     <div class="flex gap-5 items-baseline">
       <h1 class="font-semibold text-xl">Organization:</h1>
-      <p class="text-lg">{{ instructor.organization }}</p>
+      <p class="text-lg">{{ instructor.inst_organization }}</p>
     </div>
     <div class="flex gap-5 items-baseline">
       <h1 class="font-semibold text-xl">Designation:</h1>
-      <p class="text-lg">{{ instructor.designation }}</p>
+      <p class="text-lg">{{ instructor.inst_designation }}</p>
     </div>
     <div class="flex gap-5 items-baseline">
       <h1 class="font-semibold text-xl">Profit Margin:</h1>
-      <p class="text-lg">{{ instructor.profit }}</p>
+      <p class="text-lg">{{ instructor.inst_profit }}</p>
     </div>
   </div>
   <button

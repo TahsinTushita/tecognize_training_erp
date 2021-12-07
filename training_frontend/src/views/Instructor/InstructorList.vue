@@ -20,25 +20,25 @@
         @click="navigateToInstructorDetails(instructor.inst_id)"
       >
         <td class="w-1/5 px-4 py-4 text-center border-2">
-          {{ instructor.name }}
+          {{ instructor.inst_name }}
         </td>
         <td class="w-1/5 px-4 py-4 text-center border-2">
-          {{ instructor.email }}
+          {{ instructor.inst_email }}
         </td>
         <td class="w-1/5 px-4 py-4 text-center border-2">
-          {{ instructor.phone }}
+          {{ instructor.inst_phone }}
         </td>
         <td class="w-1/5 px-4 py-4 text-center border-2">
-          {{ instructor.address }}
+          {{ instructor.inst_address }}
         </td>
         <td class="w-1/5 px-4 py-4 text-center border-2">
-          {{ instructor.organization }}
+          {{ instructor.inst_organization }}
         </td>
         <td class="w-1/5 px-4 py-4 text-center border-2">
-          {{ instructor.designation }}
+          {{ instructor.inst_designation }}
         </td>
         <td class="w-1/5 px-4 py-4 text-center border-2">
-          {{ instructor.profit }}
+          {{ instructor.inst_profit }}
         </td>
       </tr>
     </tbody>

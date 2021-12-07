@@ -3,27 +3,27 @@
   <div class="grid grid-rows-1 gap-2 px-28 pt-10">
     <div class="flex gap-5 items-baseline">
       <h1 class="font-semibold text-xl">User Name:</h1>
-      <p class="text-lg">{{ user.name }}</p>
+      <p class="text-lg">{{ user.user_name }}</p>
     </div>
     <div class="flex gap-5 items-baseline">
       <h1 class="font-semibold text-xl">Email:</h1>
-      <p class="text-lg">{{ user.email }}</p>
+      <p class="text-lg">{{ user.user_email }}</p>
     </div>
     <div class="flex gap-5 items-baseline">
       <h1 class="font-semibold text-xl">Phone:</h1>
-      <p class="text-lg">{{ user.phone }}</p>
+      <p class="text-lg">{{ user.user_phone }}</p>
     </div>
     <div class="flex gap-5 items-baseline">
       <h1 class="font-semibold text-xl">Address:</h1>
-      <p class="text-lg">{{ user.address }}</p>
+      <p class="text-lg">{{ user.user_address }}</p>
     </div>
     <div class="flex gap-5 items-baseline">
       <h1 class="font-semibold text-xl">Designation:</h1>
-      <p class="text-lg">{{ user.designation }}</p>
+      <p class="text-lg">{{ user.user_designation }}</p>
     </div>
     <div class="flex gap-5 items-baseline">
       <h1 class="font-semibold text-xl">Profit Margin:</h1>
-      <p class="text-lg">{{ user.profit }}</p>
+      <p class="text-lg">{{ user.user_profit }}</p>
     </div>
   </div>
   <button

@@ -11,13 +11,13 @@ class Instructor(models.Model):
     inst_id = models.CharField(
         max_length=10, blank=False, primary_key=True, unique=True
     )
-    name = models.CharField(max_length=100, blank=False)
-    phone = models.CharField(max_length=22, blank=False)
-    email = models.CharField(max_length=255, blank=False)
-    address = models.CharField(max_length=200, blank=False)
-    organization = models.CharField(max_length=200, blank=False)
-    designation = models.CharField(max_length=150, blank=False)
-    profit = models.FloatField(blank=False)
+    inst_name = models.CharField(max_length=100, blank=False)
+    inst_phone = models.CharField(max_length=22, blank=False)
+    inst_email = models.CharField(max_length=255, blank=False)
+    inst_address = models.CharField(max_length=200, blank=False)
+    inst_organization = models.CharField(max_length=200, blank=False)
+    inst_designation = models.CharField(max_length=150, blank=False)
+    inst_profit = models.FloatField(blank=False)
     # photo = models.ImageField(blank=True)
     # inst_cv = models.FileField()
 
@@ -31,12 +31,12 @@ class User(models.Model):
     user_id = models.CharField(
         max_length=10, blank=False, primary_key=True, unique=True
     )
-    name = models.CharField(max_length=100, blank=False)
-    phone = models.CharField(max_length=22, blank=False)
-    email = models.CharField(max_length=255, blank=False)
-    address = models.CharField(max_length=200, blank=False)
-    designation = models.CharField(max_length=150, blank=False)
-    profit = models.FloatField(blank=False)
+    user_name = models.CharField(max_length=100, blank=False)
+    user_phone = models.CharField(max_length=22, blank=False)
+    user_email = models.CharField(max_length=255, blank=False)
+    user_address = models.CharField(max_length=200, blank=False)
+    user_designation = models.CharField(max_length=150, blank=False)
+    user_profit = models.FloatField(blank=False)
     # photo = models.ImageField(blank=True)
     # user_cv = models.FileField()
 
@@ -45,29 +45,29 @@ class Retail_Customer(models.Model):
     cust_id = models.CharField(
         max_length=10, blank=False, primary_key=True, unique=True
     )
-    name = models.CharField(max_length=100, blank=False)
-    phone = models.CharField(max_length=22, blank=False)
-    email = models.CharField(max_length=255, blank=False)
-    address = models.CharField(max_length=200, blank=False)
-    organization = models.CharField(max_length=200, blank=False)
-    designation = models.CharField(max_length=150, blank=False)
-    total_fee = models.IntegerField()
-    paid_fee = models.IntegerField()
-    due_fee = models.IntegerField()
+    cust_name = models.CharField(max_length=100, blank=False)
+    cust_phone = models.CharField(max_length=22, blank=False)
+    cust_email = models.CharField(max_length=255, blank=False)
+    cust_address = models.CharField(max_length=200, blank=False)
+    cust_organization = models.CharField(max_length=200, blank=False)
+    cust_designation = models.CharField(max_length=150, blank=False)
+    cust_total_fee = models.IntegerField()
+    cust_paid_fee = models.IntegerField()
+    cust_due_fee = models.IntegerField()
 
 
 class Corporate_Customer(models.Model):
     corp_id = models.CharField(
         max_length=100, blank=False, primary_key=True, unique=True
     )
-    name = models.CharField(max_length=100, blank=False)
-    phone = models.CharField(max_length=22, blank=False)
-    email = models.CharField(max_length=255, blank=False)
-    address = models.CharField(max_length=200, blank=False)
-    total_fee = models.IntegerField()
-    paid_fee = models.IntegerField()
-    due_fee = models.IntegerField()
-    units = models.IntegerField()
+    corp_name = models.CharField(max_length=100, blank=False)
+    corp_phone = models.CharField(max_length=22, blank=False)
+    corp_email = models.CharField(max_length=255, blank=False)
+    corp_address = models.CharField(max_length=200, blank=False)
+    corp_total_fee = models.IntegerField()
+    corp_paid_fee = models.IntegerField()
+    corp_due_fee = models.IntegerField()
+    corp_units = models.IntegerField()
 
 
 class Course(models.Model):

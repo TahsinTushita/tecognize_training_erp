@@ -240,12 +240,12 @@ export default {
 
         const data = {
           user_id: user_id,
-          name: this.name,
-          phone: this.phone,
-          email: this.email,
-          address: this.address,
-          designation: this.designation,
-          profit: this.profit,
+          user_name: this.name,
+          user_phone: this.phone,
+          user_email: this.email,
+          user_address: this.address,
+          user_designation: this.designation,
+          user_profit: this.profit,
         };
 
         console.log(data);
