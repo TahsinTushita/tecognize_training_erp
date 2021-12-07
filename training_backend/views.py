@@ -17,7 +17,7 @@ from training_backend.models import (
     Corporate_Customer,
     Category,
     Course,
-    Batch,
+    # Batch,
 )
 from training_backend.serializers import (
     InstructorSerializer,
@@ -26,7 +26,7 @@ from training_backend.serializers import (
     CorporateCustomerSerializer,
     CategorySerializer,
     CourseSerializer,
-    BatchSerializer,
+    # BatchSerializer,
     # NumberSerializer,
 )
 from rest_framework.decorators import api_view
@@ -341,71 +341,71 @@ def course_count(request):
 # Batch
 
 
-@api_view(["GET", "POST"])
-def batch_list(request):
-    if request.method == "GET":
-        batches = Batch.objects.all()
+# @api_view(["GET", "POST"])
+# def batch_list(request):
+#     if request.method == "GET":
+#         batches = Batch.objects.all()
 
-        batch = request.GET.get("batch", None)
-        if batch is not None:
-            batches = batches.filter(batch__icontains=batch)
+#         batch = request.GET.get("batch", None)
+#         if batch is not None:
+#             batches = batches.filter(batch__icontains=batch)
 
-        batches_serializer = BatchSerializer(batches, many=True)
-        return JsonResponse(batches_serializer.data, safe=False)
+#         batches_serializer = BatchSerializer(batches, many=True)
+#         return JsonResponse(batches_serializer.data, safe=False)
 
-    elif request.method == "POST":
-        batch_data = JSONParser().parse(request)
-        batches_serializer = BatchSerializer(data=batch_data)
-        if batches_serializer.is_valid():
-            batches_serializer.save()
-            return JsonResponse(batches_serializer.data, status=status.HTTP_201_CREATED)
-        return JsonResponse(
-            batches_serializer.errors, status=status.HTTP_400_BAD_REQUEST
-        )
-
-
-@api_view(["GET", "PUT", "DELETE"])
-def batch_detail(request, pk):
-    try:
-        batch = Batch.objects.get(pk=pk)
-    except Batch.DoesNotExist:
-        return JsonResponse(
-            {"message": "The batch does not exist"},
-            status=status.HTTP_404_NOT_FOUND,
-        )
-
-    if request.method == "GET":
-        batch_serializer = BatchSerializer(batch)
-        return JsonResponse(batch_serializer.data)
-
-    elif request.method == "PUT":
-        batch_data = JSONParser().parse(request)
-        batches_serializer = BatchSerializer(data=batch_data)
-        if batches_serializer.is_valid():
-            batches_serializer.save()
-            return JsonResponse(batches_serializer.data)
-        return JsonResponse(
-            batches_serializer.errors, status=status.HTTP_400_BAD_REQUEST
-        )
-
-    elif request.method == "DELETE":
-        batch.delete()
-        return JsonResponse(
-            {"message": "Batch was deleted successfully!"},
-            status=status.HTTP_204_NO_CONTENT,
-        )
+#     elif request.method == "POST":
+#         batch_data = JSONParser().parse(request)
+#         batches_serializer = BatchSerializer(data=batch_data)
+#         if batches_serializer.is_valid():
+#             batches_serializer.save()
+#             return JsonResponse(batches_serializer.data, status=status.HTTP_201_CREATED)
+#         return JsonResponse(
+#             batches_serializer.errors, status=status.HTTP_400_BAD_REQUEST
+#         )
 
 
-@api_view(["GET"])
-def batch_count(request):
-    if request.method == "GET":
-        cursor = connection.cursor()
-        query = "SELECT COUNT(batch_id) AS NumberOfbatches FROM training_backend_batch"
+# @api_view(["GET", "PUT", "DELETE"])
+# def batch_detail(request, pk):
+#     try:
+#         batch = Batch.objects.get(pk=pk)
+#     except Batch.DoesNotExist:
+#         return JsonResponse(
+#             {"message": "The batch does not exist"},
+#             status=status.HTTP_404_NOT_FOUND,
+#         )
 
-        cursor.execute(query)
-        r = cursor.fetchone()
-        print(r)
-        return JsonResponse(r, safe=False)
+#     if request.method == "GET":
+#         batch_serializer = BatchSerializer(batch)
+#         return JsonResponse(batch_serializer.data)
+
+#     elif request.method == "PUT":
+#         batch_data = JSONParser().parse(request)
+#         batches_serializer = BatchSerializer(data=batch_data)
+#         if batches_serializer.is_valid():
+#             batches_serializer.save()
+#             return JsonResponse(batches_serializer.data)
+#         return JsonResponse(
+#             batches_serializer.errors, status=status.HTTP_400_BAD_REQUEST
+#         )
+
+#     elif request.method == "DELETE":
+#         batch.delete()
+#         return JsonResponse(
+#             {"message": "Batch was deleted successfully!"},
+#             status=status.HTTP_204_NO_CONTENT,
+#         )
+
+
+# @api_view(["GET"])
+# def batch_count(request):
+#     if request.method == "GET":
+#         cursor = connection.cursor()
+#         query = "SELECT COUNT(batch_id) AS NumberOfbatches FROM training_backend_batch"
+
+#         cursor.execute(query)
+#         r = cursor.fetchone()
+#         print(r)
+#         return JsonResponse(r, safe=False)
 
 
 # Retail Customer

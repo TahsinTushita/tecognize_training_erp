@@ -80,36 +80,24 @@ class Course(models.Model):
     cat_id = models.ForeignKey(Category, db_column="cat_id", on_delete=models.CASCADE)
 
 
-# class Batch(models.Model):
-#     batch_id = models.CharField(max_length=30, blank=False)
-#     regular_fee = models.IntegerField()
-#     discount_fee = models.IntegerField()
-#     ad_closed = models.BooleanField()
-#     inst_id = models.ForeignKey(
-#         Instructor, db_column="inst_id", on_delete=models.CASCADE
-#     )
-#     user_id = models.ForeignKey(User, db_column="user_id", on_delete=models.CASCADE)
-#     cust_id = models.ForeignKey(
-#         Retail_Customer,
-#         db_column="cust_id",
-#         on_delete=models.CASCADE,
-#         blank=True,
-#         null=True,
-#     )
-#     corp_id = models.ForeignKey(
-#         Corporate_Customer,
-#         db_column="corp_id",
-#         on_delete=models.CASCADE,
-#         blank=True,
-#         null=True,
-#     )
-
-
 class Batch(models.Model):
-    batch = models.CharField(max_length=30, blank=False)
+    batch_id = models.CharField(
+        max_length=10, blank=False, primary_key=True, unique=True
+    )
+    batch_fee = models.IntegerField()
+    inst_id = models.ForeignKey(
+        Instructor, db_column="inst_id", on_delete=models.CASCADE
+    )
+    admit_closed = models.BooleanField()
+    course_id = models.ForeignKey(
+        Course, db_column="course_id", on_delete=models.CASCADE
+    )
+
+
+class Sale(models.Model):
+    batch_id = models.ForeignKey(Batch, db_column="batch_id", on_delete=models.CASCADE)
     regular_fee = models.IntegerField()
-    discount_fee = models.IntegerField()
-    ad_closed = models.BooleanField()
+    sale_fee = models.IntegerField()
     inst_id = models.ForeignKey(
         Instructor, db_column="inst_id", on_delete=models.CASCADE
     )
