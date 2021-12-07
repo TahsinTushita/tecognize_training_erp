@@ -20,6 +20,12 @@ export default createStore({
     batchList: [],
     batch: "",
     batchCount: "",
+    retailCustomerList: [],
+    retailCustomerCount: "",
+    retailCustomer: "",
+    corporateCustomerList: [],
+    corporateCustomerCount: "",
+    corporateCustomer: "",
   },
   mutations: {
     SET_INSTRUCTOR_LIST(state, instructorList) {
@@ -80,6 +86,30 @@ export default createStore({
 
     SET_BATCH_COUNT(state, batchCount) {
       state.batchCount = batchCount;
+    },
+
+    SET_RETAIL_CUSTOMER_LIST(state, retailCustomerList) {
+      state.retailCustomerList = retailCustomerList;
+    },
+
+    SET_RETAIL_CUSTOMER_COUNT(state, retailCustomerCount) {
+      state.retailCustomerCount = retailCustomerCount;
+    },
+
+    SET_RETAIL_CUSTOMER(state, retailCustomer) {
+      state.retailCustomer = retailCustomer;
+    },
+
+    SET_CORPORATE_CUSTOMER_LIST(state, corporateCustomerList) {
+      state.corporateCustomerList = corporateCustomerList;
+    },
+
+    SET_CORPORATE_CUSTOMER_COUNT(state, corporateCustomerCount) {
+      state.corporateCustomerCount = corporateCustomerCount;
+    },
+
+    SET_CORPORATE_CUSTOMER(state, corporateCustomer) {
+      state.corporateCustomer = corporateCustomer;
     },
   },
   actions: {
@@ -208,6 +238,84 @@ export default createStore({
           console.log(error);
         };
     },
+
+    addRetailCustomer({ commit }, data) {
+      axios.post("/api/retail-customers", data).then((res) => {
+        console.log(res.data);
+      }),
+        (error) => {
+          console.log(error);
+        };
+    },
+
+    getRetailCustomerCount({ commit }) {
+      axios("/api/retail-customers-count").then((res) => {
+        commit("SET_RETAIL_CUSTOMER_COUNT", res.data);
+        console.log(res.data);
+      }),
+        (error) => {
+          console.log(error);
+        };
+    },
+
+    getRetailCustomer({ commit }, cust_id) {
+      axios("/api/retail-customers/" + cust_id).then((res) => {
+        commit("SET_RETAIL_CUSTOMER", res.data);
+        console.log(res.data);
+      }),
+        (error) => {
+          console.log(error);
+        };
+    },
+
+    getRetailCustomerList({ commit }) {
+      axios("/api/retail-customers").then((res) => {
+        commit("SET_RETAIL_CUSTOMER_LIST", res.data);
+        console.log(res.data);
+      }),
+        (error) => {
+          console.log(error);
+        };
+    },
+
+    addCorporateCustomer({ commit }, data) {
+      axios.post("/api/corporate-customers", data).then((res) => {
+        console.log(res.data);
+      }),
+        (error) => {
+          console.log(error);
+        };
+    },
+
+    getCorporateCustomerCount({ commit }) {
+      axios("/api/corporate-customers-count").then((res) => {
+        commit("SET_CORPORATE_CUSTOMER_COUNT", res.data);
+        console.log(res.data);
+      }),
+        (error) => {
+          console.log(error);
+        };
+    },
+
+    getCorporateCustomer({ commit }, cust_id) {
+      axios("/api/corporate-customers/" + cust_id).then((res) => {
+        commit("SET_CORPORATE_CUSTOMER", res.data);
+        console.log(res.data);
+      }),
+        (error) => {
+          console.log(error);
+        };
+    },
+
+    getCorporateCustomerList({ commit }) {
+      axios("/api/corporate-customers").then((res) => {
+        commit("SET_CORPORATE_CUSTOMER_LIST", res.data);
+        console.log(res.data);
+      }),
+        (error) => {
+          console.log(error);
+        };
+    },
   },
   getters: {
     instructorList: (state) => {
@@ -244,6 +352,30 @@ export default createStore({
 
     courseCount: (state) => {
       return state.courseCount;
+    },
+
+    retailCustomerList: (state) => {
+      return state.retailCustomerList;
+    },
+
+    retailCustomerCount: (state) => {
+      return state.retailCustomerCount;
+    },
+
+    retailCustomer: (state) => {
+      return state.retailCustomer;
+    },
+
+    corporateCustomerList: (state) => {
+      return state.corporateCustomerList;
+    },
+
+    corporateCustomerCount: (state) => {
+      return state.corporateCustomerCount;
+    },
+
+    corporateCustomer: (state) => {
+      return state.corporateCustomer;
     },
   },
   modules: {},

@@ -1,11 +1,13 @@
 <template>
   <h1 class="pt-10 text-xl font-semibold">Add Retail Customer</h1>
-  <div class="h-screen px-28 py-10">
+  <div class="px-28 py-10">
     <div class="flex items-center justify-center">
-      <form @submit="addUser">
+      <form @submit="AddRetailCustomer">
         <div class="space-y-5">
           <div class="grid grid-rows-1 gap-2 place-items-start">
-            <label for="name" class="font-semibold ml-2">Name*</label>
+            <label for="name" class="font-semibold ml-2"
+              >Retail Customer Name*</label
+            >
             <input
               type="text"
               name="name"
@@ -147,12 +149,10 @@
           </div>
 
           <div class="grid grid-rows-1 gap-2 place-items-start">
-            <label for="profit" class="font-semibold ml-2"
-              >Profit margin*</label
-            >
+            <label for="totalFee" class="font-semibold ml-2">Total Fee*</label>
             <input
               type="number"
-              name="profit"
+              name="totalFee"
               required
               class="
                 bg-white
@@ -166,8 +166,54 @@
                 hover:border-navlink hover:ring-0
                 focus:outline-none focus:border-navlink
               "
-              placeholder="profit margin"
-              v-model="profit"
+              placeholder="total fee"
+              v-model="totalFee"
+            />
+          </div>
+
+          <div class="grid grid-rows-1 gap-2 place-items-start">
+            <label for="paidFee" class="font-semibold ml-2">Paid Fee*</label>
+            <input
+              type="number"
+              name="paidFee"
+              required
+              class="
+                bg-white
+                rounded-md
+                px-8
+                py-4
+                flex
+                justify-center
+                w-600
+                border-2 border-gray-200
+                hover:border-navlink hover:ring-0
+                focus:outline-none focus:border-navlink
+              "
+              placeholder="paid fee"
+              v-model="paidFee"
+            />
+          </div>
+
+          <div class="grid grid-rows-1 gap-2 place-items-start">
+            <label for="dueFee" class="font-semibold ml-2">Due Fee*</label>
+            <input
+              type="number"
+              name="dueFee"
+              required
+              class="
+                bg-white
+                rounded-md
+                px-8
+                py-4
+                flex
+                justify-center
+                w-600
+                border-2 border-gray-200
+                hover:border-navlink hover:ring-0
+                focus:outline-none focus:border-navlink
+              "
+              placeholder="due fee"
+              v-model="dueFee"
             />
           </div>
 
@@ -189,7 +235,7 @@
             "
             type="submit"
           >
-            Add User
+            Add Retail Customer
           </button>
         </div>
       </form>
@@ -216,40 +262,45 @@ export default {
       address: "",
       organization: "",
       designation: "",
-      profit: "",
+      totalFee: 0,
+      paidFee: 0,
+      dueFee: 0,
       showModal: false,
-      message: "User added",
+      message: "Retail customer added",
     };
   },
   mounted() {
-    this.$store.dispatch("getUserCount");
+    this.$store.dispatch("getRetailCustomerCount");
   },
   computed: {
-    userCount: {
+    retailCustomerCount: {
       get() {
-        return this.$store.getters.userCount;
+        return this.$store.getters.retailCustomerCount;
       },
     },
   },
   methods: {
-    addUser() {
+    AddRetailCustomer() {
       if (this.name.length > 3) {
-        let user_id = this.name.substr(0, 3);
-        user_id = user_id.toUpperCase();
-        user_id = user_id.concat((this.userCount[0] + 1).toString());
+        let cust_id = this.name.substr(0, 3);
+        cust_id = cust_id.toUpperCase();
+        cust_id = cust_id.concat((this.retailCustomerCount[0] + 1).toString());
 
         const data = {
-          user_id: user_id,
-          user_name: this.name,
-          user_phone: this.phone,
-          user_email: this.email,
-          user_address: this.address,
-          user_designation: this.designation,
-          user_profit: this.profit,
+          cust_id: cust_id,
+          cust_name: this.name,
+          cust_phone: this.phone,
+          cust_email: this.email,
+          cust_address: this.address,
+          cust_organization: this.organization,
+          cust_designation: this.designation,
+          cust_total_fee: this.totalFee,
+          cust_paid_fee: this.paidFee,
+          cust_due_fee: this.dueFee,
         };
 
         console.log(data);
-        this.$store.dispatch("addUser", data);
+        this.$store.dispatch("addRetailCustomer", data);
         this.showModal = true;
       }
     },

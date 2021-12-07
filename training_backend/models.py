@@ -46,14 +46,14 @@ class Retail_Customer(models.Model):
         max_length=10, blank=False, primary_key=True, unique=True
     )
     cust_name = models.CharField(max_length=100, blank=False)
-    cust_phone = models.CharField(max_length=22, blank=False)
+    cust_phone = models.CharField(max_length=22, blank=False, unique=True)
     cust_email = models.CharField(max_length=255, blank=False)
     cust_address = models.CharField(max_length=200, blank=False)
     cust_organization = models.CharField(max_length=200, blank=False)
     cust_designation = models.CharField(max_length=150, blank=False)
-    cust_total_fee = models.IntegerField()
-    cust_paid_fee = models.IntegerField()
-    cust_due_fee = models.IntegerField()
+    cust_total_fee = models.IntegerField(blank=True)
+    cust_paid_fee = models.IntegerField(blank=True)
+    cust_due_fee = models.IntegerField(blank=True)
 
 
 class Corporate_Customer(models.Model):
