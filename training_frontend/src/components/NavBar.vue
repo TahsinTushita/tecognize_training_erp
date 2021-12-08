@@ -1,9 +1,9 @@
 <template>
   <div id="nav">
     <div class="grid grid-cols-12 p-6 bg-gray-200">
-      <div class="col-span-3"></div>
-      <div class="col-span-5">
-        <div class="grid grid-cols-4 place-items-center">
+      <div class="col-span-2"></div>
+      <div class="col-span-8">
+        <div class="grid grid-cols-5 place-items-center">
           <!-- <DropDown animation="slide-in-up" color="green"></DropDown> -->
           <!-- Instructor -->
           <div class="relative space-y-6 w-full">
@@ -143,9 +143,39 @@
             </div>
           </div>
           <!-- Customer end -->
+
+          <!-- Sale -->
+          <div class="relative space-y-6 w-full">
+            <a href="#" class="text-lg" @click="toggleSaleOptions">Sale</a>
+            <div
+              class="
+                absolute
+                left-0
+                top-full
+                shadow-md
+                py-3
+                grid grid-rows-1
+                gap-2
+                bg-gray-200
+                w-full
+              "
+              v-if="showSaleOptions"
+            >
+              <router-link :to="{ name: 'Sale' }" class="text-lg">
+                Sale
+              </router-link>
+              <router-link :to="{ name: 'SaleList' }" class="text-lg"
+                >Sale List
+              </router-link>
+              <router-link :to="{ name: 'Due' }" class="text-lg"
+                >Due
+              </router-link>
+            </div>
+          </div>
+          <!-- Sale end -->
         </div>
       </div>
-      <div class="col-span-4"></div>
+      <div class="col-span-2"></div>
     </div>
   </div>
   <router-view />
@@ -162,6 +192,7 @@ export default {
       showUserOptions: false,
       showCourseOptions: false,
       showCustomerOptions: false,
+      showSaleOptions: false,
     };
   },
   methods: {
@@ -179,6 +210,10 @@ export default {
 
     toggleCustomerOptions() {
       this.showCustomerOptions = !this.showCustomerOptions;
+    },
+
+    toggleSaleOptions() {
+      this.showSaleOptions = !this.showSaleOptions;
     },
   },
 };

@@ -346,6 +346,10 @@ def batch_list(request):
     if request.method == "GET":
         batches = Batch.objects.all()
 
+        # course_id = request.GET.get("course_id", None)
+        # if course_id is not None:
+        #     batches = batches.filter(course_id__icontains=course_id)
+
         batches_serializer = BatchSerializer(batches, many=True)
         return JsonResponse(batches_serializer.data, safe=False)
 
@@ -402,6 +406,42 @@ def batch_count(request):
         r = cursor.fetchone()
         print(r)
         return JsonResponse(r, safe=False)
+
+
+@api_view(["GET"])
+def batch_by_course(request):
+    # batches = Batch.objects.all()
+    course_id = request.GET.get("course_id", None)
+    cursor = connection.cursor()
+    query = "SELECT batch_id from training_backend_batch WHERE course_id=%s"
+
+    cursor.execute(query, params=course_id)
+    columns = [col[0] for col in cursor.description]
+    return JsonResponse(
+        [dict(zip(columns, row)) for row in cursor.fetchall()], safe=False
+    )
+
+
+@api_view(["GET"])
+def batch_list_table(request):
+    cursor = connection.cursor()
+    query = "SELECT training_backend_batch.batch_id,training_backend_batch.batch_fee,training_backend_batch.admit_closed,training_backend_course.course_name,training_backend_instructor.inst_name FROM training_backend_batch INNER JOIN training_backend_course ON training_backend_batch.course_id=training_backend_course.course_id INNER JOIN training_backend_instructor ON training_backend_batch.inst_id=training_backend_instructor.inst_id"
+
+    cursor.execute(query)
+    columns = [col[0] for col in cursor.description]
+    return JsonResponse(
+        [dict(zip(columns, row)) for row in cursor.fetchall()], safe=False
+    )
+
+
+@api_view(["PUT"])
+def batch_admission(request, pk):
+    cursor = connection.cursor()
+    query = "UPDATE training_backend_batch SET admit_closed=(NOT admit_closed) WHERE batch_id=%s"
+
+    cursor.execute(query, params=(pk))
+    r = cursor.fetchone()
+    return JsonResponse(r, safe=False)
 
 
 # Retail Customer

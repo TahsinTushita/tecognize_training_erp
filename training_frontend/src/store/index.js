@@ -26,6 +26,8 @@ export default createStore({
     corporateCustomerList: [],
     corporateCustomerCount: "",
     corporateCustomer: "",
+    batchesByCourse: [],
+    batchListTable: [],
   },
   mutations: {
     SET_INSTRUCTOR_LIST(state, instructorList) {
@@ -110,6 +112,14 @@ export default createStore({
 
     SET_CORPORATE_CUSTOMER(state, corporateCustomer) {
       state.corporateCustomer = corporateCustomer;
+    },
+
+    SET_BACTHES_BY_COURSE(state, batchesByCourse) {
+      state.batchesByCourse = batchesByCourse;
+    },
+
+    SET_BATCH_LIST_TABLE(state, batchListTable) {
+      state.batchListTable = batchListTable;
     },
   },
   actions: {
@@ -316,6 +326,74 @@ export default createStore({
           console.log(error);
         };
     },
+
+    getBatchCount({ commit }) {
+      axios("/api/batches-count").then((res) => {
+        commit("SET_BATCH_COUNT", res.data);
+        console.log(res.data);
+      }),
+        (error) => {
+          console.log(error);
+        };
+    },
+
+    getBatchList({ commit }) {
+      axios("/api/batches").then((res) => {
+        commit("SET_BATCH_LIST", res.data);
+        console.log(res.data);
+      }),
+        (error) => {
+          console.log(error);
+        };
+    },
+
+    getBatch({ commit }, batch_id) {
+      axios("/api/batches/" + batch_id).then((res) => {
+        commit("SET_BATCH", res.data);
+        console.log(res.data);
+      }),
+        (error) => {
+          console.log(error);
+        };
+    },
+
+    addBatch({ commit }, data) {
+      axios.post("/api/batches", data).then((res) => {
+        console.log(res.data);
+      }),
+        (error) => {
+          console.log(error);
+        };
+    },
+
+    getBatchesByCourse({ commit }, course_id) {
+      axios("/api/batches-by-course?course_id=" + course_id).then((res) => {
+        commit("SET_BACTHES_BY_COURSE", res.data);
+        console.log(res.data);
+      }),
+        (error) => {
+          console.log(error);
+        };
+    },
+
+    getBatchListTable({ commit }) {
+      axios("/api/batch-list").then((res) => {
+        commit("SET_BATCH_LIST_TABLE", res.data);
+        console.log(res.data);
+      }),
+        (error) => {
+          console.log(error);
+        };
+    },
+
+    changeBatchAdmissionStatus({ commit }, batch_id) {
+      axios.put("/api/batch-admission/" + batch_id).then((res) => {
+        console.log(res.data);
+      }),
+        (error) => {
+          console.log(error);
+        };
+    },
   },
   getters: {
     instructorList: (state) => {
@@ -377,6 +455,28 @@ export default createStore({
     corporateCustomer: (state) => {
       return state.corporateCustomer;
     },
+
+    batchCount: (state) => {
+      return state.batchCount;
+    },
+
+    batchList: (state) => {
+      return state.batchList;
+    },
+
+    batch: (state) => {
+      return state.batch;
+    },
+
+    batchesByCourse: (state) => {
+      return state.batchesByCourse;
+    },
+
+    batchListTable: (state) => {
+      return state.batchListTable;
+    },
   },
   modules: {},
 });
+
+export const strict = false;

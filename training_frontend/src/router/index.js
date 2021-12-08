@@ -22,6 +22,9 @@ import RetailCustomerDetails from "../views/RetailCustomer/RetailCustomerDetails
 import AddCorporateCustomer from "../views/CorporateCustomer/AddCorporateCustomer.vue";
 import CorporateCustomerList from "../views/CorporateCustomer/CorporateCustomerList.vue";
 import CorporateCustomerDetails from "../views/CorporateCustomer/CorporateCustomerDetails.vue";
+import Sale from "../views/Sale/Sale.vue";
+import SaleList from "../views/Sale/SaleList.vue";
+import Due from "../views/Sale/Due.vue";
 
 const routes = [
   // {
@@ -135,6 +138,21 @@ const routes = [
     path: "/corporate-customer-detials/:id",
     name: "CorporateCustomerDetails",
     component: CorporateCustomerDetails,
+  },
+  {
+    path: "/sale",
+    name: "Sale",
+    component: Sale,
+  },
+  {
+    path: "/sale-list",
+    name: "SaleList",
+    component: SaleList,
+  },
+  {
+    path: "/due",
+    name: "Due",
+    component: Due,
   },
   {
     path: "/:catchAll(.*)",
