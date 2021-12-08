@@ -6,7 +6,7 @@
         <div class="grid grid-cols-5 place-items-center">
           <!-- <DropDown animation="slide-in-up" color="green"></DropDown> -->
           <!-- Instructor -->
-          <div class="relative space-y-6 w-full">
+          <div class="relative space-y-6 w-full group">
             <a href="#" class="text-lg" @click="toggleInstructorOptions"
               >Instructor</a
             >
@@ -16,14 +16,30 @@
                 left-0
                 top-full
                 shadow-md
-                py-3
+                py-4
                 grid grid-rows-1
                 gap-2
                 bg-gray-200
                 w-full
+                space-y-2
               "
               v-if="showInstructorOptions"
             >
+              <!-- <div
+              class="
+                absolute
+                top-full
+                shadow-md
+                py-4
+                grid grid-rows-1
+                gap-2
+                bg-gray-200
+                w-full
+                space-y-2
+                hidden
+                group-hover:block
+              "
+            > -->
               <router-link :to="{ name: 'AddInstructor' }" class="text-lg">
                 Add Instructor
               </router-link>

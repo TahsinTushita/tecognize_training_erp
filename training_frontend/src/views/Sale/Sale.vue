@@ -8,8 +8,9 @@
           <select
             name="course"
             id="course"
-            v-model="course_id"
+            v-model="courseId"
             required
+            @change="filterBatch"
             class="
               bg-white
               rounded-md
@@ -22,7 +23,6 @@
               hover:border-navlink hover:ring-0
               focus:outline-none focus:border-navlink
             "
-            @change="generateBatchId"
           >
             <option
               v-for="course in courseList"
@@ -35,11 +35,42 @@
         </div>
 
         <div class="grid grid-rows-1 gap-2 place-items-start">
-          <label for="course" class="font-semibold ml-2">Batch*</label>
+          <label for="batch" class="font-semibold ml-2">Batch*</label>
           <select
-            name="course"
-            id="course"
-            v-model="course_id"
+            name="batch"
+            id="batch"
+            v-model="batchId"
+            required
+            @change="setBatchFee"
+            class="
+              bg-white
+              rounded-md
+              px-8
+              py-4
+              flex
+              justify-center
+              w-600
+              border-2 border-gray-200
+              hover:border-navlink hover:ring-0
+              focus:outline-none focus:border-navlink
+            "
+          >
+            <option
+              v-for="batch in tempBatchList"
+              :value="batch.batch_id"
+              :key="batch.batch_id"
+            >
+              {{ batch.batch_id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="grid grid-rows-1 gap-2 place-items-start">
+          <label for="user" class="font-semibold ml-2">User*</label>
+          <select
+            name="user"
+            id="user"
+            v-model="userId"
             required
             class="
               bg-white
@@ -53,14 +84,13 @@
               hover:border-navlink hover:ring-0
               focus:outline-none focus:border-navlink
             "
-            @change="generateBatchId"
           >
             <option
-              v-for="course in courseList"
-              :value="course.course_id"
-              :key="course.course_id"
+              v-for="user in userList"
+              :value="user.user_id"
+              :key="user.user_id"
             >
-              {{ course.course_name }}
+              {{ user.user_name }}
             </option>
           </select>
         </div>
@@ -94,11 +124,14 @@
         <!-- Retail Customer Form -->
         <div class="space-y-5" v-if="retailCustomer">
           <div class="grid grid-rows-1 gap-2 place-items-start">
-            <label for="due" class="font-semibold ml-2">Phone Number*</label>
+            <label for="custPhone" class="font-semibold ml-2"
+              >Phone Number*
+            </label>
             <input
               type="tel"
-              name="due"
+              name="custPhone"
               required
+              @change="filterRetailCustomer"
               class="
                 bg-white
                 rounded-md
@@ -112,15 +145,17 @@
                 focus:outline-none focus:border-navlink
               "
               placeholder="phone number"
-              v-model="due"
+              v-model="custPhone"
             />
           </div>
 
           <div class="grid grid-rows-1 gap-2 place-items-start">
-            <label for="due" class="font-semibold ml-2">Customer Name*</label>
+            <label for="custName" class="font-semibold ml-2"
+              >Customer Name*</label
+            >
             <input
               type="text"
-              name="due"
+              name="custName"
               required
               class="
                 bg-white
@@ -135,15 +170,15 @@
                 focus:outline-none focus:border-navlink
               "
               placeholder="name"
-              v-model="due"
+              v-model="custName"
             />
           </div>
 
           <div class="grid grid-rows-1 gap-2 place-items-start">
-            <label for="due" class="font-semibold ml-2">Email*</label>
+            <label for="custEmail" class="font-semibold ml-2">Email*</label>
             <input
               type="email"
-              name="due"
+              name="custEmail"
               required
               class="
                 bg-white
@@ -158,15 +193,15 @@
                 focus:outline-none focus:border-navlink
               "
               placeholder="email"
-              v-model="due"
+              v-model="custEmail"
             />
           </div>
 
           <div class="grid grid-rows-1 gap-2 place-items-start">
-            <label for="due" class="font-semibold ml-2">Address*</label>
+            <label for="custAddress" class="font-semibold ml-2">Address*</label>
             <input
               type="text"
-              name="due"
+              name="custAddress"
               required
               class="
                 bg-white
@@ -181,15 +216,17 @@
                 focus:outline-none focus:border-navlink
               "
               placeholder="address"
-              v-model="due"
+              v-model="custAddress"
             />
           </div>
 
           <div class="grid grid-rows-1 gap-2 place-items-start">
-            <label for="due" class="font-semibold ml-2">Organization*</label>
+            <label for="custOrganization" class="font-semibold ml-2"
+              >Organization*</label
+            >
             <input
-              type="tel"
-              name="due"
+              type="text"
+              name="custOrganization"
               required
               class="
                 bg-white
@@ -204,15 +241,17 @@
                 focus:outline-none focus:border-navlink
               "
               placeholder="organization"
-              v-model="due"
+              v-model="custOrganization"
             />
           </div>
 
           <div class="grid grid-rows-1 gap-2 place-items-start">
-            <label for="due" class="font-semibold ml-2">Designation*</label>
+            <label for="custDesignation" class="font-semibold ml-2"
+              >Designation*</label
+            >
             <input
               type="tel"
-              name="due"
+              name="custDesignation"
               required
               class="
                 bg-white
@@ -227,17 +266,17 @@
                 focus:outline-none focus:border-navlink
               "
               placeholder="designation"
-              v-model="due"
+              v-model="custDesignation"
             />
           </div>
 
           <div class="grid grid-rows-1 gap-2 place-items-start">
-            <label for="batchFee" class="font-semibold ml-2"
+            <label for="regularFee" class="font-semibold ml-2"
               >Regular Fee*</label
             >
             <input
               type="number"
-              name="batchFee"
+              name="regularFee"
               required
               class="
                 bg-white
@@ -252,7 +291,7 @@
                 focus:outline-none focus:border-navlink
               "
               placeholder="regular fee"
-              v-model="regular_fee"
+              v-model="regularFee"
             />
           </div>
 
@@ -275,16 +314,19 @@
                 focus:outline-none focus:border-navlink
               "
               placeholder="batch fee"
-              v-model="batch_fee"
+              v-model="batchFee"
             />
           </div>
 
           <div class="grid grid-rows-1 gap-2 place-items-start">
-            <label for="batchFee" class="font-semibold ml-2">Discount*</label>
+            <label for="discountFee" class="font-semibold ml-2"
+              >Discount*</label
+            >
             <input
               type="number"
-              name="batchFee"
+              name="discountFee"
               required
+              @change="setCustTotal"
               class="
                 bg-white
                 rounded-md
@@ -298,15 +340,15 @@
                 focus:outline-none focus:border-navlink
               "
               placeholder="discount"
-              v-model="discount"
+              v-model="discountFee"
             />
           </div>
 
           <div class="grid grid-rows-1 gap-2 place-items-start">
-            <label for="batchFee" class="font-semibold ml-2">Total*</label>
+            <label for="custTotalFee" class="font-semibold ml-2">Total*</label>
             <input
               type="number"
-              name="batchFee"
+              name="custTotalFee"
               required
               class="
                 bg-white
@@ -322,16 +364,17 @@
               "
               disabled
               placeholder="total"
-              v-model="total"
+              v-model="custTotalFee"
             />
           </div>
 
           <div class="grid grid-rows-1 gap-2 place-items-start">
-            <label for="batchFee" class="font-semibold ml-2">Paid*</label>
+            <label for="custPaidFee" class="font-semibold ml-2">Paid*</label>
             <input
               type="number"
-              name="batchFee"
+              name="custPaidFee"
               required
+              @change="setCustDue"
               class="
                 bg-white
                 rounded-md
@@ -345,15 +388,15 @@
                 focus:outline-none focus:border-navlink
               "
               placeholder="paid"
-              v-model="paid"
+              v-model="custPaidFee"
             />
           </div>
 
           <div class="grid grid-rows-1 gap-2 place-items-start">
-            <label for="due" class="font-semibold ml-2">Due*</label>
+            <label for="custDueFee" class="font-semibold ml-2">Due*</label>
             <input
               type="number"
-              name="due"
+              name="custDueFee"
               required
               class="
                 bg-white
@@ -368,7 +411,7 @@
                 focus:outline-none focus:border-navlink
               "
               placeholder="due"
-              v-model="due"
+              v-model="custDueFee"
             />
           </div>
 
@@ -397,11 +440,14 @@
         <!-- Corporate Customer Form -->
         <div class="space-y-5" v-if="corporateCustomer">
           <div class="grid grid-rows-1 gap-2 place-items-start">
-            <label for="due" class="font-semibold ml-2">Phone Number*</label>
+            <label for="corpPhone" class="font-semibold ml-2"
+              >Phone Number*</label
+            >
             <input
               type="tel"
-              name="due"
+              name="corpPhone"
               required
+              @change="filterCorporateCustomer"
               class="
                 bg-white
                 rounded-md
@@ -415,15 +461,17 @@
                 focus:outline-none focus:border-navlink
               "
               placeholder="phone number"
-              v-model="due"
+              v-model="corpPhone"
             />
           </div>
 
           <div class="grid grid-rows-1 gap-2 place-items-start">
-            <label for="due" class="font-semibold ml-2">Organization*</label>
+            <label for="corpName" class="font-semibold ml-2"
+              >Organization*</label
+            >
             <input
               type="text"
-              name="due"
+              name="corpName"
               required
               class="
                 bg-white
@@ -438,15 +486,15 @@
                 focus:outline-none focus:border-navlink
               "
               placeholder="organization"
-              v-model="due"
+              v-model="corpName"
             />
           </div>
 
           <div class="grid grid-rows-1 gap-2 place-items-start">
-            <label for="due" class="font-semibold ml-2">Email*</label>
+            <label for="corpEmail" class="font-semibold ml-2">Email*</label>
             <input
               type="email"
-              name="due"
+              name="corpEmail"
               required
               class="
                 bg-white
@@ -461,15 +509,15 @@
                 focus:outline-none focus:border-navlink
               "
               placeholder="email"
-              v-model="due"
+              v-model="corpEmail"
             />
           </div>
 
           <div class="grid grid-rows-1 gap-2 place-items-start">
-            <label for="due" class="font-semibold ml-2">Address*</label>
+            <label for="corpAddress" class="font-semibold ml-2">Address*</label>
             <input
               type="text"
-              name="due"
+              name="corpAddress"
               required
               class="
                 bg-white
@@ -484,17 +532,17 @@
                 focus:outline-none focus:border-navlink
               "
               placeholder="address"
-              v-model="due"
+              v-model="corpAddress"
             />
           </div>
 
           <div class="grid grid-rows-1 gap-2 place-items-start">
-            <label for="batchFee" class="font-semibold ml-2"
+            <label for="regularFee" class="font-semibold ml-2"
               >Regular Fee*</label
             >
             <input
               type="number"
-              name="batchFee"
+              name="regularFee"
               required
               class="
                 bg-white
@@ -509,7 +557,7 @@
                 focus:outline-none focus:border-navlink
               "
               placeholder="regular fee"
-              v-model="regular_fee"
+              v-model="regularFee"
             />
           </div>
 
@@ -532,15 +580,15 @@
                 focus:outline-none focus:border-navlink
               "
               placeholder="batch fee"
-              v-model="batch_fee"
+              v-model="batchFee"
             />
           </div>
 
           <div class="grid grid-rows-1 gap-2 place-items-start">
-            <label for="batchFee" class="font-semibold ml-2">Units*</label>
+            <label for="corpUnits" class="font-semibold ml-2">Units*</label>
             <input
               type="number"
-              name="batchFee"
+              name="corpUnits"
               required
               class="
                 bg-white
@@ -555,16 +603,19 @@
                 focus:outline-none focus:border-navlink
               "
               placeholder="units"
-              v-model="discount"
+              v-model="corpUnits"
             />
           </div>
 
           <div class="grid grid-rows-1 gap-2 place-items-start">
-            <label for="batchFee" class="font-semibold ml-2">Discount*</label>
+            <label for="discountFee" class="font-semibold ml-2"
+              >Discount*</label
+            >
             <input
               type="number"
-              name="batchFee"
+              name="discountFee"
               required
+              @change="setCorpTotal"
               class="
                 bg-white
                 rounded-md
@@ -578,15 +629,15 @@
                 focus:outline-none focus:border-navlink
               "
               placeholder="discount"
-              v-model="discount"
+              v-model="discountFee"
             />
           </div>
 
           <div class="grid grid-rows-1 gap-2 place-items-start">
-            <label for="batchFee" class="font-semibold ml-2">Total*</label>
+            <label for="corpTotalFee" class="font-semibold ml-2">Total*</label>
             <input
               type="number"
-              name="batchFee"
+              name="corpTotalFee"
               required
               class="
                 bg-white
@@ -602,16 +653,17 @@
               "
               disabled
               placeholder="total"
-              v-model="total"
+              v-model="corpTotalFee"
             />
           </div>
 
           <div class="grid grid-rows-1 gap-2 place-items-start">
-            <label for="batchFee" class="font-semibold ml-2">Paid*</label>
+            <label for="corpPaidFee" class="font-semibold ml-2">Paid*</label>
             <input
               type="number"
-              name="batchFee"
+              name="corpPaidFee"
               required
+              @keydown.enter.prevent="setCorpDue"
               class="
                 bg-white
                 rounded-md
@@ -625,15 +677,15 @@
                 focus:outline-none focus:border-navlink
               "
               placeholder="paid"
-              v-model="paid"
+              v-model="corpPaidFee"
             />
           </div>
 
           <div class="grid grid-rows-1 gap-2 place-items-start">
-            <label for="due" class="font-semibold ml-2">Due*</label>
+            <label for="corpDueFee" class="font-semibold ml-2">Due*</label>
             <input
               type="number"
-              name="due"
+              name="corpDueFee"
               required
               class="
                 bg-white
@@ -648,7 +700,7 @@
                 focus:outline-none focus:border-navlink
               "
               placeholder="due"
-              v-model="due"
+              v-model="corpDueFee"
             />
           </div>
 
@@ -703,39 +755,37 @@ export default {
       custAddress: "",
       custOrganization: "",
       custDesignation: "",
-      custTotalFee: 0,
-      custPaidFee: 0,
-      custDueFee: 0,
+      custTotalFee: "",
+      custPaidFee: "",
+      custDueFee: "",
       corpId: "",
       corpName: "",
       corpEmail: "",
       corpPhone: "",
       corpAddress: "",
-      corpTotalFee: 0,
-      corpPaidFee: 0,
-      corpDueFee: 0,
-      corpUnits: 0,
+      corpTotalFee: "",
+      corpPaidFee: "",
+      corpDueFee: "",
+      corpUnits: "",
+      courseId: "",
+      batchId: "",
+      regularFee: "",
+      batchFee: "",
+      discountFee: "",
+      selectBatch: true,
+      tempBatchList: [],
+      newCustomer: true,
+      userId: "",
     };
   },
   mounted() {
     this.$store.dispatch("getCourseList");
-    this.$store.dispatch("getInstructorList");
     this.$store.dispatch("getBatchList");
+    this.$store.dispatch("getRetailCustomerList");
+    this.$store.dispatch("getCorporateCustomerList");
+    this.$store.dispatch("getUserList");
   },
   methods: {
-    addBatch() {
-      const data = {
-        batch_id: this.batch_id,
-        batch_fee: this.batch_fee,
-        admit_closed: this.admit_closed,
-        course_id: this.course_id,
-        inst_id: this.inst_id,
-      };
-
-      //   this.$store.dispatch("addBatch", data);
-      this.showModal = true;
-    },
-
     toggleModal() {
       this.showModal = !this.showModal;
     },
@@ -749,17 +799,77 @@ export default {
         this.corporateCustomer = true;
       }
     },
+
+    filterBatch() {
+      let course = this.courseId.substr(0, 3);
+      this.tempBatchList.length = 0;
+      this.batchList.filter((batch) => {
+        if (course == batch.batch_id.substr(0, 3)) {
+          this.tempBatchList.push(batch);
+        }
+      });
+
+      this.courseList.filter((course) => {
+        if (course.course_id == this.courseId) {
+          this.regularFee = course.regular_price;
+        }
+      });
+      console.log(course);
+      // this.selectBatch = false;
+    },
+
+    setBatchFee() {
+      this.tempBatchList.filter((batch) => {
+        if (batch.batch_id == this.batchId) {
+          this.batchFee = batch.batch_fee;
+        }
+      });
+    },
+
+    filterRetailCustomer() {
+      this.retailCustomerList.filter((customer) => {
+        if (this.custPhone == customer.cust_phone) {
+          this.newCustomer = false;
+          this.custName = customer.cust_name;
+          this.custEmail = customer.cust_email;
+          this.custAddress = customer.cust_address;
+          this.custOrganization = customer.cust_organization;
+          this.custDesignation = customer.cust_designation;
+        }
+      });
+    },
+
+    filterCorporateCustomer() {
+      this.corporateCustomerList.filter((customer) => {
+        if (this.corpPhone == customer.corp_phone) {
+          this.newCustomer = false;
+          this.corpName = customer.corp_name;
+          this.corpEmail = customer.corp_email;
+          this.corpAddress = customer.corp_address;
+        }
+      });
+    },
+
+    setCustTotal() {
+      this.custTotalFee = this.batchFee - this.discountFee;
+    },
+
+    setCorpTotal() {
+      this.corpTotalFee = this.batchFee * this.corpUnits - this.discountFee;
+    },
+
+    setCustDue() {
+      this.custDueFee = this.custTotalFee - this.custPaidFee;
+    },
+
+    setCorpDue() {
+      this.corpDueFee = this.corpTotalFee - this.corpPaidFee;
+    },
   },
   computed: {
     courseList: {
       get() {
         return this.$store.getters.courseList;
-      },
-    },
-
-    instructorList: {
-      get() {
-        return this.$store.getters.instructorList;
       },
     },
 
@@ -772,6 +882,24 @@ export default {
     batchList: {
       get() {
         return this.$store.getters.batchList;
+      },
+    },
+
+    retailCustomerList: {
+      get() {
+        return this.$store.getters.retailCustomerList;
+      },
+    },
+
+    corporateCustomerList: {
+      get() {
+        return this.$store.getters.corporateCustomerList;
+      },
+    },
+
+    userList: {
+      get() {
+        return this.$store.getters.userList;
       },
     },
   },

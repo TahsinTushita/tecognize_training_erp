@@ -1,7 +1,7 @@
 <template>
   <div class="flex justify-center w-full gap-24 mt-20">
     <!-- form -->
-    <form @submit="addCategory">
+    <form @submit.prevent="addCategory">
       <div class="space-y-5">
         <!-- <div v-for="inputField in inputFields" :key="inputField.id"> -->
         <div class="grid grid-rows-1 gap-2 place-items-start">
@@ -140,6 +140,7 @@ export default {
 
     toggleModal() {
       this.showModal = !this.showModal;
+      window.location.reload();
     },
   },
 };

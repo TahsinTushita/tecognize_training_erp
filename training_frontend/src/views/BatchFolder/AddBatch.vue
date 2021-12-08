@@ -1,7 +1,7 @@
 <template>
   <h1 class="pt-10 text-2xl font-semibold">Add Batch</h1>
   <div class="flex items-center justify-center">
-    <form @submit="addBatch">
+    <form @submit.prevent="addBatch">
       <div class="space-y-5">
         <div class="grid grid-rows-1 gap-2 place-items-start">
           <label for="course" class="font-semibold ml-2">Course*</label>
@@ -207,6 +207,7 @@ export default {
 
     toggleModal() {
       this.showModal = !this.showModal;
+      window.location.reload();
     },
   },
   computed: {

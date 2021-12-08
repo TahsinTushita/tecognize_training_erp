@@ -2,7 +2,7 @@
   <h1 class="pt-10 text-xl font-semibold">Add Corporate Customer</h1>
   <div class="px-28 py-10">
     <div class="flex items-center justify-center">
-      <form @submit="AddCorporateCustomer">
+      <form @submit.prevent="AddCorporateCustomer">
         <div class="space-y-5">
           <div class="grid grid-rows-1 gap-2 place-items-start">
             <label for="name" class="font-semibold ml-2"
@@ -253,7 +253,7 @@ export default {
   },
   methods: {
     AddCorporateCustomer() {
-      if (this.name.length > 3) {
+      if (this.name.length >= 3) {
         let corp_id = this.name.substr(0, 3);
         corp_id = corp_id.toUpperCase();
         let num = (10000 + (this.corporateCustomerCount[0] + 1)).toString();
@@ -279,6 +279,7 @@ export default {
 
     toggleModal() {
       this.showModal = false;
+      window.location.reload();
     },
   },
 };

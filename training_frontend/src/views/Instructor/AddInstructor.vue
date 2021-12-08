@@ -2,7 +2,7 @@
   <h1 class="pt-10 text-xl font-semibold">Add Instructor</h1>
   <div class="h-screen px-28 py-10">
     <div class="flex items-center justify-center">
-      <form @submit="addInstructor">
+      <form @submit.prevent="addInstructor">
         <div class="space-y-5">
           <!-- <div v-for="inputField in inputFields" :key="inputField.id"> -->
           <div class="grid grid-rows-1 gap-2 place-items-start">
@@ -155,6 +155,7 @@
               type="number"
               name="profit"
               required
+              @keydown.enter.prevent=""
               class="
                 bg-white
                 rounded-md
@@ -259,6 +260,7 @@ export default {
 
     toggleModal() {
       this.showModal = false;
+      window.location.reload();
     },
   },
 };

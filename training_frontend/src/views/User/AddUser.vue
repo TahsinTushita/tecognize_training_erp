@@ -2,7 +2,7 @@
   <h1 class="pt-10 text-xl font-semibold">Add User</h1>
   <div class="h-screen px-28 py-10">
     <div class="flex items-center justify-center">
-      <form @submit="addUser">
+      <form @submit.prevent="addUser">
         <div class="space-y-5">
           <div class="grid grid-rows-1 gap-2 place-items-start">
             <label for="name" class="font-semibold ml-2">Name*</label>
@@ -154,6 +154,7 @@
               type="number"
               name="profit"
               required
+              @keydown.enter.prevent=""
               class="
                 bg-white
                 rounded-md
@@ -257,6 +258,7 @@ export default {
 
     toggleModal() {
       this.showModal = false;
+      window.location.reload();
     },
   },
 };
