@@ -22,6 +22,7 @@ urlpatterns = [
     url(r"^api/batches-count$", views.batch_count),
     url(r"^api/retail-customers$", views.retail_customer_list),
     url(r"^api/retail-customers/(?P<pk>[a-zA-Z0-9_]+)$", views.retail_customer_detail),
+    url(r"^api/retail-fee-update$", views.retail_fee_update),
     url(r"^api/retail-customers-count$", views.retail_customer_count),
     url(r"^api/corporate-customers$", views.corporate_customer_list),
     url(
@@ -29,4 +30,8 @@ urlpatterns = [
         views.corporate_customer_detail,
     ),
     url(r"^api/corporate-customers-count$", views.corporate_customer_count),
+    url(r"^api/corporate-fee-update$", views.corporate_fee_update),
+    url(r"^api/sales$", views.sale_list),
+    url(r"^api/sales/(?P<pk>[a-zA-Z0-9_]+)$", views.sale_detail),
+    url(r"^api/sales-count$", views.sale_count),
 ]

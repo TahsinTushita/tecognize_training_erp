@@ -28,6 +28,9 @@ export default createStore({
     corporateCustomer: "",
     batchesByCourse: [],
     batchListTable: [],
+    saleList: [],
+    saleCount: "",
+    saleRecord: "",
   },
   mutations: {
     SET_INSTRUCTOR_LIST(state, instructorList) {
@@ -120,6 +123,18 @@ export default createStore({
 
     SET_BATCH_LIST_TABLE(state, batchListTable) {
       state.batchListTable = batchListTable;
+    },
+
+    SET_SALE_LIST(state, saleList) {
+      state.saleList = saleList;
+    },
+
+    SET_SALE_COUNT(state, saleCount) {
+      state.saleCount = saleCount;
+    },
+
+    SET_SALE_RECORD(state, saleRecord) {
+      state.saleRecord = saleRecord;
     },
   },
   actions: {
@@ -394,6 +409,53 @@ export default createStore({
           console.log(error);
         };
     },
+
+    getSaleList({ commit }) {
+      axios("/api/sales").then((res) => {
+        commit("SET_SALE_LIST", res.data);
+        console.log(res.data);
+      }),
+        (error) => {
+          console.log(error);
+        };
+    },
+
+    getSaleCount({ commit }) {
+      axios("/api/sales-count").then((res) => {
+        commit("SET_SALE_COUNT", res.data);
+        console.log(res.data);
+      }),
+        (error) => {
+          console.log(error);
+        };
+    },
+
+    addSaleRecord({ commit }, data) {
+      axios.post("/api/sales", data).then((res) => {
+        console.log(res.data);
+      }),
+        (error) => {
+          console.log(error);
+        };
+    },
+
+    updateRetailCustomerFees({ commit }, data) {
+      axios.put("/api/retail-fee-update", data).then((res) => {
+        console.log(res.data);
+      }),
+        (error) => {
+          console.log(error);
+        };
+    },
+
+    updateCorporateCustomerFees({ commit }, data) {
+      axios.put("/api/corporate-fee-update", data).then((res) => {
+        console.log(res.data);
+      }),
+        (error) => {
+          console.log(error);
+        };
+    },
   },
   getters: {
     instructorList: (state) => {
@@ -474,6 +536,14 @@ export default createStore({
 
     batchListTable: (state) => {
       return state.batchListTable;
+    },
+
+    saleList: (state) => {
+      return state.saleList;
+    },
+
+    saleCount: (state) => {
+      return state.saleCount;
     },
   },
   modules: {},

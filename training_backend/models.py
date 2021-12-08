@@ -36,21 +36,19 @@ class User(models.Model):
     user_email = models.CharField(max_length=255, blank=False)
     user_address = models.CharField(max_length=200, blank=False)
     user_designation = models.CharField(max_length=150, blank=False)
-    user_profit = models.FloatField(blank=False)
+    user_profit = models.FloatField()
     # photo = models.ImageField(blank=True)
     # user_cv = models.FileField()
 
 
 class Retail_Customer(models.Model):
-    cust_id = models.CharField(
-        max_length=10, blank=False, primary_key=True, unique=True
-    )
-    cust_name = models.CharField(max_length=100, blank=False)
-    cust_phone = models.CharField(max_length=22, blank=False, unique=True)
-    cust_email = models.CharField(max_length=255, blank=False)
-    cust_address = models.CharField(max_length=200, blank=False)
-    cust_organization = models.CharField(max_length=200, blank=False)
-    cust_designation = models.CharField(max_length=150, blank=False)
+    cust_id = models.CharField(max_length=10, primary_key=True, unique=True, blank=True)
+    cust_name = models.CharField(max_length=100, blank=True)
+    cust_phone = models.CharField(max_length=22, unique=True, blank=True)
+    cust_email = models.CharField(max_length=255, blank=True)
+    cust_address = models.CharField(max_length=200, blank=True)
+    cust_organization = models.CharField(max_length=200, blank=True)
+    cust_designation = models.CharField(max_length=150, blank=True)
     cust_total_fee = models.IntegerField(blank=True)
     cust_paid_fee = models.IntegerField(blank=True)
     cust_due_fee = models.IntegerField(blank=True)

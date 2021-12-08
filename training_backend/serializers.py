@@ -7,6 +7,7 @@ from training_backend.models import (
     Category,
     Course,
     Batch,
+    Sale,
 )
 
 
@@ -101,4 +102,21 @@ class BatchSerializer(serializers.ModelSerializer):
             "admit_closed",
             "course_id",
             "inst_id",
+        )
+
+
+class SaleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Sale
+        fields = (
+            "id",
+            "regular_fee",
+            "sale_fee",
+            "paid_fee",
+            "due_fee",
+            "batch_id",
+            "corp_id",
+            "cust_id",
+            "inst_id",
+            "user_id",
         )

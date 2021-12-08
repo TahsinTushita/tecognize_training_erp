@@ -18,6 +18,7 @@ from training_backend.models import (
     Category,
     Course,
     Batch,
+    Sale,
 )
 from training_backend.serializers import (
     InstructorSerializer,
@@ -27,6 +28,7 @@ from training_backend.serializers import (
     CategorySerializer,
     CourseSerializer,
     BatchSerializer,
+    SaleSerializer,
     # NumberSerializer,
 )
 from rest_framework.decorators import api_view
@@ -522,6 +524,27 @@ def retail_customer_count(request):
         return JsonResponse(r, safe=False)
 
 
+@api_view(["PUT"])
+def retail_fee_update(request):
+    cursor = connection.cursor()
+    customer_data = JSONParser().parse(request)
+    # customer_data = json.load(request)
+    print(customer_data)
+    query = "UPDATE training_backend_retail_customer SET cust_total_fee=%s,cust_paid_fee=%s,cust_due_fee=%s WHERE cust_id=%s"
+
+    cursor.execute(
+        query,
+        params=(
+            customer_data["cust_total_fee"],
+            customer_data["cust_paid_fee"],
+            customer_data["cust_due_fee"],
+            customer_data["cust_id"],
+        ),
+    )
+    r = cursor.fetchone()
+    return JsonResponse(r, safe=False)
+
+
 # Corporate customer
 
 
@@ -595,6 +618,96 @@ def corporate_customer_count(request):
     if request.method == "GET":
         cursor = connection.cursor()
         query = "SELECT COUNT(corp_id) AS NumberOfCorporateCustomers FROM training_backend_corporate_customer"
+
+        cursor.execute(query)
+        r = cursor.fetchone()
+        print(r)
+        return JsonResponse(r, safe=False)
+
+
+@api_view(["PUT"])
+def corporate_fee_update(request):
+    cursor = connection.cursor()
+    customer_data = JSONParser().parse(request)
+    # customer_data = json.load(request)
+    print(customer_data)
+    query = "UPDATE training_backend_corporate_customer SET corp_total_fee=%s,corp_paid_fee=%s,corp_due_fee=%s,corp_units=%s WHERE corp_id=%s"
+
+    cursor.execute(
+        query,
+        params=(
+            customer_data["corp_total_fee"],
+            customer_data["corp_paid_fee"],
+            customer_data["corp_due_fee"],
+            customer_data["corp_units"],
+            customer_data["corp_id"],
+        ),
+    )
+    r = cursor.fetchone()
+    return JsonResponse(r, safe=False)
+
+
+# Sale
+
+
+@api_view(["GET", "POST"])
+def sale_list(request):
+    if request.method == "GET":
+        sale = Corporate_Customer.objects.all()
+
+        # corp_name = request.GET.get("corp_name", None)
+        # if corp_name is not None:
+        #     sale = sale.filter(
+        #         corp_name__icontains=corp_name
+        #     )
+
+        sale_serializer = SaleSerializer(sale, many=True)
+        return JsonResponse(sale_serializer.data, safe=False)
+
+    elif request.method == "POST":
+        sale_data = JSONParser().parse(request)
+        sale_serializer = SaleSerializer(data=sale_data)
+        if sale_serializer.is_valid():
+            sale_serializer.save()
+            return JsonResponse(sale_serializer.data, status=status.HTTP_201_CREATED)
+        return JsonResponse(sale_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(["GET", "PUT", "DELETE"])
+def sale_detail(request, pk):
+    try:
+        sale = Sale.objects.get(pk=pk)
+    except Sale.DoesNotExist:
+        return JsonResponse(
+            {"message": "The sale record does not exist"},
+            status=status.HTTP_404_NOT_FOUND,
+        )
+
+    if request.method == "GET":
+        sale_serializer = SaleSerializer(sale)
+        return JsonResponse(sale_serializer.data)
+
+    elif request.method == "PUT":
+        sale_data = JSONParser().parse(request)
+        sale_serializer = SaleSerializer(data=sale_data)
+        if sale_serializer.is_valid():
+            sale_serializer.save()
+            return JsonResponse(sale_serializer.data)
+        return JsonResponse(sale_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == "DELETE":
+        sale.delete()
+        return JsonResponse(
+            {"message": "sale record was deleted successfully!"},
+            status=status.HTTP_204_NO_CONTENT,
+        )
+
+
+@api_view(["GET"])
+def sale_count(request):
+    if request.method == "GET":
+        cursor = connection.cursor()
+        query = "SELECT COUNT(id) AS NumberOfSaleRecords FROM training_backend_sale"
 
         cursor.execute(query)
         r = cursor.fetchone()
