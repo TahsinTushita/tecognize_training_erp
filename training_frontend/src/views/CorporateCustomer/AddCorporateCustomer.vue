@@ -256,9 +256,8 @@ export default {
       if (this.name.length > 3) {
         let corp_id = this.name.substr(0, 3);
         corp_id = corp_id.toUpperCase();
-        corp_id = corp_id.concat(
-          (this.corporateCustomerCount[0] + 1).toString()
-        );
+        let num = (10000 + (this.corporateCustomerCount[0] + 1)).toString();
+        corp_id = corp_id.concat(num.substr(1, 4));
 
         const data = {
           corp_id: corp_id,

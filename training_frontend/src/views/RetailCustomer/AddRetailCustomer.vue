@@ -282,9 +282,13 @@ export default {
   methods: {
     AddRetailCustomer() {
       if (this.name.length > 3) {
-        let cust_id = this.name.substr(0, 3);
-        cust_id = cust_id.toUpperCase();
-        cust_id = cust_id.concat((this.retailCustomerCount[0] + 1).toString());
+        let cust_id = new Date().getFullYear();
+        cust_id = cust_id.toString();
+        cust_id = (
+          parseInt(cust_id.substr(2, 4)) * 10000 +
+          this.retailCustomerCount[0] +
+          1
+        ).toString();
 
         const data = {
           cust_id: cust_id,

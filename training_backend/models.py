@@ -98,6 +98,8 @@ class Sale(models.Model):
     batch_id = models.ForeignKey(Batch, db_column="batch_id", on_delete=models.CASCADE)
     regular_fee = models.IntegerField()
     sale_fee = models.IntegerField()
+    paid_fee = models.IntegerField()
+    due_fee = models.IntegerField()
     inst_id = models.ForeignKey(
         Instructor, db_column="inst_id", on_delete=models.CASCADE
     )

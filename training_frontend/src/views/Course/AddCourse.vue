@@ -127,10 +127,11 @@ export default {
   },
   methods: {
     addCourse() {
-      if (this.courseName.length > 3) {
+      if (this.courseName.length >= 3) {
         let course_id = this.courseName.substr(0, 3);
         course_id = course_id.toUpperCase();
-        course_id = course_id.concat((this.courseCount[0] + 1).toString());
+        let num = (10000 + (this.courseCount[0] + 1)).toString();
+        course_id = course_id.concat(num.substr(1, 4));
 
         const data = {
           course_id: course_id,

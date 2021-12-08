@@ -236,7 +236,8 @@ export default {
       if (this.name.length > 3) {
         let user_id = this.name.substr(0, 3);
         user_id = user_id.toUpperCase();
-        user_id = user_id.concat((this.userCount[0] + 1).toString());
+        let num = (10000 + (this.userCount[0] + 1)).toString();
+        user_id = user_id.concat(num.substr(1, 4));
 
         const data = {
           user_id: user_id,

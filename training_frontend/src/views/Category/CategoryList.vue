@@ -110,7 +110,7 @@ export default {
 
   methods: {
     addCategory() {
-      if (this.categoryName.length > 3) {
+      if (this.categoryName.length >= 3) {
         let hasCategory = this.categoryList.filter((category) => {
           if (category.name == this.categoryName) {
             return category.name;
@@ -120,7 +120,8 @@ export default {
         if (!hasCategory.length) {
           let cat_id = this.categoryName.substr(0, 3);
           cat_id = cat_id.toUpperCase();
-          cat_id = cat_id.concat((this.categoryList.length + 1).toString());
+          let num = (10000 + (this.categoryList.length + 1)).toString();
+          cat_id = cat_id.concat(num.substr(1, 4));
 
           const data = {
             cat_id: cat_id,

@@ -177,19 +177,17 @@ export default {
     },
 
     generateBatchId() {
-      let num = 1;
+      let num = new Date().getFullYear();
+      num = num.toString();
+      num = parseInt(num.substr(2, 4)) * 100 + 1;
       this.batchList.filter((batch) => {
         if (batch.course_id == this.course_id) {
-          if (parseInt(batch.batch_id.substr(5, 7)) >= num)
-            num = parseInt(batch.batch_id.substr(5, 7)) + 1;
+          if (parseInt(batch.batch_id.substr(3, 7)) >= num)
+            num = parseInt(batch.batch_id.substr(3, 7)) + 1;
           console.log(num);
-          // console.log(parseInt(batch.batch_id.substr(5, 7)) + 1);
         }
       });
-      let num2 = new Date().getFullYear();
-      num2 = num2.toString();
-      num2 = parseInt(num2.substr(2, 4)) * 100 + num;
-      let batch_id = this.course_id.substr(0, 3).concat(num2.toString());
+      let batch_id = this.course_id.substr(0, 3).concat(num.toString());
       console.log(batch_id);
       this.batch_id = batch_id;
     },
