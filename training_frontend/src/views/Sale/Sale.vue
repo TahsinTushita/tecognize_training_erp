@@ -2,7 +2,7 @@
   <h1 class="pt-10 text-xl font-semibold">Sale</h1>
   <div class="flex items-center justify-center mb-20">
     <div>
-      <form>
+      <form @submit.prevent="false">
         <div class="space-y-5">
           <div class="grid grid-rows-1 gap-2 place-items-start">
             <label for="course" class="font-semibold ml-2">Course*</label>
@@ -73,6 +73,7 @@
               id="user"
               v-model="userId"
               required
+              @change="setUserName"
               class="
                 bg-white
                 rounded-md
@@ -333,7 +334,6 @@
                 type="number"
                 name="discountFee"
                 required
-                @change="setCustTotal"
                 class="
                   bg-white
                   rounded-md
@@ -373,7 +373,7 @@
                 "
                 disabled
                 placeholder="total"
-                v-model="custTotalFee"
+                v-model="getCustTotal"
               />
             </div>
 
@@ -383,7 +383,6 @@
                 type="number"
                 name="custPaidFee"
                 required
-                @change="setCustDue"
                 class="
                   bg-white
                   rounded-md
@@ -407,7 +406,6 @@
                 type="number"
                 name="custDueFee"
                 required
-                @keydown.enter.prevent=""
                 class="
                   bg-white
                   rounded-md
@@ -421,7 +419,7 @@
                   focus:outline-none focus:border-navlink
                 "
                 placeholder="due"
-                v-model="custDueFee"
+                v-model="getCustDue"
               />
             </div>
 
@@ -440,8 +438,7 @@
                 transition
                 duration-300
               "
-              type="submit"
-              @click="enableSaleButton"
+              @click="generateSalesReceipt"
             >
               show receipt
             </button>
@@ -630,7 +627,6 @@
                 type="number"
                 name="discountFee"
                 required
-                @change="setCorpTotal"
                 class="
                   bg-white
                   rounded-md
@@ -670,7 +666,7 @@
                 "
                 disabled
                 placeholder="total"
-                v-model="corpTotalFee"
+                v-model="getCorpTotal"
               />
             </div>
 
@@ -680,7 +676,6 @@
                 type="number"
                 name="corpPaidFee"
                 required
-                @keydown.enter.prevent="setCorpDue"
                 class="
                   bg-white
                   rounded-md
@@ -704,7 +699,6 @@
                 type="number"
                 name="corpDueFee"
                 required
-                @keydown.enter.prevent=""
                 class="
                   bg-white
                   rounded-md
@@ -718,7 +712,7 @@
                   focus:outline-none focus:border-navlink
                 "
                 placeholder="due"
-                v-model="corpDueFee"
+                v-model="getCorpDue"
               />
             </div>
 
@@ -737,8 +731,7 @@
                 transition
                 duration-300
               "
-              type="submit"
-              @click="enableSaleButton"
+              @click="generateSalesReceipt"
             >
               show receipt
             </button>
@@ -754,6 +747,43 @@
         Sale
       </button>
     </div>
+  </div>
+
+  <div v-if="retailReceipt">
+    <h1>Retail Customer Receipt</h1>
+    <p>{{ this.custName }}</p>
+    <p>{{ this.courseName }}</p>
+    <p>{{ this.batchId }}</p>
+    <p>{{ this.userName }}</p>
+    <p>{{ this.custPhone }}</p>
+    <p>{{ this.custEmail }}</p>
+    <p>{{ this.custAddress }}</p>
+    <p>{{ this.custOrganization }}</p>
+    <p>{{ this.custDesignation }}</p>
+    <p>{{ this.regularFee }}</p>
+    <p>{{ this.batchFee }}</p>
+    <p>{{ this.discountFee }}</p>
+    <p>{{ this.custTotalFee }}</p>
+    <p>{{ this.custPaidFee }}</p>
+    <p>{{ this.custDueFee }}</p>
+  </div>
+
+  <div v-if="corporateReceipt">
+    <h1>Corporate Customer Receipt</h1>
+    <p>{{ this.corpName }}</p>
+    <p>{{ this.courseName }}</p>
+    <p>{{ this.batchId }}</p>
+    <p>{{ this.userName }}</p>
+    <p>{{ this.corpPhone }}</p>
+    <p>{{ this.corpEmail }}</p>
+    <p>{{ this.corpAddress }}</p>
+    <p>{{ this.regularFee }}</p>
+    <p>{{ this.batchFee }}</p>
+    <p>{{ this.corpUnits }}</p>
+    <p>{{ this.discountFee }}</p>
+    <p>{{ this.corpTotalFee }}</p>
+    <p>{{ this.corpPaidFee }}</p>
+    <p>{{ this.corpDueFee }}</p>
   </div>
 
   <div v-if="showModal">
@@ -812,6 +842,10 @@ export default {
       prevCorpDueFee: "",
       prevCorpUnits: "",
       notPrinted: true,
+      retailReceipt: false,
+      corporateReceipt: false,
+      courseName: "",
+      userName: "",
     };
   },
   mounted() {
@@ -850,6 +884,7 @@ export default {
       this.courseList.filter((course) => {
         if (course.course_id == this.courseId) {
           this.regularFee = course.regular_price;
+          this.courseName = course.course_name;
         }
       });
       console.log(course);
@@ -939,7 +974,20 @@ export default {
               cust_due_fee: this.custDueFee,
             };
 
-            this.$store.dispatch("addRetailCustomer", custData);
+            this.$store.dispatch("addRetailCustomer", custData).then(() => {
+              const saleData = {
+                regular_fee: this.regularFee,
+                sale_fee: this.custTotalFee,
+                paid_fee: this.custPaidFee,
+                due_fee: this.custDueFee,
+                batch_id: this.batchId,
+                corp_id: this.corpId,
+                cust_id: cust_id,
+                inst_id: this.instId,
+                user_id: this.userId,
+              };
+              this.$store.dispatch("addSaleRecord", saleData);
+            });
           }
         } else {
           const custData = {
@@ -950,8 +998,21 @@ export default {
           };
 
           this.$store.dispatch("updateRetailCustomerFees", custData);
+          const saleData = {
+            regular_fee: this.regularFee,
+            sale_fee: this.custTotalFee,
+            paid_fee: this.custPaidFee,
+            due_fee: this.custDueFee,
+            batch_id: this.batchId,
+            corp_id: this.corpId,
+            cust_id: this.custId,
+            inst_id: this.instId,
+            user_id: this.userId,
+          };
+          this.$store.dispatch("addSaleRecord", saleData);
         }
-      } else if (ths.customerType == "corporate") {
+      }
+      if (this.customerType == "corporate") {
         if (this.newCustomer == true) {
           if (this.corpName.length >= 3) {
             let corp_id = this.corpName.substr(0, 3);
@@ -971,8 +1032,20 @@ export default {
               corp_units: this.corpUnits,
             };
 
-            console.log(data);
-            this.$store.dispatch("addCorporateCustomer", corpData);
+            this.$store.dispatch("addCorporateCustomer", corpData).then(() => {
+              const saleData = {
+                regular_fee: this.regularFee,
+                sale_fee: this.corpTotalFee,
+                paid_fee: this.corpPaidFee,
+                due_fee: this.corpDueFee,
+                batch_id: this.batchId,
+                corp_id: corp_id,
+                cust_id: this.custId,
+                inst_id: this.instId,
+                user_id: this.userId,
+              };
+              this.$store.dispatch("addSaleRecord", saleData);
+            });
             // this.showModal = true;
           }
         } else {
@@ -984,22 +1057,23 @@ export default {
             corp_units: this.corpUnits + this.prevCorpUnits,
           };
 
-          this.$store.dispatch("updateRetailCustomerFees", corpData);
+          this.$store.dispatch("updateCorporateCustomerFees", corpData);
+
+          const saleData = {
+            regular_fee: this.regularFee,
+            sale_fee: this.corpTotalFee,
+            paid_fee: this.corpPaidFee,
+            due_fee: this.corpDueFee,
+            batch_id: this.batchId,
+            corp_id: this.corpId,
+            cust_id: this.custId,
+            inst_id: this.instId,
+            user_id: this.userId,
+          };
+          this.$store.dispatch("addSaleRecord", saleData);
         }
       }
 
-      const saleData = {
-        regular_fee: this.regularFee,
-        sale_fee: this.custTotalFee,
-        paid_fee: this.custPaidFee,
-        due_fee: this.custDueFee,
-        batch_id: this.batchId,
-        corp_id: this.corpId,
-        cust_id: this.custId,
-        inst_id: this.instId,
-        user_id: this.userId,
-      };
-      this.$store.dispatch("addSaleRecord", saleData);
       this.showModal = true;
     },
 
@@ -1010,6 +1084,30 @@ export default {
     toggleModal() {
       this.showModal = !this.showModal;
       window.location.reload();
+    },
+
+    generateSalesReceipt() {
+      if (this.customerType == "retails") {
+        this.corporateReceipt = false;
+        this.retailReceipt = true;
+      } else {
+        this.retailReceipt = false;
+        this.corporateReceipt = true;
+      }
+
+      this.notPrinted = false;
+    },
+
+    setUserName() {
+      if (this.userId) {
+        this.userList.filter((user) => {
+          if (user.user_id == this.userId) {
+            this.userName = user.user_name;
+          }
+        });
+
+        return this.userName;
+      }
     },
   },
   computed: {
@@ -1059,6 +1157,40 @@ export default {
       get() {
         return this.$store.getters.retailCustomerCount;
       },
+    },
+
+    getCorpTotal() {
+      if (this.batchFee && this.corpUnits && this.discountFee) {
+        this.corpTotalFee = this.batchFee * this.corpUnits - this.discountFee;
+        return this.corpTotalFee;
+      }
+      // return !!this.batchFee && !!this.corpUnits && !!this.discountFee
+      //   ? this.batchFee * this.corpUnits - this.discountFee
+      //   : 0;
+    },
+
+    getCorpDue() {
+      if (this.corpTotalFee && this.corpPaidFee) {
+        this.corpDueFee = this.corpTotalFee - this.corpPaidFee;
+        return this.corpDueFee;
+      }
+      // return !!this.corpTotalFee && !!this.corpPaidFee
+      //   ? this.corpTotalFee - this.corpPaidFee
+      //   : 0;
+    },
+
+    getCustTotal() {
+      if (this.batchFee && this.discountFee) {
+        this.custTotalFee = this.batchFee - this.discountFee;
+        return this.custTotalFee;
+      }
+    },
+
+    getCustDue() {
+      if (this.custTotalFee && this.custPaidFee) {
+        this.custDueFee = this.custTotalFee - this.custPaidFee;
+        return this.custDueFee;
+      }
     },
   },
 };
