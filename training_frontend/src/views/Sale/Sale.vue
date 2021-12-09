@@ -739,52 +739,240 @@
           <!-- Corporate Customer Form end -->
         </div>
       </form>
-      <button
-        class="bg-green-200 px-4 py-2 rounded-md hover:bg-green-300 mt-20"
-        @click="addSaleRecord"
-        :disabled="notPrinted"
-      >
-        Sale
-      </button>
     </div>
   </div>
 
-  <div v-if="retailReceipt">
-    <h1>Retail Customer Receipt</h1>
-    <p>{{ this.custName }}</p>
-    <p>{{ this.courseName }}</p>
-    <p>{{ this.batchId }}</p>
-    <p>{{ this.userName }}</p>
-    <p>{{ this.custPhone }}</p>
-    <p>{{ this.custEmail }}</p>
-    <p>{{ this.custAddress }}</p>
-    <p>{{ this.custOrganization }}</p>
-    <p>{{ this.custDesignation }}</p>
-    <p>{{ this.regularFee }}</p>
-    <p>{{ this.batchFee }}</p>
-    <p>{{ this.discountFee }}</p>
-    <p>{{ this.custTotalFee }}</p>
-    <p>{{ this.custPaidFee }}</p>
-    <p>{{ this.custDueFee }}</p>
+  <div class="flex justify-center">
+    <div v-if="retailReceipt">
+      <h1 class="mb-5 text-xl">Retail Customer Receipt</h1>
+
+      <table>
+        <tbody>
+          <tr class="border-2 border-b-0">
+            <td class="w-2/5 px-4 py-4 text-center">Customer Name:</td>
+            <td class="w-2/5 px-4 py-4 text-center">
+              {{ custName }}
+            </td>
+          </tr>
+          <tr class="border-2 border-t-0 border-b-0">
+            <td class="w-2/5 px-4 py-4 text-center">Course:</td>
+            <td class="w-2/5 px-4 py-4 text-center">
+              {{ courseName }}
+            </td>
+          </tr>
+          <tr class="border-2 border-t-0 border-b-0">
+            <td class="w-2/5 px-4 py-4 text-center">Batch:</td>
+            <td class="w-2/5 px-4 py-4 text-center">
+              {{ batchId }}
+            </td>
+          </tr>
+
+          <tr class="border-2 border-t-0 border-b-0">
+            <td class="w-2/5 px-4 py-4 text-center">Reference:</td>
+            <td class="w-2/5 px-4 py-4 text-center">
+              {{ userName }}
+            </td>
+          </tr>
+
+          <tr class="border-2 border-t-0 border-b-0">
+            <td class="w-2/5 px-4 py-4 text-center">Phone number:</td>
+            <td class="w-2/5 px-4 py-4 text-center">
+              {{ custPhone }}
+            </td>
+          </tr>
+
+          <tr class="border-2 border-t-0 border-b-0">
+            <td class="w-2/5 px-4 py-4 text-center">email:</td>
+            <td class="w-2/5 px-4 py-4 text-center">
+              {{ custEmail }}
+            </td>
+          </tr>
+
+          <tr class="border-2 border-t-0 border-b-0">
+            <td class="w-2/5 px-4 py-4 text-center">Address:</td>
+            <td class="w-2/5 px-4 py-4 text-center">
+              {{ custAddress }}
+            </td>
+          </tr>
+
+          <tr class="border-2 border-t-0 border-b-0">
+            <td class="w-2/5 px-4 py-4 text-center">Organization:</td>
+            <td class="w-2/5 px-4 py-4 text-center">
+              {{ custOrganization }}
+            </td>
+          </tr>
+
+          <tr class="border-2 border-t-0 border-b-0">
+            <td class="w-2/5 px-4 py-4 text-center">Designation:</td>
+            <td class="w-2/5 px-4 py-4 text-center">
+              {{ custDesignation }}
+            </td>
+          </tr>
+
+          <tr class="border-2 border-t-0 border-b-0">
+            <td class="w-2/5 px-4 py-4 text-center">Regular fee:</td>
+            <td class="w-2/5 px-4 py-4 text-center">
+              {{ regularFee }}
+            </td>
+          </tr>
+
+          <tr class="border-2 border-t-0 border-b-0">
+            <td class="w-2/5 px-4 py-4 text-center">Batch fee:</td>
+            <td class="w-2/5 px-4 py-4 text-center">
+              {{ batchFee }}
+            </td>
+          </tr>
+
+          <tr class="border-2 border-t-0 border-b-0">
+            <td class="w-2/5 px-4 py-4 text-center">Discount:</td>
+            <td class="w-2/5 px-4 py-4 text-center">
+              {{ discountFee }}
+            </td>
+          </tr>
+
+          <tr class="border-2 border-t-0 border-b-0">
+            <td class="w-2/5 px-4 py-4 text-center">Total:</td>
+            <td class="w-2/5 px-4 py-4 text-center">
+              {{ custTotalFee }}
+            </td>
+          </tr>
+
+          <tr class="border-2 border-t-0 border-b-0">
+            <td class="w-2/5 px-4 py-4 text-center">Paid:</td>
+            <td class="w-2/5 px-4 py-4 text-center">
+              {{ custPaidFee }}
+            </td>
+          </tr>
+
+          <tr class="border-2 border-t-0">
+            <td class="w-2/5 px-4 py-4 text-center">Due:</td>
+            <td class="w-2/5 px-4 py-4 text-center">
+              {{ custDueFee }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div v-if="corporateReceipt">
+      <h1 class="mb-5 text-xl">Corporate Customer Receipt</h1>
+
+      <table>
+        <tbody>
+          <tr class="border-2 border-b-0">
+            <td class="w-2/5 px-4 py-4 text-center">Organization:</td>
+            <td class="w-2/5 px-4 py-4 text-center">
+              {{ corpName }}
+            </td>
+          </tr>
+          <tr class="border-2 border-t-0 border-b-0">
+            <td class="w-2/5 px-4 py-4 text-center">Course:</td>
+            <td class="w-2/5 px-4 py-4 text-center">
+              {{ courseName }}
+            </td>
+          </tr>
+          <tr class="border-2 border-t-0 border-b-0">
+            <td class="w-2/5 px-4 py-4 text-center">Batch:</td>
+            <td class="w-2/5 px-4 py-4 text-center">
+              {{ batchId }}
+            </td>
+          </tr>
+
+          <tr class="border-2 border-t-0 border-b-0">
+            <td class="w-2/5 px-4 py-4 text-center">Reference:</td>
+            <td class="w-2/5 px-4 py-4 text-center">
+              {{ userName }}
+            </td>
+          </tr>
+
+          <tr class="border-2 border-t-0 border-b-0">
+            <td class="w-2/5 px-4 py-4 text-center">Phone number:</td>
+            <td class="w-2/5 px-4 py-4 text-center">
+              {{ corpPhone }}
+            </td>
+          </tr>
+
+          <tr class="border-2 border-t-0 border-b-0">
+            <td class="w-2/5 px-4 py-4 text-center">email:</td>
+            <td class="w-2/5 px-4 py-4 text-center">
+              {{ corpEmail }}
+            </td>
+          </tr>
+
+          <tr class="border-2 border-t-0 border-b-0">
+            <td class="w-2/5 px-4 py-4 text-center">Address:</td>
+            <td class="w-2/5 px-4 py-4 text-center">
+              {{ corpAddress }}
+            </td>
+          </tr>
+
+          <tr class="border-2 border-t-0 border-b-0">
+            <td class="w-2/5 px-4 py-4 text-center">Regular fee:</td>
+            <td class="w-2/5 px-4 py-4 text-center">
+              {{ regularFee }}
+            </td>
+          </tr>
+
+          <tr class="border-2 border-t-0 border-b-0">
+            <td class="w-2/5 px-4 py-4 text-center">Batch fee:</td>
+            <td class="w-2/5 px-4 py-4 text-center">
+              {{ batchFee }}
+            </td>
+          </tr>
+
+          <tr class="border-2 border-t-0 border-b-0">
+            <td class="w-2/5 px-4 py-4 text-center">Units:</td>
+            <td class="w-2/5 px-4 py-4 text-center">
+              {{ corpUnits }}
+            </td>
+          </tr>
+
+          <tr class="border-2 border-t-0 border-b-0">
+            <td class="w-2/5 px-4 py-4 text-center">Discount:</td>
+            <td class="w-2/5 px-4 py-4 text-center">
+              {{ discountFee }}
+            </td>
+          </tr>
+
+          <tr class="border-2 border-t-0 border-b-0">
+            <td class="w-2/5 px-4 py-4 text-center">Total:</td>
+            <td class="w-2/5 px-4 py-4 text-center">
+              {{ corpTotalFee }}
+            </td>
+          </tr>
+
+          <tr class="border-2 border-t-0 border-b-0">
+            <td class="w-2/5 px-4 py-4 text-center">Paid:</td>
+            <td class="w-2/5 px-4 py-4 text-center">
+              {{ corpPaidFee }}
+            </td>
+          </tr>
+
+          <tr class="border-2 border-t-0 border-b-0">
+            <td class="w-2/5 px-4 py-4 text-center">Paid:</td>
+            <td class="w-2/5 px-4 py-4 text-center">
+              {{ corpPaidFee }}
+            </td>
+          </tr>
+
+          <tr class="border-2 border-t-0">
+            <td class="w-2/5 px-4 py-4 text-center">Due:</td>
+            <td class="w-2/5 px-4 py-4 text-center">
+              {{ corpDueFee }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 
-  <div v-if="corporateReceipt">
-    <h1>Corporate Customer Receipt</h1>
-    <p>{{ this.corpName }}</p>
-    <p>{{ this.courseName }}</p>
-    <p>{{ this.batchId }}</p>
-    <p>{{ this.userName }}</p>
-    <p>{{ this.corpPhone }}</p>
-    <p>{{ this.corpEmail }}</p>
-    <p>{{ this.corpAddress }}</p>
-    <p>{{ this.regularFee }}</p>
-    <p>{{ this.batchFee }}</p>
-    <p>{{ this.corpUnits }}</p>
-    <p>{{ this.discountFee }}</p>
-    <p>{{ this.corpTotalFee }}</p>
-    <p>{{ this.corpPaidFee }}</p>
-    <p>{{ this.corpDueFee }}</p>
-  </div>
+  <button
+    class="bg-green-200 px-4 py-2 rounded-md hover:bg-green-300 m-20 text-xl"
+    @click="addSaleRecord"
+    :disabled="notPrinted"
+  >
+    Sale
+  </button>
 
   <div v-if="showModal">
     <Modal :header="header" :text="text" @close="toggleModal">
@@ -1087,7 +1275,7 @@ export default {
     },
 
     generateSalesReceipt() {
-      if (this.customerType == "retails") {
+      if (this.customerType == "retail") {
         this.corporateReceipt = false;
         this.retailReceipt = true;
       } else {
