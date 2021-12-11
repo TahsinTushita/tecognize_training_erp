@@ -744,8 +744,8 @@
 
   <div class="flex justify-center">
     <div v-if="retailReceipt">
-      <div ref="retailReceiptContent">
-        <h1 class="mb-5 text-xl">Retail Customer Receipt</h1>
+      <div ref="retailReceiptContent" class="space-y-5">
+        <h1 class="text-xl">Retail Customer Receipt</h1>
 
         <table>
           <tbody>
@@ -853,6 +853,7 @@
             </tr>
           </tbody>
         </table>
+        <h1>{{ fulldatetime }}</h1>
       </div>
       <button
         class="px-4 py-2 bg-blue-200 rounded-md text-xl hover:bg-blue-300 mt-10"
@@ -863,8 +864,8 @@
     </div>
 
     <div v-if="corporateReceipt">
-      <div ref="corporateReceiptContent">
-        <h1 class="mb-5 text-xl">Corporate Customer Receipt</h1>
+      <div ref="corporateReceiptContent" class="space-y-5">
+        <h1 class="text-xl">Corporate Customer Receipt</h1>
 
         <table>
           <tbody>
@@ -972,6 +973,7 @@
             </tr>
           </tbody>
         </table>
+        <h1>{{ fulldatetime }}</h1>
       </div>
 
       <button
@@ -1053,6 +1055,7 @@ export default {
       corporateReceipt: false,
       courseName: "",
       userName: "",
+      fulldatetime: "",
     };
   },
   mounted() {
@@ -1063,6 +1066,7 @@ export default {
     this.$store.dispatch("getUserList");
     this.$store.dispatch("getCorporateCustomerCount");
     this.$store.dispatch("getRetailCustomerCount");
+    this.fulldatetime = this.printFullDate();
   },
   methods: {
     toggleModal() {
@@ -1339,7 +1343,18 @@ export default {
           doc.internal.pageSize.getWidth(),
           doc.internal.pageSize.getHeight()
         );
-        doc.save("sample.pdf");
+        let filename =
+          this.custName +
+          "_" +
+          this.courseName +
+          "_" +
+          this.batchId +
+          "_" +
+          new Date().toLocaleDateString() +
+          "_" +
+          new Date().toLocaleTimeString() +
+          ".pdf";
+        doc.save(filename);
       });
     },
 
@@ -1365,8 +1380,22 @@ export default {
           doc.internal.pageSize.getWidth(),
           doc.internal.pageSize.getHeight()
         );
-        doc.save("corporateSample.pdf");
+        let filename =
+          this.corpName +
+          "_" +
+          this.courseName +
+          "_" +
+          this.batchId +
+          "_" +
+          new Date().toLocaleDateString() +
+          "_" +
+          new Date().toLocaleTimeString() +
+          ".pdf";
+        doc.save(filename);
       });
+    },
+    printFullDate: function () {
+      return new Date();
     },
   },
   computed: {
