@@ -744,225 +744,242 @@
 
   <div class="flex justify-center">
     <div v-if="retailReceipt">
-      <h1 class="mb-5 text-xl">Retail Customer Receipt</h1>
+      <div ref="retailReceiptContent">
+        <h1 class="mb-5 text-xl">Retail Customer Receipt</h1>
 
-      <table>
-        <tbody>
-          <tr class="border-2 border-b-0">
-            <td class="w-2/5 px-4 py-4 text-center">Customer Name:</td>
-            <td class="w-2/5 px-4 py-4 text-center">
-              {{ custName }}
-            </td>
-          </tr>
-          <tr class="border-2 border-t-0 border-b-0">
-            <td class="w-2/5 px-4 py-4 text-center">Course:</td>
-            <td class="w-2/5 px-4 py-4 text-center">
-              {{ courseName }}
-            </td>
-          </tr>
-          <tr class="border-2 border-t-0 border-b-0">
-            <td class="w-2/5 px-4 py-4 text-center">Batch:</td>
-            <td class="w-2/5 px-4 py-4 text-center">
-              {{ batchId }}
-            </td>
-          </tr>
+        <table>
+          <tbody>
+            <tr class="border-2 border-b-0">
+              <td class="w-2/5 px-4 py-4 text-center">Customer Name:</td>
+              <td class="w-2/5 px-4 py-4 text-center">
+                {{ custName }}
+              </td>
+            </tr>
+            <tr class="border-2 border-t-0 border-b-0">
+              <td class="w-2/5 px-4 py-4 text-center">Course:</td>
+              <td class="w-2/5 px-4 py-4 text-center">
+                {{ courseName }}
+              </td>
+            </tr>
+            <tr class="border-2 border-t-0 border-b-0">
+              <td class="w-2/5 px-4 py-4 text-center">Batch:</td>
+              <td class="w-2/5 px-4 py-4 text-center">
+                {{ batchId }}
+              </td>
+            </tr>
 
-          <tr class="border-2 border-t-0 border-b-0">
-            <td class="w-2/5 px-4 py-4 text-center">Reference:</td>
-            <td class="w-2/5 px-4 py-4 text-center">
-              {{ userName }}
-            </td>
-          </tr>
+            <tr class="border-2 border-t-0 border-b-0">
+              <td class="w-2/5 px-4 py-4 text-center">Reference:</td>
+              <td class="w-2/5 px-4 py-4 text-center">
+                {{ userName }}
+              </td>
+            </tr>
 
-          <tr class="border-2 border-t-0 border-b-0">
-            <td class="w-2/5 px-4 py-4 text-center">Phone number:</td>
-            <td class="w-2/5 px-4 py-4 text-center">
-              {{ custPhone }}
-            </td>
-          </tr>
+            <tr class="border-2 border-t-0 border-b-0">
+              <td class="w-2/5 px-4 py-4 text-center">Phone number:</td>
+              <td class="w-2/5 px-4 py-4 text-center">
+                {{ custPhone }}
+              </td>
+            </tr>
 
-          <tr class="border-2 border-t-0 border-b-0">
-            <td class="w-2/5 px-4 py-4 text-center">email:</td>
-            <td class="w-2/5 px-4 py-4 text-center">
-              {{ custEmail }}
-            </td>
-          </tr>
+            <tr class="border-2 border-t-0 border-b-0">
+              <td class="w-2/5 px-4 py-4 text-center">email:</td>
+              <td class="w-2/5 px-4 py-4 text-center">
+                {{ custEmail }}
+              </td>
+            </tr>
 
-          <tr class="border-2 border-t-0 border-b-0">
-            <td class="w-2/5 px-4 py-4 text-center">Address:</td>
-            <td class="w-2/5 px-4 py-4 text-center">
-              {{ custAddress }}
-            </td>
-          </tr>
+            <tr class="border-2 border-t-0 border-b-0">
+              <td class="w-2/5 px-4 py-4 text-center">Address:</td>
+              <td class="w-2/5 px-4 py-4 text-center">
+                {{ custAddress }}
+              </td>
+            </tr>
 
-          <tr class="border-2 border-t-0 border-b-0">
-            <td class="w-2/5 px-4 py-4 text-center">Organization:</td>
-            <td class="w-2/5 px-4 py-4 text-center">
-              {{ custOrganization }}
-            </td>
-          </tr>
+            <tr class="border-2 border-t-0 border-b-0">
+              <td class="w-2/5 px-4 py-4 text-center">Organization:</td>
+              <td class="w-2/5 px-4 py-4 text-center">
+                {{ custOrganization }}
+              </td>
+            </tr>
 
-          <tr class="border-2 border-t-0 border-b-0">
-            <td class="w-2/5 px-4 py-4 text-center">Designation:</td>
-            <td class="w-2/5 px-4 py-4 text-center">
-              {{ custDesignation }}
-            </td>
-          </tr>
+            <tr class="border-2 border-t-0 border-b-0">
+              <td class="w-2/5 px-4 py-4 text-center">Designation:</td>
+              <td class="w-2/5 px-4 py-4 text-center">
+                {{ custDesignation }}
+              </td>
+            </tr>
 
-          <tr class="border-2 border-t-0 border-b-0">
-            <td class="w-2/5 px-4 py-4 text-center">Regular fee:</td>
-            <td class="w-2/5 px-4 py-4 text-center">
-              {{ regularFee }}
-            </td>
-          </tr>
+            <tr class="border-2 border-t-0 border-b-0">
+              <td class="w-2/5 px-4 py-4 text-center">Regular fee:</td>
+              <td class="w-2/5 px-4 py-4 text-center">
+                {{ regularFee }}
+              </td>
+            </tr>
 
-          <tr class="border-2 border-t-0 border-b-0">
-            <td class="w-2/5 px-4 py-4 text-center">Batch fee:</td>
-            <td class="w-2/5 px-4 py-4 text-center">
-              {{ batchFee }}
-            </td>
-          </tr>
+            <tr class="border-2 border-t-0 border-b-0">
+              <td class="w-2/5 px-4 py-4 text-center">Batch fee:</td>
+              <td class="w-2/5 px-4 py-4 text-center">
+                {{ batchFee }}
+              </td>
+            </tr>
 
-          <tr class="border-2 border-t-0 border-b-0">
-            <td class="w-2/5 px-4 py-4 text-center">Discount:</td>
-            <td class="w-2/5 px-4 py-4 text-center">
-              {{ discountFee }}
-            </td>
-          </tr>
+            <tr class="border-2 border-t-0 border-b-0">
+              <td class="w-2/5 px-4 py-4 text-center">Discount:</td>
+              <td class="w-2/5 px-4 py-4 text-center">
+                {{ discountFee }}
+              </td>
+            </tr>
 
-          <tr class="border-2 border-t-0 border-b-0">
-            <td class="w-2/5 px-4 py-4 text-center">Total:</td>
-            <td class="w-2/5 px-4 py-4 text-center">
-              {{ custTotalFee }}
-            </td>
-          </tr>
+            <tr class="border-2 border-t-0 border-b-0">
+              <td class="w-2/5 px-4 py-4 text-center">Total:</td>
+              <td class="w-2/5 px-4 py-4 text-center">
+                {{ custTotalFee }}
+              </td>
+            </tr>
 
-          <tr class="border-2 border-t-0 border-b-0">
-            <td class="w-2/5 px-4 py-4 text-center">Paid:</td>
-            <td class="w-2/5 px-4 py-4 text-center">
-              {{ custPaidFee }}
-            </td>
-          </tr>
+            <tr class="border-2 border-t-0 border-b-0">
+              <td class="w-2/5 px-4 py-4 text-center">Paid:</td>
+              <td class="w-2/5 px-4 py-4 text-center">
+                {{ custPaidFee }}
+              </td>
+            </tr>
 
-          <tr class="border-2 border-t-0">
-            <td class="w-2/5 px-4 py-4 text-center">Due:</td>
-            <td class="w-2/5 px-4 py-4 text-center">
-              {{ custDueFee }}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+            <tr class="border-2 border-t-0">
+              <td class="w-2/5 px-4 py-4 text-center">Due:</td>
+              <td class="w-2/5 px-4 py-4 text-center">
+                {{ custDueFee }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <button
+        class="px-4 py-2 bg-blue-200 rounded-md text-xl hover:bg-blue-300 mt-10"
+        @click="downloadRetailReceipt"
+      >
+        Download receipt
+      </button>
     </div>
 
     <div v-if="corporateReceipt">
-      <h1 class="mb-5 text-xl">Corporate Customer Receipt</h1>
+      <div ref="corporateReceiptContent">
+        <h1 class="mb-5 text-xl">Corporate Customer Receipt</h1>
 
-      <table>
-        <tbody>
-          <tr class="border-2 border-b-0">
-            <td class="w-2/5 px-4 py-4 text-center">Organization:</td>
-            <td class="w-2/5 px-4 py-4 text-center">
-              {{ corpName }}
-            </td>
-          </tr>
-          <tr class="border-2 border-t-0 border-b-0">
-            <td class="w-2/5 px-4 py-4 text-center">Course:</td>
-            <td class="w-2/5 px-4 py-4 text-center">
-              {{ courseName }}
-            </td>
-          </tr>
-          <tr class="border-2 border-t-0 border-b-0">
-            <td class="w-2/5 px-4 py-4 text-center">Batch:</td>
-            <td class="w-2/5 px-4 py-4 text-center">
-              {{ batchId }}
-            </td>
-          </tr>
+        <table>
+          <tbody>
+            <tr class="border-2 border-b-0">
+              <td class="w-2/5 px-4 py-4 text-center">Organization:</td>
+              <td class="w-2/5 px-4 py-4 text-center">
+                {{ corpName }}
+              </td>
+            </tr>
+            <tr class="border-2 border-t-0 border-b-0">
+              <td class="w-2/5 px-4 py-4 text-center">Course:</td>
+              <td class="w-2/5 px-4 py-4 text-center">
+                {{ courseName }}
+              </td>
+            </tr>
+            <tr class="border-2 border-t-0 border-b-0">
+              <td class="w-2/5 px-4 py-4 text-center">Batch:</td>
+              <td class="w-2/5 px-4 py-4 text-center">
+                {{ batchId }}
+              </td>
+            </tr>
 
-          <tr class="border-2 border-t-0 border-b-0">
-            <td class="w-2/5 px-4 py-4 text-center">Reference:</td>
-            <td class="w-2/5 px-4 py-4 text-center">
-              {{ userName }}
-            </td>
-          </tr>
+            <tr class="border-2 border-t-0 border-b-0">
+              <td class="w-2/5 px-4 py-4 text-center">Reference:</td>
+              <td class="w-2/5 px-4 py-4 text-center">
+                {{ userName }}
+              </td>
+            </tr>
 
-          <tr class="border-2 border-t-0 border-b-0">
-            <td class="w-2/5 px-4 py-4 text-center">Phone number:</td>
-            <td class="w-2/5 px-4 py-4 text-center">
-              {{ corpPhone }}
-            </td>
-          </tr>
+            <tr class="border-2 border-t-0 border-b-0">
+              <td class="w-2/5 px-4 py-4 text-center">Phone number:</td>
+              <td class="w-2/5 px-4 py-4 text-center">
+                {{ corpPhone }}
+              </td>
+            </tr>
 
-          <tr class="border-2 border-t-0 border-b-0">
-            <td class="w-2/5 px-4 py-4 text-center">email:</td>
-            <td class="w-2/5 px-4 py-4 text-center">
-              {{ corpEmail }}
-            </td>
-          </tr>
+            <tr class="border-2 border-t-0 border-b-0">
+              <td class="w-2/5 px-4 py-4 text-center">email:</td>
+              <td class="w-2/5 px-4 py-4 text-center">
+                {{ corpEmail }}
+              </td>
+            </tr>
 
-          <tr class="border-2 border-t-0 border-b-0">
-            <td class="w-2/5 px-4 py-4 text-center">Address:</td>
-            <td class="w-2/5 px-4 py-4 text-center">
-              {{ corpAddress }}
-            </td>
-          </tr>
+            <tr class="border-2 border-t-0 border-b-0">
+              <td class="w-2/5 px-4 py-4 text-center">Address:</td>
+              <td class="w-2/5 px-4 py-4 text-center">
+                {{ corpAddress }}
+              </td>
+            </tr>
 
-          <tr class="border-2 border-t-0 border-b-0">
-            <td class="w-2/5 px-4 py-4 text-center">Regular fee:</td>
-            <td class="w-2/5 px-4 py-4 text-center">
-              {{ regularFee }}
-            </td>
-          </tr>
+            <tr class="border-2 border-t-0 border-b-0">
+              <td class="w-2/5 px-4 py-4 text-center">Regular fee:</td>
+              <td class="w-2/5 px-4 py-4 text-center">
+                {{ regularFee }}
+              </td>
+            </tr>
 
-          <tr class="border-2 border-t-0 border-b-0">
-            <td class="w-2/5 px-4 py-4 text-center">Batch fee:</td>
-            <td class="w-2/5 px-4 py-4 text-center">
-              {{ batchFee }}
-            </td>
-          </tr>
+            <tr class="border-2 border-t-0 border-b-0">
+              <td class="w-2/5 px-4 py-4 text-center">Batch fee:</td>
+              <td class="w-2/5 px-4 py-4 text-center">
+                {{ batchFee }}
+              </td>
+            </tr>
 
-          <tr class="border-2 border-t-0 border-b-0">
-            <td class="w-2/5 px-4 py-4 text-center">Units:</td>
-            <td class="w-2/5 px-4 py-4 text-center">
-              {{ corpUnits }}
-            </td>
-          </tr>
+            <tr class="border-2 border-t-0 border-b-0">
+              <td class="w-2/5 px-4 py-4 text-center">Units:</td>
+              <td class="w-2/5 px-4 py-4 text-center">
+                {{ corpUnits }}
+              </td>
+            </tr>
 
-          <tr class="border-2 border-t-0 border-b-0">
-            <td class="w-2/5 px-4 py-4 text-center">Discount:</td>
-            <td class="w-2/5 px-4 py-4 text-center">
-              {{ discountFee }}
-            </td>
-          </tr>
+            <tr class="border-2 border-t-0 border-b-0">
+              <td class="w-2/5 px-4 py-4 text-center">Discount:</td>
+              <td class="w-2/5 px-4 py-4 text-center">
+                {{ discountFee }}
+              </td>
+            </tr>
 
-          <tr class="border-2 border-t-0 border-b-0">
-            <td class="w-2/5 px-4 py-4 text-center">Total:</td>
-            <td class="w-2/5 px-4 py-4 text-center">
-              {{ corpTotalFee }}
-            </td>
-          </tr>
+            <tr class="border-2 border-t-0 border-b-0">
+              <td class="w-2/5 px-4 py-4 text-center">Total:</td>
+              <td class="w-2/5 px-4 py-4 text-center">
+                {{ corpTotalFee }}
+              </td>
+            </tr>
 
-          <tr class="border-2 border-t-0 border-b-0">
-            <td class="w-2/5 px-4 py-4 text-center">Paid:</td>
-            <td class="w-2/5 px-4 py-4 text-center">
-              {{ corpPaidFee }}
-            </td>
-          </tr>
+            <tr class="border-2 border-t-0 border-b-0">
+              <td class="w-2/5 px-4 py-4 text-center">Paid:</td>
+              <td class="w-2/5 px-4 py-4 text-center">
+                {{ corpPaidFee }}
+              </td>
+            </tr>
 
-          <tr class="border-2 border-t-0 border-b-0">
-            <td class="w-2/5 px-4 py-4 text-center">Paid:</td>
-            <td class="w-2/5 px-4 py-4 text-center">
-              {{ corpPaidFee }}
-            </td>
-          </tr>
+            <tr class="border-2 border-t-0 border-b-0">
+              <td class="w-2/5 px-4 py-4 text-center">Paid:</td>
+              <td class="w-2/5 px-4 py-4 text-center">
+                {{ corpPaidFee }}
+              </td>
+            </tr>
 
-          <tr class="border-2 border-t-0">
-            <td class="w-2/5 px-4 py-4 text-center">Due:</td>
-            <td class="w-2/5 px-4 py-4 text-center">
-              {{ corpDueFee }}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+            <tr class="border-2 border-t-0">
+              <td class="w-2/5 px-4 py-4 text-center">Due:</td>
+              <td class="w-2/5 px-4 py-4 text-center">
+                {{ corpDueFee }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <button
+        class="px-4 py-2 bg-blue-200 rounded-md text-xl hover:bg-blue-300 mt-10"
+        @click="downloadCorporateReceipt"
+      >
+        Download receipt
+      </button>
     </div>
   </div>
 
@@ -983,6 +1000,8 @@
 
 <script>
 import Modal from "../../components/Modal.vue";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 export default {
   components: { Modal },
@@ -1001,7 +1020,7 @@ export default {
       custOrganization: "",
       custDesignation: "",
       custTotalFee: "",
-      custPaidFee: "",
+      custPaidFee: 0,
       custDueFee: "",
       corpId: "",
       corpName: "",
@@ -1009,7 +1028,7 @@ export default {
       corpPhone: "",
       corpAddress: "",
       corpTotalFee: "",
-      corpPaidFee: "",
+      corpPaidFee: 0,
       corpDueFee: "",
       corpUnits: "",
       courseId: "",
@@ -1296,6 +1315,58 @@ export default {
 
         return this.userName;
       }
+    },
+
+    downloadRetailReceipt() {
+      const doc = new jsPDF({
+        orientation: "p",
+        unit: "px",
+        format: "a4",
+        hotfixes: ["px_scaling"],
+      });
+
+      html2canvas(this.$refs.retailReceiptContent, {
+        width: doc.internal.pageSize.getWidth(),
+        height: doc.internal.pageSize.getHeight(),
+      }).then((canvas) => {
+        const img = canvas.toDataURL("image/png");
+
+        doc.addImage(
+          img,
+          "PNG",
+          140,
+          10,
+          doc.internal.pageSize.getWidth(),
+          doc.internal.pageSize.getHeight()
+        );
+        doc.save("sample.pdf");
+      });
+    },
+
+    downloadCorporateReceipt() {
+      const doc = new jsPDF({
+        orientation: "p",
+        unit: "px",
+        format: "a4",
+        hotfixes: ["px_scaling"],
+      });
+
+      html2canvas(this.$refs.corporateReceiptContent, {
+        width: doc.internal.pageSize.getWidth(),
+        height: doc.internal.pageSize.getHeight(),
+      }).then((canvas) => {
+        const img = canvas.toDataURL("image/png");
+
+        doc.addImage(
+          img,
+          "PNG",
+          140,
+          10,
+          doc.internal.pageSize.getWidth(),
+          doc.internal.pageSize.getHeight()
+        );
+        doc.save("corporateSample.pdf");
+      });
     },
   },
   computed: {
