@@ -1016,7 +1016,7 @@ export default {
       batchId: "",
       regularFee: "",
       batchFee: "",
-      discountFee: "",
+      discountFee: 0,
       selectBatch: true,
       tempBatchList: [],
       newCustomer: true,
@@ -1350,8 +1350,11 @@ export default {
     getCorpTotal() {
       if (this.batchFee && this.corpUnits && this.discountFee) {
         this.corpTotalFee = this.batchFee * this.corpUnits - this.discountFee;
-        return this.corpTotalFee;
+      } else if (this.batchFee && this.corpUnits) {
+        this.corpTotalFee = this.batchFee * this.corpUnits;
       }
+      return this.corpTotalFee;
+
       // return !!this.batchFee && !!this.corpUnits && !!this.discountFee
       //   ? this.batchFee * this.corpUnits - this.discountFee
       //   : 0;
@@ -1360,8 +1363,11 @@ export default {
     getCorpDue() {
       if (this.corpTotalFee && this.corpPaidFee) {
         this.corpDueFee = this.corpTotalFee - this.corpPaidFee;
-        return this.corpDueFee;
+      } else if (this.corpTotalFee) {
+        this.corpDueFee = this.corpTotalFee;
       }
+      return this.corpDueFee;
+
       // return !!this.corpTotalFee && !!this.corpPaidFee
       //   ? this.corpTotalFee - this.corpPaidFee
       //   : 0;
@@ -1370,15 +1376,19 @@ export default {
     getCustTotal() {
       if (this.batchFee && this.discountFee) {
         this.custTotalFee = this.batchFee - this.discountFee;
-        return this.custTotalFee;
+      } else if (this.batchFee) {
+        this.custTotalFee = this.batchFee;
       }
+      return this.custTotalFee;
     },
 
     getCustDue() {
       if (this.custTotalFee && this.custPaidFee) {
         this.custDueFee = this.custTotalFee - this.custPaidFee;
-        return this.custDueFee;
+      } else if (this.custTotalFee) {
+        this.custDueFee = this.custTotalFee;
       }
+      return this.custDueFee;
     },
   },
 };
