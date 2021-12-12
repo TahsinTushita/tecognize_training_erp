@@ -1,5 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap');
+
+
 @tailwind base;
 
 @tailwind components;
 
 @tailwind utilities;
+
+
+@font-face {
+    font-family: "Segoe UI";
+    src: local("Segoe UI"), url(./fonts/Segoe_UI.ttf) format("truetype");
+}
