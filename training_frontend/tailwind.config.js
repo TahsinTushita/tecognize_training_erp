@@ -15,6 +15,7 @@ module.exports = {
         600: "600px",
         400: "400px",
         800: "800px",
+        1100: "1130px",
       },
       fontFamily: {
         segoeUI: "'Segoe UI'",

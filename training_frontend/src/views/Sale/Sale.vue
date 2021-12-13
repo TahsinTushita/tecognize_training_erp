@@ -855,390 +855,239 @@
         </table>
         <h1>{{ fulldatetime }}</h1> -->
         <!-- Money Receipt -->
-        <div class="w-800 bg-receiptBg p-10">
-          <div class="flex justify-between mb-5">
-            <h1
-              class="
-                border-b-4
-                font-segoeUI
-                text-2xl
-                font-bold
-                pb-2
-                text-receiptTextColor
-                border-receiptBorder
-              "
-            >
-              Money Receipt
-            </h1>
-            <img
-              src="../../assets/images/traininglogo.png"
-              alt="logo"
-              class="w-36 h-10"
-            />
-          </div>
-          <div class="flex justify-between items-center justify-center mb-5">
-            <h1 class="font-segoeUI text-xl font-bold text-receiptTextColor">
-              SL NO:
-            </h1>
-            <div class="flex gap-2 items-center justify-center">
-              <h1 class="font-segoeUI text-xl font-bold text-receiptTextColor">
-                DATE:
-              </h1>
-              <input
-                type="text"
-                class="
-                  w-40
-                  px-4
-                  py-2
-                  bg-transparent
-                  border-b-2 border-receiptInputBorder
-                "
-                disabled
-              />
-            </div>
-          </div>
-          <div class="grid grid-rows-1 place-items-start w-full mb-10">
-            <!-- <div class="grid grid-cols-12 w-full place-items-start">
+        <div class="w-1100 bg-receiptBg">
+          <div class="px-10 pt-10">
+            <div class="flex justify-between items-center mb-5">
               <h1
                 class="
-                  font-poppins
+                  border-b-8
+                  font-segoeUI
                   text-2xl
-                  font-medium
+                  font-bold
+                  pb-3
                   text-receiptTextColor
-                  col-span-4
+                  border-receiptBorder
                 "
               >
-                Received with Thanks From
+                Money Receipt
               </h1>
-              <input
-                type="text"
-                class="
-                  col-span-8
-                  w-full
-                  px-4
-                  py-2
-                  bg-transparent
-                  border-b-2 border-receiptInputBorder
-                "
-                disabled
-              />
-            </div> -->
-
-            <!-- <div class="grid grid-cols-8 place-items-start w-full">
-              <label
-                class="
-                  font-poppins
-                  text-xl
-                  font-medium
-                  text-receiptTextColor
-                  col-span-3
-                "
-              >
-                Received with Thanks From
-              </label>
-              <input
-                type="text"
-                class="
-                  px-4
-                  py-1
-                  bg-transparent
-                  border-b-2 border-receiptInputBorder
-                  col-span-5
-                  w-full
-                "
-                disabled
-              />
-            </div> -->
-            <!-- <div class="grid grid-cols-12 w-full place-items-start relative">
-              <h1
-                class="
-                  font-poppins
-                  text-xl
-                  font-medium
-                  text-receiptTextColor
-                  col-span-1
-                "
-              >
-                Address
-              </h1>
-              <input
-                type="text"
-                class="
-                  col-span-11
-                  w-11/12
-                  px-4
-                  py-1
-                  bg-transparent
-                  border-b-2 border-receiptInputBorder
-                  right-0
-                  absolute
-                "
-                disabled
-              />
-            </div> -->
-
-            <div class="flex w-full relative mb-10">
-              <h1
-                class="
-                  font-poppins
-                  text-lg
-                  font-medium
-                  text-receiptTextColor
-                  left-0
-                  absolute
-                "
-              >
-                Received with Thanks From
-              </h1>
-              <input
-                type="text"
-                class="
-                  px-4
-                  py-1
-                  bg-transparent
-                  border-b-2 border-receiptInputBorder
-                  w-8/12
-                  right-0
-                  absolute
-                "
-                disabled
-                v-model="custName"
+              <img
+                src="../../assets/images/traininglogo.png"
+                alt="logo"
+                class="w-36 h-10"
               />
             </div>
-            <div class="flex item-start w-full mb-5">
-              <h1
-                class="font-poppins text-lg font-medium text-receiptTextColor"
-              >
-                Address
+            <div class="flex justify-between items-center justify-center mb-5">
+              <h1 class="font-segoeUI text-xl font-bold text-receiptTextColor">
+                SL NO:
               </h1>
-              <input
-                type="text"
-                class="
-                  px-4
-                  py-1
-                  bg-transparent
-                  border-b-2 border-receiptInputBorder
-                  w-full
-                "
-                disabled
-                v-model="custAddress"
-              />
+              <div class="flex gap-2 items-center justify-center">
+                <h1
+                  class="font-segoeUI text-xl font-bold text-receiptTextColor"
+                >
+                  DATE:
+                </h1>
+                <input
+                  type="text"
+                  class="
+                    w-40
+                    px-4
+                    py-2
+                    bg-transparent
+                    border-b-2 border-receiptInputBorder
+                  "
+                  disabled
+                />
+              </div>
             </div>
-            <div class="flex item-start w-full mb-10 relative">
-              <h1
-                class="
-                  font-poppins
-                  text-lg
-                  font-medium
-                  text-receiptTextColor
-                  left-0
-                  absolute
-                "
-              >
-                Payment Purpose
-              </h1>
-              <input
-                type="text"
-                class="
-                  px-4
-                  py-1
-                  bg-transparent
-                  border-b-2 border-receiptInputBorder
-                  right-0
-                  absolute
-                  w-9/12
-                "
-                v-model="batchId"
-                disabled
-              />
-            </div>
+            <div class="grid grid-rows-1 place-items-start w-full mb-14">
+              <div class="flex w-full relative mb-12">
+                <h1
+                  class="
+                    font-poppins
+                    text-lg
+                    font-medium
+                    text-receiptTextColor
+                    left-0
+                    absolute
+                  "
+                >
+                  Received with Thanks From
+                </h1>
+                <input
+                  type="text"
+                  class="
+                    px-4
+                    h-10
+                    py-1
+                    bg-transparent
+                    border-b-2 border-receiptInputBorder
+                    w-9/12
+                    right-0
+                    absolute
+                  "
+                  disabled
+                  v-model="custName"
+                />
+              </div>
+              <div class="flex item-start w-full">
+                <h1
+                  class="font-poppins text-lg font-medium text-receiptTextColor"
+                >
+                  Address
+                </h1>
+                <input
+                  type="text"
+                  class="
+                    px-4
+                    h-10
+                    py-1
+                    bg-transparent
+                    border-b-2 border-receiptInputBorder
+                    w-full
+                  "
+                  disabled
+                  v-model="custAddress"
+                />
+              </div>
+              <div class="flex item-start w-full relative mb-12">
+                <h1
+                  class="
+                    font-poppins
+                    text-lg
+                    font-medium
+                    text-receiptTextColor
+                    left-0
+                    absolute
+                  "
+                >
+                  Payment Purpose
+                </h1>
+                <input
+                  type="text"
+                  class="
+                    px-4
+                    h-10
+                    py-1
+                    bg-transparent
+                    border-b-2 border-receiptInputBorder
+                    right-0
+                    absolute
+                    w-10/12
+                  "
+                  v-model="batchId"
+                  disabled
+                />
+              </div>
 
-            <!-- <div class="flex w-full relative">
-              <h1
-                class="
-                  font-poppins
-                  text-lg
-                  font-medium
-                  text-receiptTextColor
-                  left-0
-                  absolute
-                "
-              >
-                Payment Purpose
-              </h1>
-              <input
-                type="text"
-                class="
-                  px-4
-                  bg-transparent
-                  border-b-2 border-receiptInputBorder
-                  w-9/12
-                  right-0
-                  absolute
-                "
-                disabled
-              />
-            </div> -->
-
-            <!-- <div class="grid grid-cols-6 place-items-start w-full">
-              <label
-                class="
-                  font-poppins
-                  text-xl
-                  font-medium
-                  text-receiptTextColor
-                  col-span-1
-                "
-              >
-                Payment Purpose
-              </label>
-              <input
-                type="text"
-                class="
-                  px-4
-                  py-1
-                  bg-transparent
-                  border-b-2 border-receiptInputBorder
-                  col-span-5
-                  w-full
-                "
-                disabled
-              />
-            </div> -->
-            <!-- <div class="grid grid-cols-6 place-items-start">
-              <div class="col-span-2">
-                <div class="grid grid-cols-6 place-items-start">
-                  <label
+              <div class="grid grid-cols-3 w-full gap-3 mb-12">
+                <div class="flex relative">
+                  <h1
                     class="
                       font-poppins
-                      text-xl
+                      text-lg
                       font-medium
                       text-receiptTextColor
-                      col-span-3
+                      left-0
+                      absolute
                     "
                   >
                     Payment Method
-                  </label>
+                  </h1>
                   <input
                     type="text"
                     class="
                       px-4
-                      py-2
+                      h-10
+                      py-1
                       bg-transparent
                       border-b-2 border-receiptInputBorder
-                      col-span-3
-                      w-full
+                      right-0
+                      absolute
+                      w-1/2
                     "
                     disabled
                   />
                 </div>
-              </div>
-              <div class="col-span-2">
-                <div class="grid grid-cols-7 place-items-start">
-                  <label
+                <div class="flex relative">
+                  <h1
                     class="
                       font-poppins
-                      text-2xl
+                      text-lg
                       font-medium
                       text-receiptTextColor
-                      col-span-3
+                      left-0
+                      absolute
                     "
                   >
                     Check/Ref No.
-                  </label>
+                  </h1>
                   <input
                     type="text"
                     class="
                       px-4
-                      py-2
+                      h-10
+                      py-1
                       bg-transparent
                       border-b-2 border-receiptInputBorder
-                      col-span-4
-                      w-full
+                      right-0
+                      absolute
                     "
                     disabled
                   />
                 </div>
-              </div>
-              <div class="col-span-2">
-                <div class="grid grid-cols-6 place-items-start">
-                  <label
+                <div class="flex w-full relative">
+                  <h1
                     class="
                       font-poppins
-                      text-2xl
+                      text-lg
                       font-medium
                       text-receiptTextColor
-                      col-span-2
+                      left-0
+                      absolute
                     "
                   >
                     Check Date
-                  </label>
+                  </h1>
                   <input
                     type="text"
                     class="
                       px-4
-                      py-2
+                      h-10
+                      py-1
                       bg-transparent
                       border-b-2 border-receiptInputBorder
-                      col-span-4
-                      w-full
+                      w-2/3
+                      right-0
+                      absolute
                     "
                     disabled
                   />
                 </div>
               </div>
-            </div> -->
 
-            <div class="grid grid-cols-3 w-full gap-3 mb-5">
-              <div class="grid grid-cols-3 relative">
+              <div class="flex item-start w-full">
                 <h1
-                  class="
-                    font-poppins
-                    text-lg
-                    font-medium
-                    text-receiptTextColor
-                    col-span-2
-                  "
+                  class="font-poppins text-lg font-medium text-receiptTextColor"
                 >
-                  Payment Method
+                  Amount
                 </h1>
                 <input
                   type="text"
                   class="
                     px-4
+                    h-10
                     py-1
                     bg-transparent
                     border-b-2 border-receiptInputBorder
-                    col-span-1
+                    w-full
                   "
                   disabled
+                  v-model="custTotalFee"
                 />
               </div>
-              <div class="grid grid-cols-5 relative">
-                <h1
-                  class="
-                    font-poppins
-                    text-lg
-                    font-medium
-                    text-receiptTextColor
-                    col-span-3
-                  "
-                >
-                  Check/Ref No.
-                </h1>
-                <input
-                  type="text"
-                  class="
-                    px-4
-                    py-1
-                    bg-transparent
-                    border-b-2 border-receiptInputBorder
-                    col-span-2
-                  "
-                  disabled
-                />
-              </div>
-              <div class="flex w-full relative">
+
+              <div class="flex w-full relative mb-12">
                 <h1
                   class="
                     font-poppins
@@ -1249,421 +1098,143 @@
                     absolute
                   "
                 >
-                  Check Date
+                  Amount in Word
                 </h1>
                 <input
                   type="text"
                   class="
                     px-4
+                    h-10
                     py-1
                     bg-transparent
                     border-b-2 border-receiptInputBorder
-                    w-1/2
+                    w-10/12
                     right-0
                     absolute
                   "
                   disabled
                 />
               </div>
-              <!-- <div class="grid grid-cols-6 relative">
-                <label
-                  class="
-                    font-poppins
-                    text-xl
-                    font-medium
-                    text-receiptTextColor
-                    col-span-3
-                    left-0
-                    absolute
-                  "
-                >
-                  Payment Method
-                </label>
-                <input
-                  type="text"
-                  class="
-                    px-4
-                    py-1
-                    bg-transparent
-                    border-b-2 border-receiptInputBorder
-                    col-span-3
-                    w-1/2
-                    right-0
-                    absolute
-                  "
-                  disabled
-                />
-              </div>
-              <div class="grid grid-cols-7">
-                <label
-                  class="
-                    font-poppins
-                    text-xl
-                    font-medium
-                    text-receiptTextColor
-                    col-span-3
-                  "
-                >
-                  Check/Ref No.
-                </label>
-                <input
-                  type="text"
-                  class="
-                    px-4
-                    py-2
-                    bg-transparent
-                    border-b-2 border-receiptInputBorder
-                    col-span-4
-                    w-full
-                  "
-                  disabled
-                />
-              </div>
-              <div class="grid grid-cols-5">
-                <label
-                  class="
-                    font-poppins
-                    text-xl
-                    font-medium
-                    text-receiptTextColor
-                    col-span-2
-                  "
-                >
-                  Check Date
-                </label>
-                <input
-                  type="text"
-                  class="
-                    px-4
-                    py-2
-                    bg-transparent
-                    border-b-2 border-receiptInputBorder
-                    col-span-3
-                    w-full
-                  "
-                  disabled
-                />
-              </div> -->
-            </div>
-
-            <!-- <div class="grid grid-cols-12 w-full place-items-start">
-              <h1
-                class="
-                  font-poppins
-                  text-xl
-                  font-medium
-                  text-receiptTextColor
-                  col-span-1
-                "
-              >
-                Amount
-              </h1>
-              <input
-                type="text"
-                class="
-                  col-span-11
-                  w-full
-                  px-4
-                  py-2
-                  bg-transparent
-                  border-b-2 border-receiptInputBorder
-                "
-                disabled
-              />
-            </div> -->
-            <div class="flex item-start w-full mb-5">
-              <h1
-                class="font-poppins text-lg font-medium text-receiptTextColor"
-              >
-                Amount
-              </h1>
-              <input
-                type="text"
-                class="
-                  px-4
-                  py-1
-                  bg-transparent
-                  border-b-2 border-receiptInputBorder
-                  w-full
-                "
-                disabled
-                v-model="custTotalFee"
-              />
-            </div>
-            <!-- <div class="grid grid-cols-12 w-full place-items-start">
-              <h1
-                class="
-                  font-poppins
-                  text-xl
-                  font-medium
-                  text-receiptTextColor
-                  col-span-2
-                "
-              >
-                Amount in Word
-              </h1>
-              <input
-                type="text"
-                class="
-                  col-span-10
-                  w-full
-                  px-4
-                  py-2
-                  bg-transparent
-                  border-b-2 border-receiptInputBorder
-                "
-                disabled
-              />
-            </div> -->
-
-            <div class="flex w-full relative mb-10">
-              <h1
-                class="
-                  font-poppins
-                  text-lg
-                  font-medium
-                  text-receiptTextColor
-                  left-0
-                  absolute
-                "
-              >
-                Amount in Word
-              </h1>
-              <input
-                type="text"
-                class="
-                  px-4
-                  py-1
-                  bg-transparent
-                  border-b-2 border-receiptInputBorder
-                  w-9/12
-                  right-0
-                  absolute
-                "
-                disabled
-              />
-            </div>
-            <div class="grid grid-cols-2 w-full">
-              <div class="grid grid-cols-2 w-full relative">
-                <label
-                  class="
-                    font-poppins
-                    text-lg
-                    font-medium
-                    text-receiptTextColor
-                    left-0
-                    absolute
-                  "
-                >
-                  Previous Receipt No.(If Any)
-                </label>
-                <input
-                  type="text"
-                  class="
-                    px-4
-                    py-1
-                    bg-transparent
-                    border-b-2 border-receiptInputBorder
-                    right-0
-                    absolute
-                    w-1/3
-                  "
-                  disabled
-                  placeholder="N/A"
-                />
-              </div>
-              <div class="grid grid-cols-3 w-full">
-                <label
-                  class="
-                    font-poppins
-                    text-lg
-                    font-medium
-                    text-receiptTextColor
-                    col-span-1
-                  "
-                >
-                  Due Amount
-                </label>
-                <input
-                  type="text"
-                  class="
-                    px-4
-                    py-1
-                    bg-transparent
-                    border-b-2 border-receiptInputBorder
-                    col-span-2
-                  "
-                  disabled
-                  v-model="custDueFee"
-                />
-              </div>
-            </div>
-            <!-- <div class="grid grid-cols-12 w-full place-items-start">
-              <h1
-                class="
-                  font-poppins
-                  text-2xl
-                  font-medium
-                  text-receiptTextColor
-                  col-span-3
-                "
-              >
-                Payment Purpose
-              </h1>
-              <input
-                type="text"
-                class="
-                  col-span-9
-                  w-full
-                  px-4
-                  py-2
-                  bg-transparent
-                  border-b-2 border-receiptInputBorder
-                "
-                disabled
-              />
-            </div>
-            <div class="grid grid-cols-12 w-full place-items-start">
-              <div class="col-span-4">
-                <h1
-                  class="
-                    font-poppins
-                    text-2xl
-                    font-medium
-                    text-receiptTextColor
-                  "
-                >
-                  Payment Method
-                </h1>
-                <input
-                  type="text"
-                  class="
-                    w-full
-                    px-4
-                    py-2
-                    bg-transparent
-                    border-b-2 border-receiptInputBorder
-                  "
-                  disabled
-                />
-              </div>
-              <div class="col-span-4">
-                <h1
-                  class="
-                    font-poppins
-                    text-2xl
-                    font-medium
-                    text-receiptTextColor
-                  "
-                >
-                  Check/Ref No.
-                </h1>
-                <input
-                  type="text"
-                  class="
-                    w-full
-                    px-4
-                    py-2
-                    bg-transparent
-                    border-b-2 border-receiptInputBorder
-                  "
-                  disabled
-                />
-              </div>
-              <div class="col-span-4">
-                <h1
-                  class="
-                    font-poppins
-                    text-2xl
-                    font-medium
-                    text-receiptTextColor
-                  "
-                >
-                  Check Date
-                </h1>
-                <input
-                  type="text"
-                  class="
-                    w-full
-                    px-4
-                    py-2
-                    bg-transparent
-                    border-b-2 border-receiptInputBorder
-                  "
-                  disabled
-                />
-              </div>
-            </div> -->
-          </div>
-          <div class="flex justify-between mb-5">
-            <div class="grid grid-cols-6 place-items-center relative">
-              <div class="flex items-center justify-center col-span-4 gap-1">
-                <div class="relative">
-                  <img
-                    src="../../assets/images/home.png"
-                    alt="home"
-                    class="w-3 h-3"
+              <div class="grid grid-cols-2 w-full gap-2">
+                <div class="flex relative">
+                  <label
+                    class="
+                      font-poppins
+                      text-lg
+                      font-medium
+                      text-receiptTextColor
+                      left-0
+                      absolute
+                    "
+                  >
+                    Previous Receipt No.(If Any)
+                  </label>
+                  <input
+                    type="text"
+                    class="
+                      px-4
+                      h-10
+                      py-1
+                      bg-transparent
+                      border-b-2 border-receiptInputBorder
+                      right-0
+                      absolute
+                      w-1/2
+                    "
+                    disabled
+                    placeholder="N/A"
                   />
                 </div>
+                <div class="flex relative">
+                  <label
+                    class="
+                      font-poppins
+                      text-lg
+                      font-medium
+                      text-receiptTextColor
+                      left-0
+                      absolute
+                    "
+                  >
+                    Due Amount
+                  </label>
+                  <input
+                    type="text"
+                    class="
+                      px-4
+                      h-10
+                      py-1
+                      bg-transparent
+                      border-b-2 border-receiptInputBorder
+                      right-0
+                      absolute
+                      w-3/4
+                    "
+                    disabled
+                    v-model="custDueFee"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="flex justify-between mb-5">
+              <div class="flex items-center gap-3">
+                <!-- <div class="flex gap-1 items-center"> -->
+                <!-- <img
+                  src="../../assets/images/home.png"
+                  alt="home"
+                  class="w-3 h-3"
+                /> -->
                 <p class="text-receiptBorder text-xs">
                   {{ officeAddress }}
                 </p>
-              </div>
-              <div
-                class="
-                  flex
-                  items-center
-                  justify-center
-                  col-span-2
-                  gap-1
-                  left-68
-                  absolute
-                "
-              >
-                <img
+                <p class="text-receiptBorder text-xs">|</p>
+                <!-- </div> -->
+                <!-- <div class="flex items-center gap-1"> -->
+                <!-- <img
                   src="../../assets/images/email.png"
                   alt="email"
                   class="w-3 h-3"
-                />
+                /> -->
                 <p class="text-receiptBorder text-xs">
                   {{ officeEmail }}
                 </p>
-              </div>
+                <p class="text-receiptBorder text-xs">|</p>
+                <!-- </div> -->
 
-              <div class="flex items-end col-span-2 gap-1 left-100 absolute">
-                <img
+                <!-- <div class="flex items-center gap-1"> -->
+                <!-- <img
                   src="../../assets/images/phone.png"
                   alt="phone"
                   class="w-3 h-3"
-                />
+                /> -->
                 <p class="text-receiptBorder text-xs">
                   {{ officePhone }}
                 </p>
+                <!-- </div> -->
               </div>
-            </div>
-            <div class="">
-              <div class="flex justify-center">
-                <img
-                  src="../../assets/images/nihalvaiasign.png"
-                  alt=""
-                  class="w-20 h-10"
-                />
+              <div>
+                <div class="flex justify-center">
+                  <img
+                    src="../../assets/images/nihalvaiasign.png"
+                    alt=""
+                    class="w-20 h-10"
+                  />
+                </div>
+                <h1
+                  class="
+                    border-t-2 border-receiptInputBorder
+                    text-sm text-receiptTextColor
+                    font-semibold
+                  "
+                >
+                  Authorized Signature
+                </h1>
               </div>
-              <h1
-                class="
-                  py-2
-                  border-t-2 border-receiptInputBorder
-                  text-sm text-receiptTextColor
-                  font-semibold
-                "
-              >
-                Authorized Signature
-              </h1>
             </div>
           </div>
           <div class="grid grid-cols-2">
-            <h1 class="border-t-4 border-receiptTextColor"></h1>
-            <h1 class="border-t-4 border-receiptBorder"></h1>
+            <h1 class="border-t-8 border-receiptTextColor"></h1>
+            <h1 class="border-t-8 border-receiptBorder"></h1>
           </div>
         </div>
         <!-- Money Receipt end -->
@@ -2139,7 +1710,7 @@ export default {
 
     downloadRetailReceipt() {
       const doc = new jsPDF({
-        orientation: "p",
+        orientation: "l",
         unit: "px",
         format: "a4",
         hotfixes: ["px_scaling"],
@@ -2155,7 +1726,7 @@ export default {
           img,
           "PNG",
           0,
-          10,
+          0,
           doc.internal.pageSize.getWidth(),
           doc.internal.pageSize.getHeight()
         );
