@@ -1,7 +1,7 @@
 import { createStore } from "vuex";
 import axios from "axios";
 
-axios.defaults.baseURL = "http://localhost:8080";
+axios.defaults.baseURL = "http://18.140.55.67/backend/api/";
 
 export default createStore({
   state: {
@@ -139,7 +139,7 @@ export default createStore({
   },
   actions: {
     getInstructorList({ commit }) {
-      axios("/api/instructors").then((res) => {
+      axios("instructors").then((res) => {
         commit("SET_INSTRUCTOR_LIST", res.data);
         console.log(res.data);
       }),
@@ -149,7 +149,7 @@ export default createStore({
     },
 
     getInstructorCount({ commit }) {
-      axios("/api/instructors-count").then((res) => {
+      axios("instructors-count").then((res) => {
         commit("SET_INSTRUCTOR_COUNT", res.data);
         console.log(res.data);
       }),
@@ -159,7 +159,7 @@ export default createStore({
     },
 
     addInstructor({ commit }, data) {
-      axios.post("/api/instructors", data).then((res) => {
+      axios.post("instructors", data).then((res) => {
         console.log(res.data);
       }),
         (error) => {
@@ -168,7 +168,7 @@ export default createStore({
     },
 
     getInstructor({ commit }, inst_id) {
-      axios("/api/instructors/" + inst_id).then((res) => {
+      axios("instructors/" + inst_id).then((res) => {
         commit("SET_INSTRUCTOR", res.data);
         console.log(res.data);
       }),
@@ -178,7 +178,7 @@ export default createStore({
     },
 
     getUserList({ commit }) {
-      axios("/api/users").then((res) => {
+      axios("users").then((res) => {
         commit("SET_USER_LIST", res.data);
         console.log(res.data);
       }),
@@ -188,7 +188,7 @@ export default createStore({
     },
 
     addUser({ commit }, data) {
-      axios.post("/api/users", data).then((res) => {
+      axios.post("users", data).then((res) => {
         console.log(res.data);
       }),
         (error) => {
@@ -197,7 +197,7 @@ export default createStore({
     },
 
     getUser({ commit }, user_id) {
-      axios("/api/users/" + user_id).then((res) => {
+      axios("users/" + user_id).then((res) => {
         commit("SET_USER", res.data);
         console.log(res.data);
       }),
@@ -207,7 +207,7 @@ export default createStore({
     },
 
     getUserCount({ commit }) {
-      axios("/api/users-count").then((res) => {
+      axios("users-count").then((res) => {
         commit("SET_USER_COUNT", res.data);
         console.log(res.data);
       }),
@@ -217,7 +217,7 @@ export default createStore({
     },
 
     getCategoryList({ commit }) {
-      axios("/api/categories").then((res) => {
+      axios("categories").then((res) => {
         commit("SET_CATEGORY_LIST", res.data);
         console.log(res.data);
       }),
@@ -227,7 +227,7 @@ export default createStore({
     },
 
     addCategory({ commit }, data) {
-      axios.post("/api/categories", data).then((res) => {
+      axios.post("categories", data).then((res) => {
         console.log(res.data);
       }),
         (error) => {
@@ -236,7 +236,7 @@ export default createStore({
     },
 
     addCourse({ commit }, data) {
-      axios.post("/api/courses", data).then((res) => {
+      axios.post("courses", data).then((res) => {
         console.log(res.data);
       }),
         (error) => {
@@ -245,7 +245,7 @@ export default createStore({
     },
 
     getCourseList({ commit }) {
-      axios("/api/courses").then((res) => {
+      axios("courses").then((res) => {
         commit("SET_COURSE_LIST", res.data);
         console.log(res.data);
       }),
@@ -255,7 +255,7 @@ export default createStore({
     },
 
     getCourseCount({ commit }) {
-      axios("/api/courses-count").then((res) => {
+      axios("courses-count").then((res) => {
         commit("SET_COURSE_COUNT", res.data);
         console.log(res.data);
       }),
@@ -265,7 +265,7 @@ export default createStore({
     },
 
     addRetailCustomer({ commit }, data) {
-      axios.post("/api/retail-customers", data).then((res) => {
+      axios.post("retail-customers", data).then((res) => {
         console.log(res.data);
       }),
         (error) => {
@@ -274,7 +274,7 @@ export default createStore({
     },
 
     getRetailCustomerCount({ commit }) {
-      axios("/api/retail-customers-count").then((res) => {
+      axios("retail-customers-count").then((res) => {
         commit("SET_RETAIL_CUSTOMER_COUNT", res.data);
         console.log(res.data);
       }),
@@ -284,7 +284,7 @@ export default createStore({
     },
 
     getRetailCustomer({ commit }, cust_id) {
-      axios("/api/retail-customers/" + cust_id).then((res) => {
+      axios("retail-customers/" + cust_id).then((res) => {
         commit("SET_RETAIL_CUSTOMER", res.data);
         console.log(res.data);
       }),
@@ -294,7 +294,7 @@ export default createStore({
     },
 
     getRetailCustomerList({ commit }) {
-      axios("/api/retail-customers").then((res) => {
+      axios("retail-customers").then((res) => {
         commit("SET_RETAIL_CUSTOMER_LIST", res.data);
         console.log(res.data);
       }),
@@ -304,7 +304,7 @@ export default createStore({
     },
 
     addCorporateCustomer({ commit }, data) {
-      axios.post("/api/corporate-customers", data).then((res) => {
+      axios.post("corporate-customers", data).then((res) => {
         console.log(res.data);
       }),
         (error) => {
@@ -313,7 +313,7 @@ export default createStore({
     },
 
     getCorporateCustomerCount({ commit }) {
-      axios("/api/corporate-customers-count").then((res) => {
+      axios("corporate-customers-count").then((res) => {
         commit("SET_CORPORATE_CUSTOMER_COUNT", res.data);
         console.log(res.data);
       }),
@@ -323,7 +323,7 @@ export default createStore({
     },
 
     getCorporateCustomer({ commit }, cust_id) {
-      axios("/api/corporate-customers/" + cust_id).then((res) => {
+      axios("corporate-customers/" + cust_id).then((res) => {
         commit("SET_CORPORATE_CUSTOMER", res.data);
         console.log(res.data);
       }),
@@ -333,7 +333,7 @@ export default createStore({
     },
 
     getCorporateCustomerList({ commit }) {
-      axios("/api/corporate-customers").then((res) => {
+      axios("corporate-customers").then((res) => {
         commit("SET_CORPORATE_CUSTOMER_LIST", res.data);
         console.log(res.data);
       }),
@@ -343,7 +343,7 @@ export default createStore({
     },
 
     getBatchCount({ commit }) {
-      axios("/api/batches-count").then((res) => {
+      axios("batches-count").then((res) => {
         commit("SET_BATCH_COUNT", res.data);
         console.log(res.data);
       }),
@@ -353,7 +353,7 @@ export default createStore({
     },
 
     getBatchList({ commit }) {
-      axios("/api/batches").then((res) => {
+      axios("batches").then((res) => {
         commit("SET_BATCH_LIST", res.data);
         console.log(res.data);
       }),
@@ -363,7 +363,7 @@ export default createStore({
     },
 
     getBatch({ commit }, batch_id) {
-      axios("/api/batches/" + batch_id).then((res) => {
+      axios("batches/" + batch_id).then((res) => {
         commit("SET_BATCH", res.data);
         console.log(res.data);
       }),
@@ -373,7 +373,7 @@ export default createStore({
     },
 
     addBatch({ commit }, data) {
-      axios.post("/api/batches", data).then((res) => {
+      axios.post("batches", data).then((res) => {
         console.log(res.data);
       }),
         (error) => {
@@ -382,7 +382,7 @@ export default createStore({
     },
 
     getBatchesByCourse({ commit }, course_id) {
-      axios("/api/batches-by-course?course_id=" + course_id).then((res) => {
+      axios("batches-by-course?course_id=" + course_id).then((res) => {
         commit("SET_BACTHES_BY_COURSE", res.data);
         console.log(res.data);
       }),
@@ -392,7 +392,7 @@ export default createStore({
     },
 
     getBatchListTable({ commit }) {
-      axios("/api/batch-list").then((res) => {
+      axios("batch-list").then((res) => {
         commit("SET_BATCH_LIST_TABLE", res.data);
         console.log(res.data);
       }),
@@ -402,7 +402,7 @@ export default createStore({
     },
 
     changeBatchAdmissionStatus({ commit }, batch_id) {
-      axios.put("/api/batch-admission/" + batch_id).then((res) => {
+      axios.put("batch-admission/" + batch_id).then((res) => {
         console.log(res.data);
       }),
         (error) => {
@@ -411,7 +411,7 @@ export default createStore({
     },
 
     getSaleList({ commit }) {
-      axios("/api/sales").then((res) => {
+      axios("sales").then((res) => {
         commit("SET_SALE_LIST", res.data);
         console.log(res.data);
       }),
@@ -421,7 +421,7 @@ export default createStore({
     },
 
     getSaleCount({ commit }) {
-      axios("/api/sales-count").then((res) => {
+      axios("sales-count").then((res) => {
         commit("SET_SALE_COUNT", res.data);
         console.log(res.data);
       }),
@@ -431,7 +431,7 @@ export default createStore({
     },
 
     addSaleRecord({ commit }, data) {
-      axios.post("/api/sales", data).then((res) => {
+      axios.post("sales", data).then((res) => {
         console.log(res.data);
       }),
         (error) => {
@@ -440,7 +440,7 @@ export default createStore({
     },
 
     updateRetailCustomerFees({ commit }, data) {
-      axios.put("/api/retail-fee-update", data).then((res) => {
+      axios.put("retail-fee-update", data).then((res) => {
         console.log(res.data);
       }),
         (error) => {
@@ -449,7 +449,7 @@ export default createStore({
     },
 
     updateCorporateCustomerFees({ commit }, data) {
-      axios.put("/api/corporate-fee-update", data).then((res) => {
+      axios.put("corporate-fee-update", data).then((res) => {
         console.log(res.data);
       }),
         (error) => {

@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-n@iobuun&+)k3^haq&q=&)r2(aaq^ibie(@gy(pic4af^%fa7@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["18.140.55.67"]
 
 
 # Application definition
@@ -87,7 +87,7 @@ DATABASES = {
         "ENGINE": "django.db.backends.mysql",
         "NAME": "tecognize_training_erp",
         "USER": "admin",
-        "PASSWORD": "adminA1@",
+        "PASSWORD": "admin",
         "HOST": "127.0.0.1",
         "PORT": "3306",
     }
