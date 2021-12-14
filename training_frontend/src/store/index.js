@@ -304,8 +304,8 @@ export default createStore({
         };
     },
 
-    addCorporateCustomer({ commit }, data) {
-      axios.post("corporate-customers", data).then((res) => {
+    async addCorporateCustomer({ commit }, data) {
+      await axios.post("corporate-customers", data).then((res) => {
         console.log(res.data);
       }),
         (error) => {

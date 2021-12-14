@@ -737,6 +737,37 @@
             </button>
           </div>
           <!-- Corporate Customer Form end -->
+          <div class="grid grid-rows-1 gap-2 place-items-start">
+            <label for="paymentMethod" class="font-semibold ml-2"
+              >Payment Method*</label
+            >
+            <select
+              name="paymentMethod"
+              id="paymentMethod"
+              v-model="paymentMethod"
+              required
+              class="
+                bg-white
+                rounded-md
+                px-8
+                py-4
+                flex
+                justify-center
+                w-600
+                border-2 border-gray-200
+                hover:border-navlink hover:ring-0
+                focus:outline-none focus:border-navlink
+              "
+            >
+              <option
+                v-for="payMethod in paymentMethodList"
+                :value="payMethod.name"
+                :key="payMethod.id"
+              >
+                {{ payMethod.name }}
+              </option>
+            </select>
+          </div>
         </div>
       </form>
     </div>
@@ -897,6 +928,7 @@
                     border-b-2 border-receiptInputBorder
                   "
                   disabled
+                  v-model="date"
                 />
               </div>
             </div>
@@ -1007,6 +1039,7 @@
                       w-1/2
                     "
                     disabled
+                    v-model="paymentMethod"
                   />
                 </div>
                 <div class="flex relative">
@@ -1062,6 +1095,7 @@
                       absolute
                     "
                     disabled
+                    v-model="date"
                   />
                 </div>
               </div>
@@ -1113,6 +1147,7 @@
                     absolute
                   "
                   disabled
+                  v-model="custAmountInWords"
                 />
               </div>
               <div class="grid grid-cols-2 w-full gap-2">
@@ -1178,39 +1213,19 @@
             </div>
             <div class="flex justify-between mb-5">
               <div class="flex items-center gap-3">
-                <!-- <div class="flex gap-1 items-center"> -->
-                <!-- <img
-                  src="../../assets/images/home.png"
-                  alt="home"
-                  class="w-3 h-3"
-                /> -->
                 <p class="text-receiptBorder text-xs">
                   {{ officeAddress }}
                 </p>
                 <p class="text-receiptBorder text-xs">|</p>
-                <!-- </div> -->
-                <!-- <div class="flex items-center gap-1"> -->
-                <!-- <img
-                  src="../../assets/images/email.png"
-                  alt="email"
-                  class="w-3 h-3"
-                /> -->
+
                 <p class="text-receiptBorder text-xs">
                   {{ officeEmail }}
                 </p>
                 <p class="text-receiptBorder text-xs">|</p>
-                <!-- </div> -->
 
-                <!-- <div class="flex items-center gap-1"> -->
-                <!-- <img
-                  src="../../assets/images/phone.png"
-                  alt="phone"
-                  class="w-3 h-3"
-                /> -->
                 <p class="text-receiptBorder text-xs">
                   {{ officePhone }}
                 </p>
-                <!-- </div> -->
               </div>
               <div>
                 <div class="flex justify-center">
@@ -1249,115 +1264,374 @@
 
     <div v-if="corporateReceipt">
       <div ref="corporateReceiptContent" class="space-y-5">
-        <h1 class="text-xl">Corporate Customer Receipt</h1>
+        <!-- Corporate money receipt -->
+        <div class="w-1100 bg-receiptBg">
+          <div class="px-10 pt-10">
+            <div class="flex justify-between items-center mb-5">
+              <h1
+                class="
+                  border-b-8
+                  font-segoeUI
+                  text-2xl
+                  font-bold
+                  pb-3
+                  text-receiptTextColor
+                  border-receiptBorder
+                "
+              >
+                Money Receipt
+              </h1>
+              <img
+                src="../../assets/images/traininglogo.png"
+                alt="logo"
+                class="w-36 h-10"
+              />
+            </div>
+            <div class="flex justify-between items-center justify-center mb-5">
+              <h1 class="font-segoeUI text-xl font-bold text-receiptTextColor">
+                SL NO:
+              </h1>
+              <div class="flex gap-2 items-center justify-center">
+                <h1
+                  class="font-segoeUI text-xl font-bold text-receiptTextColor"
+                >
+                  DATE:
+                </h1>
+                <input
+                  type="text"
+                  class="
+                    w-40
+                    px-4
+                    py-2
+                    bg-transparent
+                    border-b-2 border-receiptInputBorder
+                  "
+                  disabled
+                  v-model="date"
+                />
+              </div>
+            </div>
+            <div class="grid grid-rows-1 place-items-start w-full mb-14">
+              <div class="flex w-full relative mb-12">
+                <h1
+                  class="
+                    font-poppins
+                    text-lg
+                    font-medium
+                    text-receiptTextColor
+                    left-0
+                    absolute
+                  "
+                >
+                  Received with Thanks From
+                </h1>
+                <input
+                  type="text"
+                  class="
+                    px-4
+                    h-10
+                    py-1
+                    bg-transparent
+                    border-b-2 border-receiptInputBorder
+                    w-9/12
+                    right-0
+                    absolute
+                  "
+                  disabled
+                  v-model="corpName"
+                />
+              </div>
+              <div class="flex item-start w-full">
+                <h1
+                  class="font-poppins text-lg font-medium text-receiptTextColor"
+                >
+                  Address
+                </h1>
+                <input
+                  type="text"
+                  class="
+                    px-4
+                    h-10
+                    py-1
+                    bg-transparent
+                    border-b-2 border-receiptInputBorder
+                    w-full
+                  "
+                  disabled
+                  v-model="corpAddress"
+                />
+              </div>
+              <div class="flex item-start w-full relative mb-12">
+                <h1
+                  class="
+                    font-poppins
+                    text-lg
+                    font-medium
+                    text-receiptTextColor
+                    left-0
+                    absolute
+                  "
+                >
+                  Payment Purpose
+                </h1>
+                <input
+                  type="text"
+                  class="
+                    px-4
+                    h-10
+                    py-1
+                    bg-transparent
+                    border-b-2 border-receiptInputBorder
+                    right-0
+                    absolute
+                    w-10/12
+                  "
+                  v-model="batchId"
+                  disabled
+                />
+              </div>
 
-        <table>
-          <tbody>
-            <tr class="border-2 border-b-0">
-              <td class="w-2/5 px-4 py-4 text-center">Organization:</td>
-              <td class="w-2/5 px-4 py-4 text-center">
-                {{ corpName }}
-              </td>
-            </tr>
-            <tr class="border-2 border-t-0 border-b-0">
-              <td class="w-2/5 px-4 py-4 text-center">Course:</td>
-              <td class="w-2/5 px-4 py-4 text-center">
-                {{ courseName }}
-              </td>
-            </tr>
-            <tr class="border-2 border-t-0 border-b-0">
-              <td class="w-2/5 px-4 py-4 text-center">Batch:</td>
-              <td class="w-2/5 px-4 py-4 text-center">
-                {{ batchId }}
-              </td>
-            </tr>
+              <div class="grid grid-cols-3 w-full gap-3 mb-12">
+                <div class="flex relative">
+                  <h1
+                    class="
+                      font-poppins
+                      text-lg
+                      font-medium
+                      text-receiptTextColor
+                      left-0
+                      absolute
+                    "
+                  >
+                    Payment Method
+                  </h1>
+                  <input
+                    type="text"
+                    class="
+                      px-4
+                      h-10
+                      py-1
+                      bg-transparent
+                      border-b-2 border-receiptInputBorder
+                      right-0
+                      absolute
+                      w-1/2
+                    "
+                    disabled
+                    v-model="paymentMethod"
+                  />
+                </div>
+                <div class="flex relative">
+                  <h1
+                    class="
+                      font-poppins
+                      text-lg
+                      font-medium
+                      text-receiptTextColor
+                      left-0
+                      absolute
+                    "
+                  >
+                    Check/Ref No.
+                  </h1>
+                  <input
+                    type="text"
+                    class="
+                      px-4
+                      h-10
+                      py-1
+                      bg-transparent
+                      border-b-2 border-receiptInputBorder
+                      right-0
+                      absolute
+                    "
+                    disabled
+                  />
+                </div>
+                <div class="flex w-full relative">
+                  <h1
+                    class="
+                      font-poppins
+                      text-lg
+                      font-medium
+                      text-receiptTextColor
+                      left-0
+                      absolute
+                    "
+                  >
+                    Check Date
+                  </h1>
+                  <input
+                    type="text"
+                    class="
+                      px-4
+                      h-10
+                      py-1
+                      bg-transparent
+                      border-b-2 border-receiptInputBorder
+                      w-2/3
+                      right-0
+                      absolute
+                    "
+                    disabled
+                    v-model="date"
+                  />
+                </div>
+              </div>
 
-            <tr class="border-2 border-t-0 border-b-0">
-              <td class="w-2/5 px-4 py-4 text-center">Reference:</td>
-              <td class="w-2/5 px-4 py-4 text-center">
-                {{ userName }}
-              </td>
-            </tr>
+              <div class="flex item-start w-full">
+                <h1
+                  class="font-poppins text-lg font-medium text-receiptTextColor"
+                >
+                  Amount
+                </h1>
+                <input
+                  type="text"
+                  class="
+                    px-4
+                    h-10
+                    py-1
+                    bg-transparent
+                    border-b-2 border-receiptInputBorder
+                    w-full
+                  "
+                  disabled
+                  v-model="corpTotalFee"
+                />
+              </div>
 
-            <tr class="border-2 border-t-0 border-b-0">
-              <td class="w-2/5 px-4 py-4 text-center">Phone number:</td>
-              <td class="w-2/5 px-4 py-4 text-center">
-                {{ corpPhone }}
-              </td>
-            </tr>
+              <div class="flex w-full relative mb-12">
+                <h1
+                  class="
+                    font-poppins
+                    text-lg
+                    font-medium
+                    text-receiptTextColor
+                    left-0
+                    absolute
+                  "
+                >
+                  Amount in Word
+                </h1>
+                <input
+                  type="text"
+                  class="
+                    px-4
+                    h-10
+                    py-1
+                    bg-transparent
+                    border-b-2 border-receiptInputBorder
+                    w-10/12
+                    right-0
+                    absolute
+                  "
+                  disabled
+                  v-model="corpAmountInWords"
+                />
+              </div>
+              <div class="grid grid-cols-2 w-full gap-2">
+                <div class="flex relative">
+                  <label
+                    class="
+                      font-poppins
+                      text-lg
+                      font-medium
+                      text-receiptTextColor
+                      left-0
+                      absolute
+                    "
+                  >
+                    Previous Receipt No.(If Any)
+                  </label>
+                  <input
+                    type="text"
+                    class="
+                      px-4
+                      h-10
+                      py-1
+                      bg-transparent
+                      border-b-2 border-receiptInputBorder
+                      right-0
+                      absolute
+                      w-1/2
+                    "
+                    disabled
+                    placeholder="N/A"
+                  />
+                </div>
+                <div class="flex relative">
+                  <label
+                    class="
+                      font-poppins
+                      text-lg
+                      font-medium
+                      text-receiptTextColor
+                      left-0
+                      absolute
+                    "
+                  >
+                    Due Amount
+                  </label>
+                  <input
+                    type="text"
+                    class="
+                      px-4
+                      h-10
+                      py-1
+                      bg-transparent
+                      border-b-2 border-receiptInputBorder
+                      right-0
+                      absolute
+                      w-3/4
+                    "
+                    disabled
+                    v-model="corpDueFee"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="flex justify-between mb-5">
+              <div class="flex items-center gap-3">
+                <p class="text-receiptBorder text-xs">
+                  {{ officeAddress }}
+                </p>
+                <p class="text-receiptBorder text-xs">|</p>
 
-            <tr class="border-2 border-t-0 border-b-0">
-              <td class="w-2/5 px-4 py-4 text-center">email:</td>
-              <td class="w-2/5 px-4 py-4 text-center">
-                {{ corpEmail }}
-              </td>
-            </tr>
+                <p class="text-receiptBorder text-xs">
+                  {{ officeEmail }}
+                </p>
+                <p class="text-receiptBorder text-xs">|</p>
 
-            <tr class="border-2 border-t-0 border-b-0">
-              <td class="w-2/5 px-4 py-4 text-center">Address:</td>
-              <td class="w-2/5 px-4 py-4 text-center">
-                {{ corpAddress }}
-              </td>
-            </tr>
-
-            <tr class="border-2 border-t-0 border-b-0">
-              <td class="w-2/5 px-4 py-4 text-center">Regular fee:</td>
-              <td class="w-2/5 px-4 py-4 text-center">
-                {{ regularFee }}
-              </td>
-            </tr>
-
-            <tr class="border-2 border-t-0 border-b-0">
-              <td class="w-2/5 px-4 py-4 text-center">Batch fee:</td>
-              <td class="w-2/5 px-4 py-4 text-center">
-                {{ batchFee }}
-              </td>
-            </tr>
-
-            <tr class="border-2 border-t-0 border-b-0">
-              <td class="w-2/5 px-4 py-4 text-center">Units:</td>
-              <td class="w-2/5 px-4 py-4 text-center">
-                {{ corpUnits }}
-              </td>
-            </tr>
-
-            <tr class="border-2 border-t-0 border-b-0">
-              <td class="w-2/5 px-4 py-4 text-center">Discount:</td>
-              <td class="w-2/5 px-4 py-4 text-center">
-                {{ discountFee }}
-              </td>
-            </tr>
-
-            <tr class="border-2 border-t-0 border-b-0">
-              <td class="w-2/5 px-4 py-4 text-center">Total:</td>
-              <td class="w-2/5 px-4 py-4 text-center">
-                {{ corpTotalFee }}
-              </td>
-            </tr>
-
-            <tr class="border-2 border-t-0 border-b-0">
-              <td class="w-2/5 px-4 py-4 text-center">Paid:</td>
-              <td class="w-2/5 px-4 py-4 text-center">
-                {{ corpPaidFee }}
-              </td>
-            </tr>
-
-            <tr class="border-2 border-t-0 border-b-0">
-              <td class="w-2/5 px-4 py-4 text-center">Paid:</td>
-              <td class="w-2/5 px-4 py-4 text-center">
-                {{ corpPaidFee }}
-              </td>
-            </tr>
-
-            <tr class="border-2 border-t-0">
-              <td class="w-2/5 px-4 py-4 text-center">Due:</td>
-              <td class="w-2/5 px-4 py-4 text-center">
-                {{ corpDueFee }}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <h1>{{ fulldatetime }}</h1>
+                <p class="text-receiptBorder text-xs">
+                  {{ officePhone }}
+                </p>
+              </div>
+              <div>
+                <div class="flex justify-center">
+                  <img
+                    src="../../assets/images/nihalvaiasign.png"
+                    alt=""
+                    class="w-20 h-10"
+                  />
+                </div>
+                <h1
+                  class="
+                    border-t-2 border-receiptInputBorder
+                    text-sm text-receiptTextColor
+                    font-semibold
+                  "
+                >
+                  Authorized Signature
+                </h1>
+              </div>
+            </div>
+          </div>
+          <div class="grid grid-cols-2">
+            <h1 class="border-t-8 border-receiptTextColor"></h1>
+            <h1 class="border-t-8 border-receiptBorder"></h1>
+          </div>
+        </div>
+        <!-- Corporate money receipt end -->
       </div>
 
       <button
@@ -1388,6 +1662,8 @@
 import Modal from "../../components/Modal.vue";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import moment from "moment";
+import numberToWords from "number-to-words";
 
 export default {
   components: { Modal },
@@ -1439,10 +1715,20 @@ export default {
       corporateReceipt: false,
       courseName: "",
       userName: "",
-      fulldatetime: "",
+      date: "",
       officeAddress: "H# B-160,New DOHS Mohakhali,Dhaka-1206",
       officeEmail: "training@tecognize.com",
       officePhone: "+8801893466660",
+      custAmountInWords: "",
+      corpAmountInWords: "",
+      paymentMethodList: [
+        { id: 1, name: "bkash" },
+        { id: 2, name: "nagad" },
+        { id: 3, name: "cash" },
+        { id: 4, name: "exim bank" },
+        { id: 5, name: "dbbl" },
+      ],
+      paymentMethod: "",
     };
   },
   mounted() {
@@ -1453,7 +1739,7 @@ export default {
     this.$store.dispatch("getUserList");
     this.$store.dispatch("getCorporateCustomerCount");
     this.$store.dispatch("getRetailCustomerCount");
-    this.fulldatetime = this.printFullDate();
+    this.date = this.getDate();
   },
   methods: {
     toggleModal() {
@@ -1629,20 +1915,20 @@ export default {
               corp_units: this.corpUnits,
             };
 
-            this.$store.dispatch("addCorporateCustomer", corpData).then(() => {
-              const saleData = {
-                regular_fee: this.regularFee,
-                sale_fee: this.corpTotalFee,
-                paid_fee: this.corpPaidFee,
-                due_fee: this.corpDueFee,
-                batch_id: this.batchId,
-                corp_id: corp_id,
-                cust_id: this.custId,
-                inst_id: this.instId,
-                user_id: this.userId,
-              };
-              this.$store.dispatch("addSaleRecord", saleData);
-            });
+            await this.$store.dispatch("addCorporateCustomer", corpData);
+            const saleData = {
+              regular_fee: this.regularFee,
+              sale_fee: this.corpTotalFee,
+              paid_fee: this.corpPaidFee,
+              due_fee: this.corpDueFee,
+              batch_id: this.batchId,
+              corp_id: corp_id,
+              cust_id: this.custId,
+              inst_id: this.instId,
+              user_id: this.userId,
+            };
+            this.$store.dispatch("addSaleRecord", saleData);
+            // });
             // this.showModal = true;
           }
         } else {
@@ -1746,7 +2032,7 @@ export default {
 
     downloadCorporateReceipt() {
       const doc = new jsPDF({
-        orientation: "p",
+        orientation: "l",
         unit: "px",
         format: "a4",
         hotfixes: ["px_scaling"],
@@ -1761,8 +2047,8 @@ export default {
         doc.addImage(
           img,
           "PNG",
-          140,
-          10,
+          0,
+          0,
           doc.internal.pageSize.getWidth(),
           doc.internal.pageSize.getHeight()
         );
@@ -1780,8 +2066,10 @@ export default {
         doc.save(filename);
       });
     },
-    printFullDate: function () {
-      return new Date();
+    getDate: function () {
+      return moment(String(new Date().toLocaleDateString())).format(
+        "DD/MM/YYYY"
+      );
     },
   },
   computed: {
@@ -1836,8 +2124,10 @@ export default {
     getCorpTotal() {
       if (this.batchFee && this.corpUnits && this.discountFee) {
         this.corpTotalFee = this.batchFee * this.corpUnits - this.discountFee;
+        this.corpAmountInWords = numberToWords.toWords(this.corpTotalFee);
       } else if (this.batchFee && this.corpUnits) {
         this.corpTotalFee = this.batchFee * this.corpUnits;
+        this.corpAmountInWords = numberToWords.toWords(this.corpTotalFee);
       }
       return this.corpTotalFee;
 
@@ -1862,8 +2152,10 @@ export default {
     getCustTotal() {
       if (this.batchFee && this.discountFee) {
         this.custTotalFee = this.batchFee - this.discountFee;
+        this.custAmountInWords = numberToWords.toWords(this.custTotalFee);
       } else if (this.batchFee) {
         this.custTotalFee = this.batchFee;
+        this.custAmountInWords = numberToWords.toWords(this.custTotalFee);
       }
       return this.custTotalFee;
     },
