@@ -2,6 +2,7 @@ import { createStore } from "vuex";
 import axios from "axios";
 
 axios.defaults.baseURL = "http://18.140.55.67/backend/api/";
+// axios.defaults.baseURL = "http://localhost:8080/backend/api/";
 
 export default createStore({
   state: {
@@ -264,8 +265,8 @@ export default createStore({
         };
     },
 
-    addRetailCustomer({ commit }, data) {
-      axios.post("retail-customers", data).then((res) => {
+    async addRetailCustomer({ commit }, data) {
+      await axios.post("retail-customers", data).then((res) => {
         console.log(res.data);
       }),
         (error) => {

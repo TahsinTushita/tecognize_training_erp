@@ -1547,7 +1547,7 @@ export default {
       this.corpDueFee = this.corpTotalFee - this.corpPaidFee;
     },
 
-    addSaleRecord() {
+    async addSaleRecord() {
       if (this.customerType == "retail") {
         if (this.newCustomer == true) {
           if (this.custName.length >= 3) {
@@ -1572,20 +1572,19 @@ export default {
               cust_due_fee: this.custDueFee,
             };
 
-            this.$store.dispatch("addRetailCustomer", custData).then(() => {
-              const saleData = {
-                regular_fee: this.regularFee,
-                sale_fee: this.custTotalFee,
-                paid_fee: this.custPaidFee,
-                due_fee: this.custDueFee,
-                batch_id: this.batchId,
-                corp_id: this.corpId,
-                cust_id: cust_id,
-                inst_id: this.instId,
-                user_id: this.userId,
-              };
-              this.$store.dispatch("addSaleRecord", saleData);
-            });
+            await this.$store.dispatch("addRetailCustomer", custData);
+            const saleData = {
+              regular_fee: this.regularFee,
+              sale_fee: this.custTotalFee,
+              paid_fee: this.custPaidFee,
+              due_fee: this.custDueFee,
+              batch_id: this.batchId,
+              corp_id: this.corpId,
+              cust_id: cust_id,
+              inst_id: this.instId,
+              user_id: this.userId,
+            };
+            this.$store.dispatch("addSaleRecord", saleData);
           }
         } else {
           const custData = {
