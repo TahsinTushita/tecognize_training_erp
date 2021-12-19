@@ -98,6 +98,89 @@
           </div>
 
           <div class="grid grid-rows-1 gap-2 place-items-start">
+            <label for="paymentMethod" class="font-semibold ml-2"
+              >Payment Method*</label
+            >
+            <select
+              name="paymentMethod"
+              id="paymentMethod"
+              @change="toggleCheckDate"
+              v-model="paymentMethod"
+              required
+              class="
+                bg-white
+                rounded-md
+                px-8
+                py-4
+                flex
+                justify-center
+                w-600
+                border-2 border-gray-200
+                hover:border-navlink hover:ring-0
+                focus:outline-none focus:border-navlink
+              "
+            >
+              <option
+                v-for="payMethod in paymentMethodList"
+                :value="payMethod.name"
+                :key="payMethod.id"
+              >
+                {{ payMethod.name }}
+              </option>
+            </select>
+          </div>
+          <div class="grid grid-rows-1 gap-2 place-items-start">
+            <label for="checkRefNo" class="font-semibold ml-2"
+              >Check/Ref No*</label
+            >
+            <input
+              type="text"
+              name="checkRefNo"
+              required
+              class="
+                bg-white
+                rounded-md
+                px-8
+                py-4
+                flex
+                justify-center
+                w-600
+                border-2 border-gray-200
+                hover:border-navlink hover:ring-0
+                focus:outline-none focus:border-navlink
+              "
+              placeholder="check/ref no."
+              v-model="checkRefNo"
+            />
+          </div>
+
+          <div
+            class="grid grid-rows-1 gap-2 place-items-start"
+            v-if="showCheckDate"
+          >
+            <label for="checkDate" class="font-semibold ml-2"
+              >Check Date*</label
+            >
+            <input
+              type="date"
+              name="checkDate"
+              class="
+                bg-white
+                rounded-md
+                px-8
+                py-4
+                flex
+                justify-center
+                w-600
+                border-2 border-gray-200
+                hover:border-navlink hover:ring-0
+                focus:outline-none focus:border-navlink
+              "
+              v-model="checkDate"
+            />
+          </div>
+
+          <div class="grid grid-rows-1 gap-2 place-items-start">
             <label for="course" class="font-semibold ml-2"
               >Customer Type*</label
             >
@@ -737,37 +820,6 @@
             </button>
           </div>
           <!-- Corporate Customer Form end -->
-          <div class="grid grid-rows-1 gap-2 place-items-start">
-            <label for="paymentMethod" class="font-semibold ml-2"
-              >Payment Method*</label
-            >
-            <select
-              name="paymentMethod"
-              id="paymentMethod"
-              v-model="paymentMethod"
-              required
-              class="
-                bg-white
-                rounded-md
-                px-8
-                py-4
-                flex
-                justify-center
-                w-600
-                border-2 border-gray-200
-                hover:border-navlink hover:ring-0
-                focus:outline-none focus:border-navlink
-              "
-            >
-              <option
-                v-for="payMethod in paymentMethodList"
-                :value="payMethod.name"
-                :key="payMethod.id"
-              >
-                {{ payMethod.name }}
-              </option>
-            </select>
-          </div>
         </div>
       </form>
     </div>
@@ -1067,6 +1119,7 @@
                       absolute
                     "
                     disabled
+                    v-model="checkRefNo"
                   />
                 </div>
                 <div class="flex w-full relative">
@@ -1083,7 +1136,6 @@
                     Check Date
                   </h1>
                   <input
-                    type="text"
                     class="
                       px-4
                       h-10
@@ -1095,7 +1147,8 @@
                       absolute
                     "
                     disabled
-                    v-model="date"
+                    v-model="checkDate"
+                    placeholder="N/A"
                   />
                 </div>
               </div>
@@ -1727,8 +1780,12 @@ export default {
         { id: 3, name: "cash" },
         { id: 4, name: "exim bank" },
         { id: 5, name: "dbbl" },
+        { id: 6, name: "check" },
       ],
       paymentMethod: "",
+      checkRefNo: "",
+      checkDate: null,
+      showCheckDate: false,
     };
   },
   mounted() {
@@ -1817,6 +1874,14 @@ export default {
       });
     },
 
+    toggleCheckDate() {
+      if (this.paymentMethod == "check") {
+        this.showCheckDate = true;
+      } else {
+        this.showCheckDate = false;
+      }
+    },
+
     setCustTotal() {
       this.custTotalFee = this.batchFee - this.discountFee;
     },
@@ -1869,6 +1934,7 @@ export default {
               cust_id: cust_id,
               inst_id: this.instId,
               user_id: this.userId,
+              pay_method: this.paymentMethod,
             };
             this.$store.dispatch("addSaleRecord", saleData);
           }
@@ -2068,7 +2134,7 @@ export default {
     },
     getDate: function () {
       return moment(String(new Date().toLocaleDateString())).format(
-        "DD/MM/YYYY"
+        "YYYY-MM-DD"
       );
     },
   },
