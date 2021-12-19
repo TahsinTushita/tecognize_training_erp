@@ -116,3 +116,4 @@ class Sale(models.Model):
         blank=True,
         null=True,
     )
+    pay_method = models.CharField(max_length=100, blank=False)
