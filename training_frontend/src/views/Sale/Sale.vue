@@ -1786,6 +1786,7 @@ export default {
       checkRefNo: "",
       checkDate: null,
       showCheckDate: false,
+      moneyReceipt: "",
     };
   },
   mounted() {
@@ -1796,6 +1797,7 @@ export default {
     this.$store.dispatch("getUserList");
     this.$store.dispatch("getCorporateCustomerCount");
     this.$store.dispatch("getRetailCustomerCount");
+    this.$store.dispatch("getReceiptCount");
     this.date = this.getDate();
   },
   methods: {
@@ -1936,7 +1938,15 @@ export default {
               user_id: this.userId,
               pay_method: this.paymentMethod,
             };
-            this.$store.dispatch("addSaleRecord", saleData);
+            await this.$store.dispatch("addSaleRecord", saleData);
+
+            // const receiptData = {
+            //   receipt_id: this.receiptCount[0] + 1,
+            //   cust_id: cust_id,
+            //   corp_id: this.corpId,
+            //   receipt: this.moneyReceipt,
+            //   id:
+            // };
           }
         } else {
           const custData = {
@@ -2093,6 +2103,7 @@ export default {
           new Date().toLocaleTimeString() +
           ".pdf";
         doc.save(filename);
+        this.moneyReceipt = doc;
       });
     },
 
@@ -2130,6 +2141,7 @@ export default {
           new Date().toLocaleTimeString() +
           ".pdf";
         doc.save(filename);
+        this.moneyReceipt = doc;
       });
     },
     getDate: function () {
@@ -2184,6 +2196,12 @@ export default {
     retailCustomerCount: {
       get() {
         return this.$store.getters.retailCustomerCount;
+      },
+    },
+
+    receiptCount: {
+      get() {
+        return this.$store.getters.receiptCount;
       },
     },
 

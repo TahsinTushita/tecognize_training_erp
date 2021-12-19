@@ -119,10 +119,6 @@ class Sale(models.Model):
 
 
 class MoneyReceipt(models.Model):
-    receipt_id = models.BigAutoField(
-        auto_created=True, primary_key=True, serialize=False
-    )
-
     cust_id = models.ForeignKey(
         Retail_Customer,
         db_column="cust_id",
@@ -138,6 +134,6 @@ class MoneyReceipt(models.Model):
         null=True,
     )
     receipt = models.FileField()
-    id = models.ForeignKey(Sale, db_column="id", on_delete=models.CASCADE)
+    batch_id = models.ForeignKey(Batch, db_column="batch_id", on_delete=models.CASCADE)
     pay_method = models.CharField(max_length=100)
     check_ref_no = models.CharField(max_length=80)

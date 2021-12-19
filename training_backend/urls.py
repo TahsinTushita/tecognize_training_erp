@@ -37,4 +37,6 @@ urlpatterns = [
     url(r"^backend/api/sales$", views.sale_list),
     url(r"^backend/api/sales/(?P<pk>[a-zA-Z0-9_]+)$", views.sale_detail),
     url(r"^backend/api/sales-count$", views.sale_count),
+    url(r"^backend/api/receipts$", views.receipt_list),
+    url(r"^backend/api/receipt-count$", views.receipt_count),
 ]

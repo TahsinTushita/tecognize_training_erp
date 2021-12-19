@@ -127,11 +127,11 @@ class MoneyReceiptSerializer(serializers.ModelSerializer):
     class Meta:
         model = MoneyReceipt
         fields = (
-            "receipt_id",
+            "id",
             "cust_id",
             "corp_id",
             "receipt",
-            "id",
+            "batch_id",
             "pay_method",
             "check_ref_no",
         )

@@ -19,6 +19,7 @@ from training_backend.models import (
     Course,
     Batch,
     Sale,
+    MoneyReceipt,
 )
 from training_backend.serializers import (
     InstructorSerializer,
@@ -29,6 +30,7 @@ from training_backend.serializers import (
     CourseSerializer,
     BatchSerializer,
     SaleSerializer,
+    MoneyReceiptSerializer,
     # NumberSerializer,
 )
 from rest_framework.decorators import api_view
@@ -708,6 +710,39 @@ def sale_count(request):
     if request.method == "GET":
         cursor = connection.cursor()
         query = "SELECT COUNT(id) AS NumberOfSaleRecords FROM training_backend_sale"
+
+        cursor.execute(query)
+        r = cursor.fetchone()
+        print(r)
+        return JsonResponse(r, safe=False)
+
+
+@api_view(["GET", "POST"])
+def receipt_list(request):
+    if request.method == "GET":
+        receipts = MoneyReceipt.objects.all()
+
+        receipt_serializer = MoneyReceiptSerializer(receipts, many=True)
+        return JsonResponse(receipt_serializer.data, safe=False)
+
+    elif request.method == "POST":
+        receipt_data = JSONParser().parse(request)
+        receipt_serializer = MoneyReceiptSerializer(data=receipt_data)
+        if receipt_serializer.is_valid():
+            receipt_serializer.save()
+            return JsonResponse(receipt_serializer.data, status=status.HTTP_201_CREATED)
+        return JsonResponse(
+            receipt_serializer.errors, status=status.HTTP_400_BAD_REQUEST
+        )
+
+
+@api_view(["GET"])
+def receipt_count(request):
+    if request.method == "GET":
+        cursor = connection.cursor()
+        query = (
+            "SELECT COUNT(id) AS NumberOfReceipts FROM training_backend_moneyreceipt"
+        )
 
         cursor.execute(query)
         r = cursor.fetchone()

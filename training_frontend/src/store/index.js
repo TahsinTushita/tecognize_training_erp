@@ -1,8 +1,8 @@
 import { createStore } from "vuex";
 import axios from "axios";
 
-axios.defaults.baseURL = "http://18.140.55.67/backend/api/";
-// axios.defaults.baseURL = "http://localhost:8080/backend/api/";
+// axios.defaults.baseURL = "http://18.140.55.67/backend/api/";
+axios.defaults.baseURL = "http://localhost:8080/backend/api/";
 
 export default createStore({
   state: {
@@ -32,6 +32,8 @@ export default createStore({
     saleList: [],
     saleCount: "",
     saleRecord: "",
+    receipts: [],
+    receiptCount: "",
   },
   mutations: {
     SET_INSTRUCTOR_LIST(state, instructorList) {
@@ -136,6 +138,14 @@ export default createStore({
 
     SET_SALE_RECORD(state, saleRecord) {
       state.saleRecord = saleRecord;
+    },
+
+    SET_RECEIPTS(state, receipts) {
+      state.receipts = receipts;
+    },
+
+    SET_RECEIPT_COUNT(state, receiptCount) {
+      state.receiptCount = receiptCount;
     },
   },
   actions: {
@@ -431,8 +441,8 @@ export default createStore({
         };
     },
 
-    addSaleRecord({ commit }, data) {
-      axios.post("sales", data).then((res) => {
+    async addSaleRecord({ commit }, data) {
+      await axios.post("sales", data).then((res) => {
         console.log(res.data);
       }),
         (error) => {
@@ -451,6 +461,35 @@ export default createStore({
 
     updateCorporateCustomerFees({ commit }, data) {
       axios.put("corporate-fee-update", data).then((res) => {
+        console.log(res.data);
+      }),
+        (error) => {
+          console.log(error);
+        };
+    },
+
+    getReceipts({ commit }) {
+      axios("receipts").then((res) => {
+        commit("SET_RECEIPTS", res.data);
+        console.log(res.data);
+      }),
+        (error) => {
+          console.log(error);
+        };
+    },
+
+    addReceipt({ commit }, data) {
+      axios.post("receipts", data).then((res) => {
+        console.log(res.data);
+      }),
+        (error) => {
+          console.log(error);
+        };
+    },
+
+    getReceiptCount({ commit }) {
+      axios("receipt-count").then((res) => {
+        commit("SET_RECEIPT_COUNT", res.data);
         console.log(res.data);
       }),
         (error) => {
@@ -545,6 +584,14 @@ export default createStore({
 
     saleCount: (state) => {
       return state.saleCount;
+    },
+
+    receipts: (state) => {
+      return state.receipts;
+    },
+
+    receiptCount: (state) => {
+      return state.receiptCount;
     },
   },
   modules: {},
