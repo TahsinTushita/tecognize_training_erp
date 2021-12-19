@@ -2124,10 +2124,12 @@ export default {
     getCorpTotal() {
       if (this.batchFee && this.corpUnits && this.discountFee) {
         this.corpTotalFee = this.batchFee * this.corpUnits - this.discountFee;
-        this.corpAmountInWords = numberToWords.toWords(this.corpTotalFee);
+        this.corpAmountInWords =
+          numberToWords.toWords(this.corpTotalFee).toUpperCase() + " TAKA";
       } else if (this.batchFee && this.corpUnits) {
         this.corpTotalFee = this.batchFee * this.corpUnits;
-        this.corpAmountInWords = numberToWords.toWords(this.corpTotalFee);
+        this.corpAmountInWords =
+          numberToWords.toWords(this.corpTotalFee).toUpperCase() + " TAKA";
       }
       return this.corpTotalFee;
 
@@ -2152,10 +2154,12 @@ export default {
     getCustTotal() {
       if (this.batchFee && this.discountFee) {
         this.custTotalFee = this.batchFee - this.discountFee;
-        this.custAmountInWords = numberToWords.toWords(this.custTotalFee);
+        this.custAmountInWords =
+          numberToWords.toWords(this.custTotalFee).toUpperCase() + " TAKA";
       } else if (this.batchFee) {
         this.custTotalFee = this.batchFee;
-        this.custAmountInWords = numberToWords.toWords(this.custTotalFee);
+        this.custAmountInWords =
+          numberToWords.toWords(this.custTotalFee).toUpperCase() + " TAKA";
       }
       return this.custTotalFee;
     },
