@@ -96,7 +96,10 @@ class Sale(models.Model):
     batch_id = models.ForeignKey(Batch, db_column="batch_id", on_delete=models.CASCADE)
     regular_fee = models.IntegerField()
     sale_fee = models.IntegerField()
-    paid_fee = models.IntegerField()
+    installment1 = models.IntegerField()
+    installment2 = models.IntegerField()
+    installment3 = models.IntegerField()
+    installment4 = models.IntegerField()
     due_fee = models.IntegerField()
     inst_id = models.ForeignKey(
         Instructor, db_column="inst_id", on_delete=models.CASCADE
@@ -116,24 +119,7 @@ class Sale(models.Model):
         blank=True,
         null=True,
     )
-
-
-class MoneyReceipt(models.Model):
-    cust_id = models.ForeignKey(
-        Retail_Customer,
-        db_column="cust_id",
-        on_delete=models.CASCADE,
-        blank=True,
-        null=True,
-    )
-    corp_id = models.ForeignKey(
-        Corporate_Customer,
-        db_column="corp_id",
-        on_delete=models.CASCADE,
-        blank=True,
-        null=True,
-    )
-    receipt = models.FileField()
-    batch_id = models.ForeignKey(Batch, db_column="batch_id", on_delete=models.CASCADE)
     pay_method = models.CharField(max_length=100)
-    check_ref_no = models.CharField(max_length=80)
+    check_ref_no = models.CharField(max_length=100)
+    curr_date = models.DateField()
+    check_date = models.DateField(blank=True, null=True)

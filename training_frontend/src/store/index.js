@@ -32,8 +32,6 @@ export default createStore({
     saleList: [],
     saleCount: "",
     saleRecord: "",
-    receipts: [],
-    receiptCount: "",
   },
   mutations: {
     SET_INSTRUCTOR_LIST(state, instructorList) {
@@ -138,14 +136,6 @@ export default createStore({
 
     SET_SALE_RECORD(state, saleRecord) {
       state.saleRecord = saleRecord;
-    },
-
-    SET_RECEIPTS(state, receipts) {
-      state.receipts = receipts;
-    },
-
-    SET_RECEIPT_COUNT(state, receiptCount) {
-      state.receiptCount = receiptCount;
     },
   },
   actions: {
@@ -477,25 +467,6 @@ export default createStore({
           console.log(error);
         };
     },
-
-    addReceipt({ commit }, data) {
-      axios.post("receipts", data).then((res) => {
-        console.log(res.data);
-      }),
-        (error) => {
-          console.log(error);
-        };
-    },
-
-    getReceiptCount({ commit }) {
-      axios("receipt-count").then((res) => {
-        commit("SET_RECEIPT_COUNT", res.data);
-        console.log(res.data);
-      }),
-        (error) => {
-          console.log(error);
-        };
-    },
   },
   getters: {
     instructorList: (state) => {
@@ -584,14 +555,6 @@ export default createStore({
 
     saleCount: (state) => {
       return state.saleCount;
-    },
-
-    receipts: (state) => {
-      return state.receipts;
-    },
-
-    receiptCount: (state) => {
-      return state.receiptCount;
     },
   },
   modules: {},

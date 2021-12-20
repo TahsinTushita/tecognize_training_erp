@@ -961,8 +961,18 @@
               />
             </div>
             <div class="flex justify-between items-center justify-center mb-5">
-              <h1 class="font-segoeUI text-xl font-bold text-receiptTextColor">
+              <h1
+                class="
+                  font-segoeUI
+                  text-xl
+                  font-bold
+                  text-receiptTextColor
+                  flex
+                  gap-2
+                "
+              >
                 SL NO:
+                <p class="text-black font-medium">{{ saleCount[0] + 1 }}</p>
               </h1>
               <div class="flex gap-2 items-center justify-center">
                 <h1
@@ -970,7 +980,7 @@
                 >
                   DATE:
                 </h1>
-                <input
+                <div
                   type="text"
                   class="
                     w-40
@@ -978,10 +988,12 @@
                     py-2
                     bg-transparent
                     border-b-2 border-receiptInputBorder
+                    flex
+                    items-start
                   "
-                  disabled
-                  v-model="date"
-                />
+                >
+                  {{ date }}
+                </div>
               </div>
             </div>
             <div class="grid grid-rows-1 place-items-start w-full mb-14">
@@ -998,7 +1010,7 @@
                 >
                   Received with Thanks From
                 </h1>
-                <input
+                <div
                   type="text"
                   class="
                     px-4
@@ -1009,10 +1021,12 @@
                     w-9/12
                     right-0
                     absolute
+                    flex
+                    items-start
                   "
-                  disabled
-                  v-model="custName"
-                />
+                >
+                  {{ custName }}
+                </div>
               </div>
               <div class="flex item-start w-full">
                 <h1
@@ -1020,7 +1034,7 @@
                 >
                   Address
                 </h1>
-                <input
+                <div
                   type="text"
                   class="
                     px-4
@@ -1029,10 +1043,12 @@
                     bg-transparent
                     border-b-2 border-receiptInputBorder
                     w-full
+                    flex
+                    items-start
                   "
-                  disabled
-                  v-model="custAddress"
-                />
+                >
+                  {{ custAddress }}
+                </div>
               </div>
               <div class="flex item-start w-full relative mb-12">
                 <h1
@@ -1047,7 +1063,7 @@
                 >
                   Payment Purpose
                 </h1>
-                <input
+                <div
                   type="text"
                   class="
                     px-4
@@ -1057,11 +1073,13 @@
                     border-b-2 border-receiptInputBorder
                     right-0
                     absolute
+                    flex
+                    items-start
                     w-10/12
                   "
-                  v-model="batchId"
-                  disabled
-                />
+                >
+                  {{ batchId }}
+                </div>
               </div>
 
               <div class="grid grid-cols-3 w-full gap-3 mb-12">
@@ -1078,7 +1096,8 @@
                   >
                     Payment Method
                   </h1>
-                  <input
+
+                  <div
                     type="text"
                     class="
                       px-4
@@ -1089,10 +1108,12 @@
                       right-0
                       absolute
                       w-1/2
+                      flex
+                      items-start
                     "
-                    disabled
-                    v-model="paymentMethod"
-                  />
+                  >
+                    {{ paymentMethod }}
+                  </div>
                 </div>
                 <div class="flex relative">
                   <h1
@@ -1107,7 +1128,7 @@
                   >
                     Check/Ref No.
                   </h1>
-                  <input
+                  <div
                     type="text"
                     class="
                       px-4
@@ -1117,10 +1138,13 @@
                       border-b-2 border-receiptInputBorder
                       right-0
                       absolute
+                      w-2/3
+                      flex
+                      items-start
                     "
-                    disabled
-                    v-model="checkRefNo"
-                  />
+                  >
+                    {{ checkRefNo }}
+                  </div>
                 </div>
                 <div class="flex w-full relative">
                   <h1
@@ -1135,7 +1159,7 @@
                   >
                     Check Date
                   </h1>
-                  <input
+                  <div
                     class="
                       px-4
                       h-10
@@ -1145,11 +1169,13 @@
                       w-2/3
                       right-0
                       absolute
+                      flex
+                      items-start
                     "
-                    disabled
-                    v-model="checkDate"
-                    placeholder="N/A"
-                  />
+                    aria-placeholder="N/A"
+                  >
+                    {{ checkDate }}
+                  </div>
                 </div>
               </div>
 
@@ -1159,7 +1185,8 @@
                 >
                   Amount
                 </h1>
-                <input
+
+                <div
                   type="text"
                   class="
                     px-4
@@ -1168,10 +1195,12 @@
                     bg-transparent
                     border-b-2 border-receiptInputBorder
                     w-full
+                    flex
+                    items-start
                   "
-                  disabled
-                  v-model="custTotalFee"
-                />
+                >
+                  {{ custTotalFee }}
+                </div>
               </div>
 
               <div class="flex w-full relative mb-12">
@@ -1187,7 +1216,7 @@
                 >
                   Amount in Word
                 </h1>
-                <input
+                <div
                   type="text"
                   class="
                     px-4
@@ -1198,10 +1227,12 @@
                     w-10/12
                     right-0
                     absolute
+                    flex
+                    items-start
                   "
-                  disabled
-                  v-model="custAmountInWords"
-                />
+                >
+                  {{ custAmountInWords }}
+                </div>
               </div>
               <div class="grid grid-cols-2 w-full gap-2">
                 <div class="flex relative">
@@ -1217,7 +1248,8 @@
                   >
                     Previous Receipt No.(If Any)
                   </label>
-                  <input
+
+                  <div
                     type="text"
                     class="
                       px-4
@@ -1228,10 +1260,12 @@
                       right-0
                       absolute
                       w-1/2
+                      flex
+                      items-start
                     "
-                    disabled
-                    placeholder="N/A"
-                  />
+                  >
+                    N/A
+                  </div>
                 </div>
                 <div class="flex relative">
                   <label
@@ -1246,7 +1280,7 @@
                   >
                     Due Amount
                   </label>
-                  <input
+                  <div
                     type="text"
                     class="
                       px-4
@@ -1257,10 +1291,12 @@
                       right-0
                       absolute
                       w-3/4
+                      flex
+                      items-start
                     "
-                    disabled
-                    v-model="custDueFee"
-                  />
+                  >
+                    {{ custDueFee }}
+                  </div>
                 </div>
               </div>
             </div>
@@ -1784,9 +1820,8 @@ export default {
       ],
       paymentMethod: "",
       checkRefNo: "",
-      checkDate: null,
+      checkDate: "",
       showCheckDate: false,
-      moneyReceipt: "",
     };
   },
   mounted() {
@@ -1797,7 +1832,7 @@ export default {
     this.$store.dispatch("getUserList");
     this.$store.dispatch("getCorporateCustomerCount");
     this.$store.dispatch("getRetailCustomerCount");
-    this.$store.dispatch("getReceiptCount");
+    this.$store.dispatch("getSaleCount");
     this.date = this.getDate();
   },
   methods: {
@@ -1927,26 +1962,36 @@ export default {
 
             await this.$store.dispatch("addRetailCustomer", custData);
             const saleData = {
+              id: this.saleCount[0] + 1,
+              batch_id: this.batchId,
               regular_fee: this.regularFee,
               sale_fee: this.custTotalFee,
-              paid_fee: this.custPaidFee,
+              installment1: this.custPaidFee,
+              installment2: 0,
+              installment3: 0,
+              installment4: 0,
               due_fee: this.custDueFee,
-              batch_id: this.batchId,
-              corp_id: this.corpId,
-              cust_id: cust_id,
               inst_id: this.instId,
               user_id: this.userId,
+              cust_id: cust_id,
+              corp_id: this.corpId,
               pay_method: this.paymentMethod,
+              check_ref_no: this.checkRefNo,
+              curr_date: this.date,
+              check_date: this.checkDate,
             };
             await this.$store.dispatch("addSaleRecord", saleData);
 
             // const receiptData = {
-            //   receipt_id: this.receiptCount[0] + 1,
             //   cust_id: cust_id,
             //   corp_id: this.corpId,
             //   receipt: this.moneyReceipt,
-            //   id:
+            //   batch_id: this.batchId,
+            //   pay_method: this.paymentMethod,
+            //   check_ref_no: this.checkRefNo,
             // };
+
+            // this.$store.dispatch("addReceipt", receiptData);
           }
         } else {
           const custData = {
@@ -1958,15 +2003,23 @@ export default {
 
           this.$store.dispatch("updateRetailCustomerFees", custData);
           const saleData = {
+            id: this.saleCount[0] + 1,
+            batch_id: this.batchId,
             regular_fee: this.regularFee,
             sale_fee: this.custTotalFee,
-            paid_fee: this.custPaidFee,
+            installment1: this.custPaidFee,
+            installment2: 0,
+            installment3: 0,
+            installment4: 0,
             due_fee: this.custDueFee,
-            batch_id: this.batchId,
-            corp_id: this.corpId,
-            cust_id: this.custId,
             inst_id: this.instId,
             user_id: this.userId,
+            cust_id: this.custId,
+            corp_id: this.corpId,
+            pay_method: this.paymentMethod,
+            check_ref_no: this.checkRefNo,
+            curr_date: this.date,
+            check_date: this.checkDate,
           };
           this.$store.dispatch("addSaleRecord", saleData);
         }
@@ -1993,17 +2046,26 @@ export default {
 
             await this.$store.dispatch("addCorporateCustomer", corpData);
             const saleData = {
+              id: this.saleCount[0] + 1,
+              batch_id: this.batchId,
               regular_fee: this.regularFee,
               sale_fee: this.corpTotalFee,
-              paid_fee: this.corpPaidFee,
+              installment1: this.corpPaidFee,
+              installment2: 0,
+              installment3: 0,
+              installment4: 0,
               due_fee: this.corpDueFee,
-              batch_id: this.batchId,
-              corp_id: corp_id,
-              cust_id: this.custId,
               inst_id: this.instId,
               user_id: this.userId,
+              cust_id: this.custId,
+              corp_id: corp_id,
+              pay_method: this.paymentMethod,
+              check_ref_no: this.checkRefNo,
+              curr_date: this.date,
+              check_date: this.checkDate,
             };
-            this.$store.dispatch("addSaleRecord", saleData);
+            await this.$store.dispatch("addSaleRecord", saleData);
+
             // });
             // this.showModal = true;
           }
@@ -2019,15 +2081,23 @@ export default {
           this.$store.dispatch("updateCorporateCustomerFees", corpData);
 
           const saleData = {
+            id: this.saleCount[0] + 1,
+            batch_id: this.batchId,
             regular_fee: this.regularFee,
             sale_fee: this.corpTotalFee,
-            paid_fee: this.corpPaidFee,
+            installment1: this.corpPaidFee,
+            installment2: 0,
+            installment3: 0,
+            installment4: 0,
             due_fee: this.corpDueFee,
-            batch_id: this.batchId,
-            corp_id: this.corpId,
-            cust_id: this.custId,
             inst_id: this.instId,
             user_id: this.userId,
+            cust_id: this.custId,
+            corp_id: this.corpId,
+            pay_method: this.paymentMethod,
+            check_ref_no: this.checkRefNo,
+            curr_date: this.date,
+            check_date: this.checkDate,
           };
           this.$store.dispatch("addSaleRecord", saleData);
         }
@@ -2103,7 +2173,6 @@ export default {
           new Date().toLocaleTimeString() +
           ".pdf";
         doc.save(filename);
-        this.moneyReceipt = doc;
       });
     },
 
@@ -2199,9 +2268,9 @@ export default {
       },
     },
 
-    receiptCount: {
+    saleCount: {
       get() {
-        return this.$store.getters.receiptCount;
+        return this.$store.getters.saleCount;
       },
     },
 

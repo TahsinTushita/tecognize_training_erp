@@ -8,7 +8,6 @@ from training_backend.models import (
     Course,
     Batch,
     Sale,
-    MoneyReceipt,
 )
 
 
@@ -111,27 +110,20 @@ class SaleSerializer(serializers.ModelSerializer):
         model = Sale
         fields = (
             "id",
+            "batch_id",
             "regular_fee",
             "sale_fee",
-            "paid_fee",
+            "installment1",
+            "installment2",
+            "installment3",
+            "installment4",
             "due_fee",
-            "batch_id",
-            "corp_id",
-            "cust_id",
             "inst_id",
             "user_id",
-        )
-
-
-class MoneyReceiptSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = MoneyReceipt
-        fields = (
-            "id",
             "cust_id",
             "corp_id",
-            "receipt",
-            "batch_id",
             "pay_method",
             "check_ref_no",
+            "curr_date",
+            "check_date",
         )
