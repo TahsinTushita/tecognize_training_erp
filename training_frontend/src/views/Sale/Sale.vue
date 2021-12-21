@@ -1377,8 +1377,18 @@
               />
             </div>
             <div class="flex justify-between items-center justify-center mb-5">
-              <h1 class="font-segoeUI text-xl font-bold text-receiptTextColor">
+              <h1
+                class="
+                  font-segoeUI
+                  text-xl
+                  font-bold
+                  text-receiptTextColor
+                  flex
+                  gap-2
+                "
+              >
                 SL NO:
+                <p class="text-black font-medium">{{ saleCount[0] + 1 }}</p>
               </h1>
               <div class="flex gap-2 items-center justify-center">
                 <h1
@@ -1386,7 +1396,7 @@
                 >
                   DATE:
                 </h1>
-                <input
+                <div
                   type="text"
                   class="
                     w-40
@@ -1394,10 +1404,12 @@
                     py-2
                     bg-transparent
                     border-b-2 border-receiptInputBorder
+                    flex
+                    items-start
                   "
-                  disabled
-                  v-model="date"
-                />
+                >
+                  {{ date }}
+                </div>
               </div>
             </div>
             <div class="grid grid-rows-1 place-items-start w-full mb-14">
@@ -1414,7 +1426,7 @@
                 >
                   Received with Thanks From
                 </h1>
-                <input
+                <div
                   type="text"
                   class="
                     px-4
@@ -1425,10 +1437,12 @@
                     w-9/12
                     right-0
                     absolute
+                    flex
+                    items-start
                   "
-                  disabled
-                  v-model="corpName"
-                />
+                >
+                  {{ corpName }}
+                </div>
               </div>
               <div class="flex item-start w-full">
                 <h1
@@ -1436,7 +1450,7 @@
                 >
                   Address
                 </h1>
-                <input
+                <div
                   type="text"
                   class="
                     px-4
@@ -1445,10 +1459,12 @@
                     bg-transparent
                     border-b-2 border-receiptInputBorder
                     w-full
+                    flex
+                    items-start
                   "
-                  disabled
-                  v-model="corpAddress"
-                />
+                >
+                  {{ corpAddress }}
+                </div>
               </div>
               <div class="flex item-start w-full relative mb-12">
                 <h1
@@ -1463,7 +1479,7 @@
                 >
                   Payment Purpose
                 </h1>
-                <input
+                <div
                   type="text"
                   class="
                     px-4
@@ -1473,11 +1489,13 @@
                     border-b-2 border-receiptInputBorder
                     right-0
                     absolute
+                    flex
+                    items-start
                     w-10/12
                   "
-                  v-model="batchId"
-                  disabled
-                />
+                >
+                  {{ batchId }}
+                </div>
               </div>
 
               <div class="grid grid-cols-3 w-full gap-3 mb-12">
@@ -1494,7 +1512,7 @@
                   >
                     Payment Method
                   </h1>
-                  <input
+                  <div
                     type="text"
                     class="
                       px-4
@@ -1505,10 +1523,12 @@
                       right-0
                       absolute
                       w-1/2
+                      flex
+                      items-start
                     "
-                    disabled
-                    v-model="paymentMethod"
-                  />
+                  >
+                    {{ paymentMethod }}
+                  </div>
                 </div>
                 <div class="flex relative">
                   <h1
@@ -1523,7 +1543,7 @@
                   >
                     Check/Ref No.
                   </h1>
-                  <input
+                  <div
                     type="text"
                     class="
                       px-4
@@ -1533,9 +1553,13 @@
                       border-b-2 border-receiptInputBorder
                       right-0
                       absolute
+                      w-2/3
+                      flex
+                      items-start
                     "
-                    disabled
-                  />
+                  >
+                    {{ checkRefNo }}
+                  </div>
                 </div>
                 <div class="flex w-full relative">
                   <h1
@@ -1550,8 +1574,7 @@
                   >
                     Check Date
                   </h1>
-                  <input
-                    type="text"
+                  <div
                     class="
                       px-4
                       h-10
@@ -1561,10 +1584,12 @@
                       w-2/3
                       right-0
                       absolute
+                      flex
+                      items-start
                     "
-                    disabled
-                    v-model="date"
-                  />
+                  >
+                    {{ checkDate }}
+                  </div>
                 </div>
               </div>
 
@@ -1574,7 +1599,7 @@
                 >
                   Amount
                 </h1>
-                <input
+                <div
                   type="text"
                   class="
                     px-4
@@ -1583,10 +1608,12 @@
                     bg-transparent
                     border-b-2 border-receiptInputBorder
                     w-full
+                    flex
+                    items-start
                   "
-                  disabled
-                  v-model="corpTotalFee"
-                />
+                >
+                  {{ corpTotalFee }}
+                </div>
               </div>
 
               <div class="flex w-full relative mb-12">
@@ -1602,7 +1629,7 @@
                 >
                   Amount in Word
                 </h1>
-                <input
+                <div
                   type="text"
                   class="
                     px-4
@@ -1613,10 +1640,12 @@
                     w-10/12
                     right-0
                     absolute
+                    flex
+                    items-start
                   "
-                  disabled
-                  v-model="corpAmountInWords"
-                />
+                >
+                  {{ corpAmountInWords }}
+                </div>
               </div>
               <div class="grid grid-cols-2 w-full gap-2">
                 <div class="flex relative">
@@ -1632,7 +1661,7 @@
                   >
                     Previous Receipt No.(If Any)
                   </label>
-                  <input
+                  <div
                     type="text"
                     class="
                       px-4
@@ -1643,10 +1672,12 @@
                       right-0
                       absolute
                       w-1/2
+                      flex
+                      items-start
                     "
-                    disabled
-                    placeholder="N/A"
-                  />
+                  >
+                    N/A
+                  </div>
                 </div>
                 <div class="flex relative">
                   <label
@@ -1661,7 +1692,7 @@
                   >
                     Due Amount
                   </label>
-                  <input
+                  <div
                     type="text"
                     class="
                       px-4
@@ -1672,10 +1703,12 @@
                       right-0
                       absolute
                       w-3/4
+                      flex
+                      items-start
                     "
-                    disabled
-                    v-model="corpDueFee"
-                  />
+                  >
+                    {{ corpDueFee }}
+                  </div>
                 </div>
               </div>
             </div>
@@ -1820,7 +1853,7 @@ export default {
       ],
       paymentMethod: "",
       checkRefNo: "",
-      checkDate: "",
+      checkDate: "N/A",
       showCheckDate: false,
     };
   },
@@ -1936,6 +1969,7 @@ export default {
     },
 
     async addSaleRecord() {
+      if (this.checkDate == "N/A") this.checkDate = this.date;
       if (this.customerType == "retail") {
         if (this.newCustomer == true) {
           if (this.custName.length >= 3) {
