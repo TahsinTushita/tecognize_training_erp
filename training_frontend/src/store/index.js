@@ -32,6 +32,7 @@ export default createStore({
     saleList: [],
     saleCount: "",
     saleRecord: "",
+    saleid: "",
   },
   mutations: {
     SET_INSTRUCTOR_LIST(state, instructorList) {
@@ -136,6 +137,10 @@ export default createStore({
 
     SET_SALE_RECORD(state, saleRecord) {
       state.saleRecord = saleRecord;
+    },
+
+    SET_SALE_ID(state, saleid) {
+      state.saleid = saleid;
     },
   },
   actions: {
@@ -440,6 +445,16 @@ export default createStore({
         };
     },
 
+    getSaleId({ commit }) {
+      axios("sale-id").then((res) => {
+        console.log(res.data);
+        commit("SET_SALE_ID", res.data);
+      }),
+        (error) => {
+          console.log(error);
+        };
+    },
+
     updateRetailCustomerFees({ commit }, data) {
       axios.put("retail-fee-update", data).then((res) => {
         console.log(res.data);
@@ -555,6 +570,10 @@ export default createStore({
 
     saleCount: (state) => {
       return state.saleCount;
+    },
+
+    saleid: (state) => {
+      return state.saleid;
     },
   },
   modules: {},

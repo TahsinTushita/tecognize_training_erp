@@ -972,7 +972,7 @@
                 "
               >
                 SL NO:
-                <p class="text-black font-medium">{{ saleCount[0] + 1 }}</p>
+                <p class="text-black font-medium">{{ saleid[0] + 1 }}</p>
               </h1>
               <div class="flex gap-2 items-center justify-center">
                 <h1
@@ -1388,7 +1388,7 @@
                 "
               >
                 SL NO:
-                <p class="text-black font-medium">{{ saleCount[0] + 1 }}</p>
+                <p class="text-black font-medium">{{ saleid[0] + 1 }}</p>
               </h1>
               <div class="flex gap-2 items-center justify-center">
                 <h1
@@ -1865,7 +1865,7 @@ export default {
     this.$store.dispatch("getUserList");
     this.$store.dispatch("getCorporateCustomerCount");
     this.$store.dispatch("getRetailCustomerCount");
-    this.$store.dispatch("getSaleCount");
+    this.$store.dispatch("getSaleId");
     this.date = this.getDate();
   },
   methods: {
@@ -1996,7 +1996,7 @@ export default {
 
             await this.$store.dispatch("addRetailCustomer", custData);
             const saleData = {
-              id: this.saleCount[0] + 1,
+              id: this.saleid[0] + 1,
               batch_id: this.batchId,
               regular_fee: this.regularFee,
               sale_fee: this.custTotalFee,
@@ -2037,7 +2037,7 @@ export default {
 
           this.$store.dispatch("updateRetailCustomerFees", custData);
           const saleData = {
-            id: this.saleCount[0] + 1,
+            id: this.saleid[0] + 1,
             batch_id: this.batchId,
             regular_fee: this.regularFee,
             sale_fee: this.custTotalFee,
@@ -2080,7 +2080,7 @@ export default {
 
             await this.$store.dispatch("addCorporateCustomer", corpData);
             const saleData = {
-              id: this.saleCount[0] + 1,
+              id: this.saleid[0] + 1,
               batch_id: this.batchId,
               regular_fee: this.regularFee,
               sale_fee: this.corpTotalFee,
@@ -2115,7 +2115,7 @@ export default {
           this.$store.dispatch("updateCorporateCustomerFees", corpData);
 
           const saleData = {
-            id: this.saleCount[0] + 1,
+            id: this.saleid[0] + 1,
             batch_id: this.batchId,
             regular_fee: this.regularFee,
             sale_fee: this.corpTotalFee,
@@ -2302,9 +2302,9 @@ export default {
       },
     },
 
-    saleCount: {
+    saleid: {
       get() {
-        return this.$store.getters.saleCount;
+        return this.$store.getters.saleid;
       },
     },
 

@@ -545,6 +545,13 @@ def retail_fee_update(request):
     return JsonResponse(r, safe=False)
 
 
+# @api_view(["GET"])
+# def retail_due_batches(request):
+#     cursor = connection.cursor()
+#     customer_data = JSONParser().parse(request)
+#     query = ""
+
+
 # Corporate customer
 
 
@@ -653,7 +660,7 @@ def corporate_fee_update(request):
 @api_view(["GET", "POST"])
 def sale_list(request):
     if request.method == "GET":
-        sale = Corporate_Customer.objects.all()
+        sale = Sale.objects.all()
 
         # corp_name = request.GET.get("corp_name", None)
         # if corp_name is not None:
@@ -713,3 +720,21 @@ def sale_count(request):
         r = cursor.fetchone()
         print(r)
         return JsonResponse(r, safe=False)
+
+
+@api_view(["GET"])
+def sale_id(request):
+    cursor = connection.cursor()
+    query = "SELECT id FROM training_backend_sale ORDER BY id DESC LIMIT 0,1"
+    cursor.execute(query)
+    r = cursor.fetchone()
+    print(r)
+    return JsonResponse(r, safe=False)
+
+
+# params=(
+#             customer_data["cust_total_fee"],
+#             customer_data["cust_paid_fee"],
+#             customer_data["cust_due_fee"],
+#             customer_data["cust_id"],
+#         ),
