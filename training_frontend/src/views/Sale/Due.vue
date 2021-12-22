@@ -658,10 +658,13 @@
                     items-start
                     gap-2
                   "
-                  v-for="(receipt, index) in previousReceipts"
-                  :key="index"
                 >
-                  {{ receipt }}
+                  <div
+                    v-for="(receipt, index) in previousReceipts"
+                    :key="index"
+                  >
+                    {{ receipt }}
+                  </div>
                 </div>
               </div>
               <div class="flex relative">
@@ -749,7 +752,7 @@
   </button>
   <button
     class="bg-green-200 px-4 py-2 rounded-md hover:bg-green-300 m-20 text-xl"
-    @click="addSaleRecord"
+    @click="clearDue"
   >
     Clear Due
   </button>
@@ -796,12 +799,17 @@ export default {
       installment3: 0,
       installment4: 0,
       dueFee: 0,
-      inst_id: "",
-      user_id: "",
+      instId: "",
+      userId: "",
       address: "",
       batchList: [],
       amountInWords: "",
       previousReceipts: [],
+      prevCustTotalFee: "",
+      prevCustDueFee: "",
+      prevCustPaidFee: "",
+      prevDueFee: "",
+      corpUnits: "",
     };
   },
 
@@ -835,6 +843,9 @@ export default {
             this.name = customer.cust_name;
             this.custid = customer.cust_id;
             this.address = customer.cust_address;
+            this.prevCustTotalFee = customer.cust_total_fee;
+            this.prevCustPaidFee = customer.cust_paid_fee;
+            this.prevCustDueFee = customer.cust_due_fee;
           }
         });
         let tempBatchList = [];
@@ -855,7 +866,6 @@ export default {
                 }
               }
             });
-            console.log(due);
             if (due != 0 && !this.batchList.includes(batch))
               this.batchList.push(batch);
           });
@@ -866,6 +876,10 @@ export default {
             this.name = customer.corp_name;
             this.custid = customer.corp_id;
             this.address = customer.corp_address;
+            this.prevCustTotalFee = customer.corp_total_fee;
+            this.prevCustPaidFee = customer.corp_paid_fee;
+            this.prevCustDueFee = customer.corp_due_fee;
+            this.corpUnits = customer.corp_units;
           }
         });
 
@@ -911,6 +925,9 @@ export default {
       this.installment4 = this.batchId.installment4;
       this.regularFee = this.batchId.regular_fee;
       this.dueFee = this.batchId.due_fee;
+      this.instId = this.batchId.inst_id;
+      this.userId = this.batchId.user_id;
+      this.prevDueFee = this.batchId.due_fee;
       this.amountInWords =
         numberToWords.toWords(this.totalFee).toUpperCase() + " TAKA";
       this.previousReceipts = [];
@@ -962,6 +979,74 @@ export default {
           ".pdf";
         doc.save(filename);
       });
+    },
+
+    clearDue() {
+      if (this.customerType == this.customerTypes[0].type) {
+        const custData = {
+          cust_id: this.custid,
+          cust_total_fee: this.prevCustTotalFee,
+          cust_paid_fee: this.prevCustPaidFee + (this.prevDueFee - this.dueFee),
+          cust_due_fee: this.prevCustDueFee - (this.prevDueFee - this.dueFee),
+        };
+
+        this.$store.dispatch("updateRetailCustomerFees", custData);
+        if (this.checkDate == "N/A") this.checkDate = this.date;
+
+        const saleData = {
+          id: this.saleid[0] + 1,
+          batch_id: this.batchId.batch_id,
+          regular_fee: this.regularFee,
+          sale_fee: this.totalFee,
+          installment1: this.installment1,
+          installment2: this.installment2,
+          installment3: this.installment3,
+          installment4: this.installment4,
+          due_fee: this.dueFee,
+          inst_id: this.instId,
+          user_id: this.userId,
+          cust_id: this.custid,
+          corp_id: "",
+          pay_method: this.paymentMethod,
+          check_ref_no: this.checkRefNo,
+          curr_date: this.date,
+          check_date: this.checkDate,
+        };
+        this.$store.dispatch("addSaleRecord", saleData);
+      } else {
+        const corpData = {
+          corp_id: this.custid,
+          corp_total_fee: this.prevCustTotalFee,
+          corp_paid_fee: this.prevCustPaidFee + (this.prevDueFee - this.dueFee),
+          corp_due_fee: this.prevCustDueFee - (this.prevDueFee - this.dueFee),
+          corp_units: this.corpUnits,
+        };
+
+        this.$store.dispatch("updateCorporateCustomerFees", corpData);
+        if (this.checkDate == "N/A") this.checkDate = this.date;
+
+        const saleData = {
+          id: this.saleid[0] + 1,
+          batch_id: this.batchId.batch_id,
+          regular_fee: this.regularFee,
+          sale_fee: this.totalFee,
+          installment1: this.installment1,
+          installment2: this.installment2,
+          installment3: this.installment3,
+          installment4: this.installment4,
+          due_fee: this.dueFee,
+          inst_id: this.instId,
+          user_id: this.userId,
+          cust_id: "",
+          corp_id: this.custid,
+          pay_method: this.paymentMethod,
+          check_ref_no: this.checkRefNo,
+          curr_date: this.date,
+          check_date: this.checkDate,
+        };
+        this.$store.dispatch("addSaleRecord", saleData);
+      }
+      window.location.reload();
     },
   },
 
