@@ -181,8 +181,12 @@
             "
             @change="setFees"
           >
-            <option v-for="batch in batchList" :value="batch" :key="batch.id">
-              {{ batch.batch_id }}
+            <option
+              v-for="(batch, index) in tempBatchList"
+              :value="batch"
+              :key="index"
+            >
+              {{ batch }}
             </option>
           </select>
         </div>
@@ -473,7 +477,7 @@
                   w-10/12
                 "
               >
-                {{ batchId.batch_id }}
+                {{ batchId }}
               </div>
             </div>
 
@@ -810,6 +814,8 @@ export default {
       prevCustPaidFee: "",
       prevDueFee: "",
       corpUnits: "",
+      tempBatchList: [],
+      tempRecords: [],
     };
   },
 
@@ -848,27 +854,17 @@ export default {
             this.prevCustDueFee = customer.cust_due_fee;
           }
         });
-        let tempBatchList = [];
-        this.batchList = [];
+
+        this.tempBatchList = [];
+        this.tempRecords = [];
+
         this.saleList.filter((record) => {
           if (record.cust_id == this.custid) {
-            if (!tempBatchList.includes(record)) {
-              tempBatchList.push(record);
+            this.tempRecords.push(record);
+            if (!this.tempBatchList.includes(record.batch_id)) {
+              this.tempBatchList.push(record.batch_id);
             }
           }
-
-          tempBatchList.filter((batch) => {
-            let due = 9007199254740991;
-            this.saleList.filter((record) => {
-              if (record.batch_id == batch.batch_id) {
-                if (record.due_fee < due) {
-                  due = record.due_fee;
-                }
-              }
-            });
-            if (due != 0 && !this.batchList.includes(batch))
-              this.batchList.push(batch);
-          });
         });
       } else {
         this.corporateCustomerList.filter((customer) => {
@@ -883,29 +879,41 @@ export default {
           }
         });
 
-        let tempBatchList = [];
-        this.batchList = [];
+        this.tempBatchList = [];
+        this.tempRecords = [];
+
         this.saleList.filter((record) => {
           if (record.corp_id == this.custid) {
-            if (!tempBatchList.includes(record)) {
-              tempBatchList.push(record);
+            this.tempRecords.push(record);
+            if (!this.tempBatchList.includes(record.batch_id)) {
+              this.tempBatchList.push(record.batch_id);
             }
           }
-
-          tempBatchList.filter((batch) => {
-            let due = 9007199254740991;
-            this.saleList.filter((record) => {
-              if (record.batch_id == batch.batch_id) {
-                if (record.due_fee < due) {
-                  due = record.due_fee;
-                }
-              }
-            });
-            console.log(due);
-            if (due != 0 && !this.batchList.includes(batch))
-              this.batchList.push(batch);
-          });
         });
+
+        // let tempBatchList = [];
+        // this.batchList = [];
+        // this.saleList.filter((record) => {
+        //   if (record.corp_id == this.custid) {
+        //     if (!tempBatchList.includes(record)) {
+        //       tempBatchList.push(record);
+        //     }
+        //   }
+
+        //   tempBatchList.filter((batch) => {
+        //     let due = 9007199254740991;
+        //     this.saleList.filter((record) => {
+        //       if (record.batch_id == batch.batch_id) {
+        //         if (record.due_fee < due) {
+        //           due = record.due_fee;
+        //         }
+        //       }
+        //     });
+        //     console.log(due);
+        //     if (due != 0 && !this.batchList.includes(batch))
+        //       this.batchList.push(batch);
+        //   });
+        // });
 
         // this.saleList.filter((record) => {
         //   if (record.corp_id == this.custid) {
@@ -918,32 +926,90 @@ export default {
     },
 
     setFees() {
-      this.totalFee = this.batchId.sale_fee;
-      this.installment1 = this.batchId.installment1;
-      this.installment2 = this.batchId.installment2;
-      this.installment3 = this.batchId.installment3;
-      this.installment4 = this.batchId.installment4;
-      this.regularFee = this.batchId.regular_fee;
-      this.dueFee = this.batchId.due_fee;
-      this.instId = this.batchId.inst_id;
-      this.userId = this.batchId.user_id;
-      this.prevDueFee = this.batchId.due_fee;
-      this.amountInWords =
-        numberToWords.toWords(this.totalFee).toUpperCase() + " TAKA";
       this.previousReceipts = [];
-      this.saleList.filter((record) => {
-        if (record.batch_id == this.batchId.batch_id) {
-          if (this.customerType == this.customerTypes[0].type) {
-            if (record.cust_id == this.custid) {
-              this.previousReceipts.push(record.id);
-            }
-          } else {
-            if (record.corp_id == this.custid) {
-              this.previousReceipts.push(record.id);
-            }
+      this.tempRecords.filter((record) => {
+        if (record.batch_id == this.batchId) {
+          this.totalFee = record.sale_fee;
+          this.installment1 = record.installment1;
+          if (record.installment2 > 0) {
+            this.installment2 = record.installment2;
           }
+          if (record.installment3 > 0) {
+            this.installment3 = record.installment3;
+          }
+          if (record.installment4 > 0) {
+            this.installment4 = record.installment4;
+          }
+          this.regularFee = record.regular_fee;
+          this.instId = this.batchId.inst_id;
+          this.userId = this.batchId.user_id;
+          this.previousReceipts.push(record.id);
         }
       });
+
+      this.prevDueFee =
+        this.totalFee -
+        (this.installment1 +
+          this.installment2 +
+          this.installment3 +
+          this.installment4);
+
+      this.amountInWords =
+        numberToWords.toWords(this.totalFee).toUpperCase() + " TAKA";
+
+      // this.totalFee = this.batchId.sale_fee;
+      // this.installment1 = this.batchId.installment1;
+      // this.installment2 = this.batchId.installment2;
+      // this.installment3 = this.batchId.installment3;
+      // this.installment4 = this.batchId.installment4;
+      // this.regularFee = this.batchId.regular_fee;
+      // this.dueFee = this.batchId.due_fee;
+      // this.instId = this.batchId.inst_id;
+      // this.userId = this.batchId.user_id;
+      // this.prevDueFee = this.batchId.due_fee;
+      // this.amountInWords =
+      //   numberToWords.toWords(this.totalFee).toUpperCase() + " TAKA";
+      // this.previousReceipts = [];
+      // this.saleList.filter((record) => {
+      //   if (record.batch_id == this.batchId.batch_id) {
+      //     if (this.customerType == this.customerTypes[0].type) {
+      //       if (record.cust_id == this.custid) {
+      //         this.previousReceipts.push(record.id);
+      //       }
+      //     } else {
+      //       if (record.corp_id == this.custid) {
+      //         this.previousReceipts.push(record.id);
+      //       }
+      //     }
+      //   }
+      // });
+
+      // this.totalFee = this.batchId.sale_fee;
+      // this.installment1 = this.batchId.installment1;
+      // this.installment2 = this.batchId.installment2;
+      // this.installment3 = this.batchId.installment3;
+      // this.installment4 = this.batchId.installment4;
+      // this.regularFee = this.batchId.regular_fee;
+      // this.dueFee = this.batchId.due_fee;
+      // this.instId = this.batchId.inst_id;
+      // this.userId = this.batchId.user_id;
+      // this.prevDueFee = this.batchId.due_fee;
+      // this.amountInWords =
+      //   numberToWords.toWords(this.totalFee).toUpperCase() + " TAKA";
+      // this.previousReceipts = [];
+      // this.saleList.filter((record) => {
+      //   if (record.batch_id == this.batchId.batch_id) {
+      //     if (this.customerType == this.customerTypes[0].type) {
+      //       if (record.cust_id == this.custid) {
+      //         this.previousReceipts.push(record.id);
+      //       }
+      //     } else {
+      //       if (record.corp_id == this.custid) {
+      //         this.previousReceipts.push(record.id);
+      //       }
+      //     }
+      //   }
+      // });
     },
 
     downloadReceipt() {
@@ -995,7 +1061,7 @@ export default {
 
         const saleData = {
           id: this.saleid[0] + 1,
-          batch_id: this.batchId.batch_id,
+          batch_id: this.batchId,
           regular_fee: this.regularFee,
           sale_fee: this.totalFee,
           installment1: this.installment1,
@@ -1027,7 +1093,7 @@ export default {
 
         const saleData = {
           id: this.saleid[0] + 1,
-          batch_id: this.batchId.batch_id,
+          batch_id: this.batchId,
           regular_fee: this.regularFee,
           sale_fee: this.totalFee,
           installment1: this.installment1,
@@ -1046,7 +1112,7 @@ export default {
         };
         this.$store.dispatch("addSaleRecord", saleData);
       }
-      window.location.reload();
+      // window.location.reload();
     },
   },
 
