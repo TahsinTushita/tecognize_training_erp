@@ -448,7 +448,13 @@ export default createStore({
     getSaleId({ commit }) {
       axios("sale-id").then((res) => {
         console.log(res.data);
-        commit("SET_SALE_ID", res.data);
+        let saleid = [];
+        if (res.data == null) {
+          saleid.push(0);
+          commit("SET_SALE_ID", saleid);
+        } else {
+          commit("SET_SALE_ID", res.data);
+        }
       }),
         (error) => {
           console.log(error);

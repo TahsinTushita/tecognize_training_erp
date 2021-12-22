@@ -1768,7 +1768,6 @@
   <button
     class="bg-green-200 px-4 py-2 rounded-md hover:bg-green-300 m-20 text-xl"
     @click="addSaleRecord"
-    :disabled="notPrinted"
   >
     Sale
   </button>
@@ -2151,14 +2150,14 @@ export default {
 
     generateSalesReceipt() {
       if (this.customerType == "retail") {
-        this.corporateReceipt = false;
+        // alert("hyhyhyh");
+        // this.corporateReceipt = false;
         this.retailReceipt = true;
       } else {
-        this.retailReceipt = false;
+        // this.retailReceipt = false;
         this.corporateReceipt = true;
       }
-
-      this.notPrinted = false;
+      // this.notPrinted = false;
     },
 
     setUserName() {

@@ -941,8 +941,8 @@ export default {
             this.installment4 = record.installment4;
           }
           this.regularFee = record.regular_fee;
-          this.instId = this.batchId.inst_id;
-          this.userId = this.batchId.user_id;
+          this.instId = record.inst_id;
+          this.userId = record.user_id;
           this.previousReceipts.push(record.id);
         }
       });
@@ -1037,7 +1037,7 @@ export default {
         let filename =
           this.name +
           "_" +
-          this.batchId.batch_id +
+          this.batchId +
           "_" +
           new Date().toLocaleDateString() +
           "_" +
@@ -1112,7 +1112,7 @@ export default {
         };
         this.$store.dispatch("addSaleRecord", saleData);
       }
-      // window.location.reload();
+      window.location.reload();
     },
   },
 
