@@ -123,3 +123,6 @@ class Sale(models.Model):
     check_ref_no = models.CharField(max_length=100)
     curr_date = models.DateField()
     check_date = models.DateField(blank=True, null=True)
+    name = models.CharField(max_length=100, blank=True)
+    address = models.CharField(max_length=200, blank=True)
+    prev_receipts = models.CharField(max_length=100, blank=True)

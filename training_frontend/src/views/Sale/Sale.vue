@@ -1854,6 +1854,7 @@ export default {
       checkRefNo: "",
       checkDate: "N/A",
       showCheckDate: false,
+      prevReceipts: "N/A",
     };
   },
   mounted() {
@@ -2012,6 +2013,9 @@ export default {
               check_ref_no: this.checkRefNo,
               curr_date: this.date,
               check_date: this.checkDate,
+              name: this.custName,
+              address: this.custAddress,
+              prev_receipts: this.prevReceipts,
             };
             await this.$store.dispatch("addSaleRecord", saleData);
 
@@ -2053,6 +2057,9 @@ export default {
             check_ref_no: this.checkRefNo,
             curr_date: this.date,
             check_date: this.checkDate,
+            name: this.custName,
+            address: this.custAddress,
+            prev_receipts: this.prevReceipts,
           };
           this.$store.dispatch("addSaleRecord", saleData);
         }
@@ -2096,6 +2103,9 @@ export default {
               check_ref_no: this.checkRefNo,
               curr_date: this.date,
               check_date: this.checkDate,
+              name: this.corpName,
+              address: this.corpAddress,
+              prev_receipts: this.prevReceipts,
             };
             await this.$store.dispatch("addSaleRecord", saleData);
 
@@ -2131,6 +2141,9 @@ export default {
             check_ref_no: this.checkRefNo,
             curr_date: this.date,
             check_date: this.checkDate,
+            name: this.corpName,
+            address: this.corpAddress,
+            prev_receipts: this.prevReceipts,
           };
           this.$store.dispatch("addSaleRecord", saleData);
         }

@@ -23,7 +23,7 @@ import AddCorporateCustomer from "../views/CorporateCustomer/AddCorporateCustome
 import CorporateCustomerList from "../views/CorporateCustomer/CorporateCustomerList.vue";
 import CorporateCustomerDetails from "../views/CorporateCustomer/CorporateCustomerDetails.vue";
 import Sale from "../views/Sale/Sale.vue";
-import SaleList from "../views/Sale/SaleList.vue";
+import SaleRecords from "../views/Sale/SaleRecords.vue";
 import Due from "../views/Sale/Due.vue";
 
 const routes = [
@@ -146,8 +146,8 @@ const routes = [
   },
   {
     path: "/sale-list",
-    name: "SaleList",
-    component: SaleList,
+    name: "SaleRecords",
+    component: SaleRecords,
   },
   {
     path: "/due",

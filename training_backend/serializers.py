@@ -126,4 +126,7 @@ class SaleSerializer(serializers.ModelSerializer):
             "check_ref_no",
             "curr_date",
             "check_date",
+            "name",
+            "address",
+            "prev_receipts",
         )

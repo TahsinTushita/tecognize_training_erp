@@ -663,12 +663,13 @@
                     gap-2
                   "
                 >
-                  <div
+                  {{ prevReceipts }}
+                  <!-- <div
                     v-for="(receipt, index) in previousReceipts"
                     :key="index"
                   >
                     {{ receipt }}
-                  </div>
+                  </div> -->
                 </div>
               </div>
               <div class="flex relative">
@@ -816,6 +817,7 @@ export default {
       corpUnits: "",
       tempBatchList: [],
       tempRecords: [],
+      prevReceipts: "",
     };
   },
 
@@ -927,6 +929,7 @@ export default {
 
     setFees() {
       this.previousReceipts = [];
+      this.prevReceipts = "";
       this.tempRecords.filter((record) => {
         if (record.batch_id == this.batchId) {
           this.totalFee = record.sale_fee;
@@ -944,6 +947,7 @@ export default {
           this.instId = record.inst_id;
           this.userId = record.user_id;
           this.previousReceipts.push(record.id);
+          this.prevReceipts = this.prevReceipts + " " + String(record.id);
         }
       });
 
@@ -1077,6 +1081,9 @@ export default {
           check_ref_no: this.checkRefNo,
           curr_date: this.date,
           check_date: this.checkDate,
+          name: this.name,
+          address: this.address,
+          prev_receipts: this.prevReceipts,
         };
         this.$store.dispatch("addSaleRecord", saleData);
       } else {
@@ -1109,6 +1116,9 @@ export default {
           check_ref_no: this.checkRefNo,
           curr_date: this.date,
           check_date: this.checkDate,
+          name: this.name,
+          address: this.address,
+          prev_receipts: this.prevReceipts,
         };
         this.$store.dispatch("addSaleRecord", saleData);
       }

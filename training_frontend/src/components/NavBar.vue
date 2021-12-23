@@ -180,8 +180,8 @@
               <router-link :to="{ name: 'Sale' }" class="text-lg">
                 Sale
               </router-link>
-              <router-link :to="{ name: 'SaleList' }" class="text-lg"
-                >Sale List
+              <router-link :to="{ name: 'SaleRecords' }" class="text-lg"
+                >Sale Records
               </router-link>
               <router-link :to="{ name: 'Due' }" class="text-lg"
                 >Due
