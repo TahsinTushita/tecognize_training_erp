@@ -3,95 +3,142 @@
   <table class="m-10">
     <thead>
       <tr>
-        <th class="px-4 py-4 text-center border-2">ID</th>
-        <th class="px-4 py-4 text-center border-2">Customer Name</th>
-        <th class="px-4 py-4 text-center border-2">Previous Receipts</th>
-        <th class="px-4 py-4 text-center border-2">Regular Fee</th>
-        <th class="px-4 py-4 text-center border-2">Sale Fee</th>
-        <th class="px-4 py-4 text-center border-2">Installment 1</th>
-        <th class="px-4 py-4 text-center border-2">Installment 2</th>
-        <th class="px-4 py-4 text-center border-2">Installment 3</th>
-        <th class="px-4 py-4 text-center border-2">Installment 4</th>
-        <th class="px-4 py-4 text-center border-2">Due Fee</th>
-        <th class="px-4 py-4 text-center border-2">Payment Method</th>
-        <th class="px-4 py-4 text-center border-2">Check/Ref No.</th>
+        <th class="px-4 py-4 text-center border-2">Serial</th>
+        <th class="px-4 py-4 text-center border-2">Participants ID</th>
+        <th class="px-4 py-4 text-center border-2">Name</th>
+        <th class="px-4 py-4 text-center border-2">Email</th>
+        <th class="px-4 py-4 text-center border-2">Phone</th>
+        <th class="px-4 py-4 text-center border-2">Address</th>
+        <th class="px-4 py-4 text-center border-2">Organization</th>
+        <th class="px-4 py-4 text-center border-2">Designation</th>
+        <th class="px-4 py-4 text-center border-2">Registered Course</th>
+        <th class="px-4 py-4 text-center border-2">Batch Fee</th>
+        <th class="px-4 py-4 text-center border-2">1st Installment</th>
+        <th class="px-4 py-4 text-center border-2">MR No.</th>
         <th class="px-4 py-4 text-center border-2">Date</th>
-        <th class="px-4 py-4 text-center border-2">Check Date</th>
-        <th class="px-4 py-4 text-center border-2">Batch</th>
-        <th class="px-4 py-4 text-center border-2">Corporate ID</th>
-        <th class="px-4 py-4 text-center border-2">Customer ID</th>
-        <th class="px-4 py-4 text-center border-2">Instructor ID</th>
+        <th class="px-4 py-4 text-center border-2">Payment Method</th>
+        <th class="px-4 py-4 text-center border-2">2nd Installment</th>
+        <th class="px-4 py-4 text-center border-2">MR No.</th>
+        <th class="px-4 py-4 text-center border-2">Date</th>
+        <th class="px-4 py-4 text-center border-2">Pay Mode</th>
+        <th class="px-4 py-4 text-center border-2">3rd Installment</th>
+        <th class="px-4 py-4 text-center border-2">MR No.</th>
+        <th class="px-4 py-4 text-center border-2">Date</th>
+        <th class="px-4 py-4 text-center border-2">Pay Mode</th>
+        <th class="px-4 py-4 text-center border-2">4th Installment</th>
+        <th class="px-4 py-4 text-center border-2">MR No.</th>
+        <th class="px-4 py-4 text-center border-2">Date</th>
+        <th class="px-4 py-4 text-center border-2">Pay Mode</th>
+        <th class="px-4 py-4 text-center border-2">Total Paid</th>
+        <th class="px-4 py-4 text-center border-2">Total Due</th>
         <th class="px-4 py-4 text-center border-2">User ID</th>
-        <th class="px-4 py-4 text-center border-2">Receipt</th>
+        <th class="px-4 py-4 text-center border-2">Remarks</th>
       </tr>
     </thead>
-    <tbody v-if="saleList.length">
-      <tr v-for="record in saleList" :key="record.id" class="hover:bg-gray-100">
+    <tbody v-if="saleCustomerList.length">
+      <tr
+        v-for="record in saleCustomerList"
+        :key="record.id"
+        class="hover:bg-gray-100"
+      >
         <td class="px-4 py-4 text-center border-2">
           {{ record.id }}
         </td>
         <td class="px-4 py-4 text-center border-2">
-          {{ record.name }}
+          {{ record.cust_id }}
         </td>
         <td class="px-4 py-4 text-center border-2">
-          {{ record.prev_receipts }}
+          {{ record.cust_name }}
         </td>
         <td class="px-4 py-4 text-sm text-center border-2">
-          {{ record.regular_fee }}
+          {{ record.cust_email }}
         </td>
         <td class="px-4 py-4 text-sm text-center border-2">
-          {{ record.sale_fee }}
+          {{ record.cust_phone }}
         </td>
         <td class="px-4 py-4 text-sm text-center border-2">
-          {{ record.installment1 }}
+          {{ record.cust_address }}
         </td>
         <td class="px-4 py-4 text-sm text-center border-2">
-          {{ record.installment2 }}
+          {{ record.cust_organization }}
         </td>
         <td class="px-4 py-4 text-sm text-center border-2">
-          {{ record.installment3 }}
-        </td>
-        <td class="px-4 py-4 text-sm text-center border-2">
-          {{ record.installment4 }}
-        </td>
-        <td class="px-4 py-4 text-sm text-center border-2">
-          {{ record.due_fee }}
-        </td>
-        <td class="px-4 py-4 text-sm text-center border-2">
-          {{ record.pay_method }}
-        </td>
-        <td class="px-4 py-4 text-sm text-center border-2">
-          {{ record.check_ref_no }}
-        </td>
-        <td class="px-4 py-4 text-sm text-center border-2">
-          {{ record.curr_date }}
-        </td>
-        <td class="px-4 py-4 text-sm text-center border-2">
-          {{ record.check_date }}
+          {{ record.cust_designation }}
         </td>
         <td class="px-4 py-4 text-sm text-center border-2">
           {{ record.batch_id }}
         </td>
         <td class="px-4 py-4 text-sm text-center border-2">
-          {{ record.corp_id }}
+          {{ record.batch_fee }}
         </td>
         <td class="px-4 py-4 text-sm text-center border-2">
-          {{ record.cust_id }}
+          {{ record.installment1 }}
         </td>
         <td class="px-4 py-4 text-sm text-center border-2">
-          {{ record.inst_id }}
+          {{ record.mr_no1 }}
+        </td>
+        <td class="px-4 py-4 text-sm text-center border-2">
+          {{ record.date1 }}
+        </td>
+        <td class="px-4 py-4 text-sm text-center border-2">
+          {{ record.pay_mode1 }}
+        </td>
+        <td class="px-4 py-4 text-sm text-center border-2">
+          {{ record.installment2 }}
+        </td>
+        <td class="px-4 py-4 text-sm text-center border-2">
+          {{ record.mr_no2 }}
+        </td>
+        <td class="px-4 py-4 text-sm text-center border-2">
+          {{ record.date2 }}
+        </td>
+        <td class="px-4 py-4 text-sm text-center border-2">
+          {{ record.pay_mode2 }}
+        </td>
+        <td class="px-4 py-4 text-sm text-center border-2">
+          {{ record.installment3 }}
+        </td>
+        <td class="px-4 py-4 text-sm text-center border-2">
+          {{ record.mr_no3 }}
+        </td>
+        <td class="px-4 py-4 text-sm text-center border-2">
+          {{ record.date3 }}
+        </td>
+        <td class="px-4 py-4 text-sm text-center border-2">
+          {{ record.pay_mode3 }}
+        </td>
+        <td class="px-4 py-4 text-sm text-center border-2">
+          {{ record.installment4 }}
+        </td>
+        <td class="px-4 py-4 text-sm text-center border-2">
+          {{ record.mr_no4 }}
+        </td>
+        <td class="px-4 py-4 text-sm text-center border-2">
+          {{ record.date4 }}
+        </td>
+        <td class="px-4 py-4 text-sm text-center border-2">
+          {{ record.pay_mode4 }}
+        </td>
+        <td class="px-4 py-4 text-sm text-center border-2">
+          {{ record.paid }}
+        </td>
+        <td class="px-4 py-4 text-sm text-center border-2">
+          {{ record.due }}
         </td>
         <td class="px-4 py-4 text-sm text-center border-2">
           {{ record.user_id }}
         </td>
-        <td class="text-sm px-2 border-2">
+        <td class="px-4 py-4 text-sm text-center border-2">
+          {{ record.remarks }}
+        </td>
+        <!-- <td class="text-sm px-2 border-2">
           <button
             class="py-2 bg-green bg-green-200 hover:bg-green-300"
             @click="setReceiptData(record)"
           >
             Download receipt
           </button>
-        </td>
+        </td> -->
       </tr>
     </tbody>
   </table>
@@ -530,9 +577,7 @@ export default {
   },
 
   mounted() {
-    this.$store.dispatch("getSaleList");
-    this.$store.dispatch("getRetailCustomerList");
-    this.$store.dispatch("getCorporateCustomerList");
+    this.$store.dispatch("getSaleCustomerList");
   },
 
   methods: {
@@ -613,21 +658,9 @@ export default {
   },
 
   computed: {
-    saleList: {
+    saleCustomerList: {
       get() {
-        return this.$store.getters.saleList;
-      },
-    },
-
-    retailCustomerList: {
-      get() {
-        return this.$store.getters.retailCustomerList;
-      },
-    },
-
-    corporateCustomerList: {
-      get() {
-        return this.$store.getters.corporateCustomerList;
+        return this.$store.getters.saleCustomerList;
       },
     },
   },

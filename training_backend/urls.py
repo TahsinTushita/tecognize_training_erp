@@ -40,4 +40,5 @@ urlpatterns = [
     url(r"^backend/api/sale-id$", views.sale_id),
     url(r"^backend/api/sale-update$", views.sale_update),
     url(r"^backend/api/sale-list$", views.sale_list),
+    url(r"^backend/api/sale-customer-list$", views.sale_report_with_customers),
 ]

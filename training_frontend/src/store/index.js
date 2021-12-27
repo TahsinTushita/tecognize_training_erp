@@ -34,6 +34,7 @@ export default createStore({
     saleRecord: "",
     saleid: "",
     receipt4: "",
+    saleCustomerList: [],
   },
   mutations: {
     SET_INSTRUCTOR_LIST(state, instructorList) {
@@ -146,6 +147,10 @@ export default createStore({
 
     SET_RECEIPT4(state, receipt4) {
       state.receipt4 = receipt4;
+    },
+
+    SET_SALE_CUSTOMER_LIST(state, saleCustomerList) {
+      state.saleCustomerList = saleCustomerList;
     },
   },
   actions: {
@@ -502,6 +507,16 @@ export default createStore({
           console.log(error);
         };
     },
+
+    getSaleCustomerList({ commit }) {
+      axios("sale-customer-list").then((res) => {
+        console.log(res.data);
+        commit("SET_SALE_CUSTOMER_LIST", res.data);
+      }),
+        (error) => {
+          console.log(error);
+        };
+    },
   },
   getters: {
     instructorList: (state) => {
@@ -597,6 +612,10 @@ export default createStore({
     },
     receipt4: (state) => {
       return state.receipt4;
+    },
+
+    saleCustomerList: (state) => {
+      return state.saleCustomerList;
     },
   },
   modules: {},

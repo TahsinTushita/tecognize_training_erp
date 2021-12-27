@@ -769,6 +769,18 @@ def sale_list(request):
 
 
 @api_view(["GET"])
+def sale_report_with_customers(request):
+    cursor = connection.cursor()
+    query = "SELECT * FROM training_backend_salereport INNER JOIN training_backend_customer ON training_backend_salereport.cust_id=training_backend_customer.cust_id"
+
+    cursor.execute(query)
+    columns = [col[0] for col in cursor.description]
+    return JsonResponse(
+        [dict(zip(columns, row)) for row in cursor.fetchall()], safe=False
+    )
+
+
+@api_view(["GET"])
 def sale_id(request):
     cursor = connection.cursor()
     query = "SELECT * FROM training_backend_salereport ORDER BY id DESC LIMIT 0,1"
