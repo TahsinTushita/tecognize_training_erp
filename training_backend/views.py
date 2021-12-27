@@ -13,22 +13,24 @@ from django.db import connection
 from training_backend.models import (
     Instructor,
     User,
-    Retail_Customer,
-    Corporate_Customer,
+    Customer,
+    # Corporate_Customer,
     Category,
     Course,
     Batch,
-    Sale,
+    # Sale,
+    SaleReport,
 )
 from training_backend.serializers import (
     InstructorSerializer,
     UserSerializer,
-    RetailCustomerSerializer,
-    CorporateCustomerSerializer,
+    CustomerSerializer,
+    # CorporateCustomerSerializer,
     CategorySerializer,
     CourseSerializer,
     BatchSerializer,
-    SaleSerializer,
+    # SaleSerializer,
+    SaleReportSerializer,
     # NumberSerializer,
 )
 from rest_framework.decorators import api_view
@@ -450,73 +452,67 @@ def batch_admission(request, pk):
 
 
 @api_view(["GET", "POST"])
-def retail_customer_list(request):
+def customer_list(request):
     if request.method == "GET":
-        retail_customers = Retail_Customer.objects.all()
+        customers = Customer.objects.all()
 
         cust_phone = request.GET.get("cust_phone", None)
         if cust_phone is not None:
-            retail_customers = retail_customers.filter(cust_phone__icontains=cust_phone)
+            customers = customers.filter(cust_phone__icontains=cust_phone)
 
-        retail_customers_serializer = RetailCustomerSerializer(
-            retail_customers, many=True
-        )
-        return JsonResponse(retail_customers_serializer.data, safe=False)
+        customers_serializer = CustomerSerializer(customers, many=True)
+        return JsonResponse(customers_serializer.data, safe=False)
 
     elif request.method == "POST":
-        retail_customer_data = JSONParser().parse(request)
-        retail_customers_serializer = RetailCustomerSerializer(
-            data=retail_customer_data
-        )
-        if retail_customers_serializer.is_valid():
-            retail_customers_serializer.save()
+        customer_data = JSONParser().parse(request)
+        customers_serializer = CustomerSerializer(data=customer_data)
+        if customers_serializer.is_valid():
+            customers_serializer.save()
             return JsonResponse(
-                retail_customers_serializer.data, status=status.HTTP_201_CREATED
+                customers_serializer.data, status=status.HTTP_201_CREATED
             )
         return JsonResponse(
-            retail_customers_serializer.errors, status=status.HTTP_400_BAD_REQUEST
+            customers_serializer.errors, status=status.HTTP_400_BAD_REQUEST
         )
 
 
 @api_view(["GET", "PUT", "DELETE"])
-def retail_customer_detail(request, pk):
+def customer_detail(request, pk):
     try:
-        retail_customer = Retail_Customer.objects.get(pk=pk)
-    except Retail_Customer.DoesNotExist:
+        customer = Customer.objects.get(pk=pk)
+    except Customer.DoesNotExist:
         return JsonResponse(
-            {"message": "The retail_customer does not exist"},
+            {"message": "The customer does not exist"},
             status=status.HTTP_404_NOT_FOUND,
         )
 
     if request.method == "GET":
-        retail_customer_serializer = RetailCustomerSerializer(retail_customer)
-        return JsonResponse(retail_customer_serializer.data)
+        customer_serializer = CustomerSerializer(customer)
+        return JsonResponse(customer_serializer.data)
 
     elif request.method == "PUT":
-        retail_customer_data = JSONParser().parse(request)
-        retail_customers_serializer = RetailCustomerSerializer(
-            data=retail_customer_data
-        )
-        if retail_customers_serializer.is_valid():
-            retail_customers_serializer.save()
-            return JsonResponse(retail_customers_serializer.data)
+        customer_data = JSONParser().parse(request)
+        customers_serializer = CustomerSerializer(data=customer_data)
+        if customers_serializer.is_valid():
+            customers_serializer.save()
+            return JsonResponse(customers_serializer.data)
         return JsonResponse(
-            retail_customers_serializer.errors, status=status.HTTP_400_BAD_REQUEST
+            customers_serializer.errors, status=status.HTTP_400_BAD_REQUEST
         )
 
     elif request.method == "DELETE":
-        retail_customer.delete()
+        customer.delete()
         return JsonResponse(
-            {"message": "retail_customer was deleted successfully!"},
+            {"message": "customer was deleted successfully!"},
             status=status.HTTP_204_NO_CONTENT,
         )
 
 
 @api_view(["GET"])
-def retail_customer_count(request):
+def customer_count(request):
     if request.method == "GET":
         cursor = connection.cursor()
-        query = "SELECT COUNT(cust_id) AS NumberOfRetailCustomers FROM training_backend_retail_customer"
+        query = "SELECT COUNT(cust_id) AS NumberOfRetailCustomers FROM training_backend_customer"
 
         cursor.execute(query)
         r = cursor.fetchone()
@@ -525,12 +521,12 @@ def retail_customer_count(request):
 
 
 @api_view(["PUT"])
-def retail_fee_update(request):
+def customer_fee_update(request):
     cursor = connection.cursor()
     customer_data = JSONParser().parse(request)
     # customer_data = json.load(request)
     print(customer_data)
-    query = "UPDATE training_backend_retail_customer SET cust_total_fee=%s,cust_paid_fee=%s,cust_due_fee=%s WHERE cust_id=%s"
+    query = "UPDATE training_backend_customer SET cust_total_fee=%s,cust_paid_fee=%s,cust_due_fee=%s,cust_units=%s WHERE cust_id=%s"
 
     cursor.execute(
         query,
@@ -538,6 +534,7 @@ def retail_fee_update(request):
             customer_data["cust_total_fee"],
             customer_data["cust_paid_fee"],
             customer_data["cust_due_fee"],
+            customer_data["cust_units"],
             customer_data["cust_id"],
         ),
     )
@@ -555,181 +552,181 @@ def retail_fee_update(request):
 # Corporate customer
 
 
-@api_view(["GET", "POST"])
-def corporate_customer_list(request):
-    if request.method == "GET":
-        corporate_customers = Corporate_Customer.objects.all()
+# @api_view(["GET", "POST"])
+# def corporate_customer_list(request):
+#     if request.method == "GET":
+#         corporate_customers = Corporate_Customer.objects.all()
 
-        corp_name = request.GET.get("corp_name", None)
-        if corp_name is not None:
-            corporate_customers = corporate_customers.filter(
-                corp_name__icontains=corp_name
-            )
+#         corp_name = request.GET.get("corp_name", None)
+#         if corp_name is not None:
+#             corporate_customers = corporate_customers.filter(
+#                 corp_name__icontains=corp_name
+#             )
 
-        corporate_customers_serializer = CorporateCustomerSerializer(
-            corporate_customers, many=True
-        )
-        return JsonResponse(corporate_customers_serializer.data, safe=False)
+#         corporate_customers_serializer = CorporateCustomerSerializer(
+#             corporate_customers, many=True
+#         )
+#         return JsonResponse(corporate_customers_serializer.data, safe=False)
 
-    elif request.method == "POST":
-        corporate_customer_data = JSONParser().parse(request)
-        corporate_customers_serializer = CorporateCustomerSerializer(
-            data=corporate_customer_data
-        )
-        if corporate_customers_serializer.is_valid():
-            corporate_customers_serializer.save()
-            return JsonResponse(
-                corporate_customers_serializer.data, status=status.HTTP_201_CREATED
-            )
-        return JsonResponse(
-            corporate_customers_serializer.errors, status=status.HTTP_400_BAD_REQUEST
-        )
-
-
-@api_view(["GET", "PUT", "DELETE"])
-def corporate_customer_detail(request, pk):
-    try:
-        corporate_customer = Corporate_Customer.objects.get(pk=pk)
-    except Corporate_Customer.DoesNotExist:
-        return JsonResponse(
-            {"message": "The corporate_customer does not exist"},
-            status=status.HTTP_404_NOT_FOUND,
-        )
-
-    if request.method == "GET":
-        corporate_customer_serializer = CorporateCustomerSerializer(corporate_customer)
-        return JsonResponse(corporate_customer_serializer.data)
-
-    elif request.method == "PUT":
-        corporate_customer_data = JSONParser().parse(request)
-        corporate_customers_serializer = CorporateCustomerSerializer(
-            data=corporate_customer_data
-        )
-        if corporate_customers_serializer.is_valid():
-            corporate_customers_serializer.save()
-            return JsonResponse(corporate_customers_serializer.data)
-        return JsonResponse(
-            corporate_customers_serializer.errors, status=status.HTTP_400_BAD_REQUEST
-        )
-
-    elif request.method == "DELETE":
-        corporate_customer.delete()
-        return JsonResponse(
-            {"message": "corporate_customer was deleted successfully!"},
-            status=status.HTTP_204_NO_CONTENT,
-        )
+#     elif request.method == "POST":
+#         corporate_customer_data = JSONParser().parse(request)
+#         corporate_customers_serializer = CorporateCustomerSerializer(
+#             data=corporate_customer_data
+#         )
+#         if corporate_customers_serializer.is_valid():
+#             corporate_customers_serializer.save()
+#             return JsonResponse(
+#                 corporate_customers_serializer.data, status=status.HTTP_201_CREATED
+#             )
+#         return JsonResponse(
+#             corporate_customers_serializer.errors, status=status.HTTP_400_BAD_REQUEST
+#         )
 
 
-@api_view(["GET"])
-def corporate_customer_count(request):
-    if request.method == "GET":
-        cursor = connection.cursor()
-        query = "SELECT COUNT(corp_id) AS NumberOfCorporateCustomers FROM training_backend_corporate_customer"
+# @api_view(["GET", "PUT", "DELETE"])
+# def corporate_customer_detail(request, pk):
+#     try:
+#         corporate_customer = Corporate_Customer.objects.get(pk=pk)
+#     except Corporate_Customer.DoesNotExist:
+#         return JsonResponse(
+#             {"message": "The corporate_customer does not exist"},
+#             status=status.HTTP_404_NOT_FOUND,
+#         )
 
-        cursor.execute(query)
-        r = cursor.fetchone()
-        print(r)
-        return JsonResponse(r, safe=False)
+#     if request.method == "GET":
+#         corporate_customer_serializer = CorporateCustomerSerializer(corporate_customer)
+#         return JsonResponse(corporate_customer_serializer.data)
 
+#     elif request.method == "PUT":
+#         corporate_customer_data = JSONParser().parse(request)
+#         corporate_customers_serializer = CorporateCustomerSerializer(
+#             data=corporate_customer_data
+#         )
+#         if corporate_customers_serializer.is_valid():
+#             corporate_customers_serializer.save()
+#             return JsonResponse(corporate_customers_serializer.data)
+#         return JsonResponse(
+#             corporate_customers_serializer.errors, status=status.HTTP_400_BAD_REQUEST
+#         )
 
-@api_view(["PUT"])
-def corporate_fee_update(request):
-    cursor = connection.cursor()
-    customer_data = JSONParser().parse(request)
-    # customer_data = json.load(request)
-    print(customer_data)
-    query = "UPDATE training_backend_corporate_customer SET corp_total_fee=%s,corp_paid_fee=%s,corp_due_fee=%s,corp_units=%s WHERE corp_id=%s"
-
-    cursor.execute(
-        query,
-        params=(
-            customer_data["corp_total_fee"],
-            customer_data["corp_paid_fee"],
-            customer_data["corp_due_fee"],
-            customer_data["corp_units"],
-            customer_data["corp_id"],
-        ),
-    )
-    r = cursor.fetchone()
-    return JsonResponse(r, safe=False)
-
-
-# Sale
+#     elif request.method == "DELETE":
+#         corporate_customer.delete()
+#         return JsonResponse(
+#             {"message": "corporate_customer was deleted successfully!"},
+#             status=status.HTTP_204_NO_CONTENT,
+#         )
 
 
-@api_view(["GET", "POST"])
-def sale_list(request):
-    if request.method == "GET":
-        sale = Sale.objects.all()
+# @api_view(["GET"])
+# def corporate_customer_count(request):
+#     if request.method == "GET":
+#         cursor = connection.cursor()
+#         query = "SELECT COUNT(corp_id) AS NumberOfCorporateCustomers FROM training_backend_corporate_customer"
 
-        # corp_name = request.GET.get("corp_name", None)
-        # if corp_name is not None:
-        #     sale = sale.filter(
-        #         corp_name__icontains=corp_name
-        #     )
-
-        sale_serializer = SaleSerializer(sale, many=True)
-        return JsonResponse(sale_serializer.data, safe=False)
-
-    elif request.method == "POST":
-        sale_data = JSONParser().parse(request)
-        sale_serializer = SaleSerializer(data=sale_data)
-        if sale_serializer.is_valid():
-            sale_serializer.save()
-            return JsonResponse(sale_serializer.data, status=status.HTTP_201_CREATED)
-        return JsonResponse(sale_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#         cursor.execute(query)
+#         r = cursor.fetchone()
+#         print(r)
+#         return JsonResponse(r, safe=False)
 
 
-@api_view(["GET", "PUT", "DELETE"])
-def sale_detail(request, pk):
-    try:
-        sale = Sale.objects.get(pk=pk)
-    except Sale.DoesNotExist:
-        return JsonResponse(
-            {"message": "The sale record does not exist"},
-            status=status.HTTP_404_NOT_FOUND,
-        )
+# @api_view(["PUT"])
+# def corporate_fee_update(request):
+#     cursor = connection.cursor()
+#     customer_data = JSONParser().parse(request)
+#     # customer_data = json.load(request)
+#     print(customer_data)
+#     query = "UPDATE training_backend_corporate_customer SET corp_total_fee=%s,corp_paid_fee=%s,corp_due_fee=%s,corp_units=%s WHERE corp_id=%s"
 
-    if request.method == "GET":
-        sale_serializer = SaleSerializer(sale)
-        return JsonResponse(sale_serializer.data)
-
-    elif request.method == "PUT":
-        sale_data = JSONParser().parse(request)
-        sale_serializer = SaleSerializer(data=sale_data)
-        if sale_serializer.is_valid():
-            sale_serializer.save()
-            return JsonResponse(sale_serializer.data)
-        return JsonResponse(sale_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    elif request.method == "DELETE":
-        sale.delete()
-        return JsonResponse(
-            {"message": "sale record was deleted successfully!"},
-            status=status.HTTP_204_NO_CONTENT,
-        )
+#     cursor.execute(
+#         query,
+#         params=(
+#             customer_data["corp_total_fee"],
+#             customer_data["corp_paid_fee"],
+#             customer_data["corp_due_fee"],
+#             customer_data["corp_units"],
+#             customer_data["corp_id"],
+#         ),
+#     )
+#     r = cursor.fetchone()
+#     return JsonResponse(r, safe=False)
 
 
-@api_view(["GET"])
-def sale_count(request):
-    if request.method == "GET":
-        cursor = connection.cursor()
-        query = "SELECT COUNT(id) AS NumberOfSaleRecords FROM training_backend_sale"
-
-        cursor.execute(query)
-        r = cursor.fetchone()
-        print(r)
-        return JsonResponse(r, safe=False)
+# # Sale
 
 
-@api_view(["GET"])
-def sale_id(request):
-    cursor = connection.cursor()
-    query = "SELECT id FROM training_backend_sale ORDER BY id DESC LIMIT 0,1"
-    cursor.execute(query)
-    r = cursor.fetchone()
-    print(r)
-    return JsonResponse(r, safe=False)
+# @api_view(["GET", "POST"])
+# def sale_list(request):
+#     if request.method == "GET":
+#         sale = Sale.objects.all()
+
+#         # corp_name = request.GET.get("corp_name", None)
+#         # if corp_name is not None:
+#         #     sale = sale.filter(
+#         #         corp_name__icontains=corp_name
+#         #     )
+
+#         sale_serializer = SaleSerializer(sale, many=True)
+#         return JsonResponse(sale_serializer.data, safe=False)
+
+#     elif request.method == "POST":
+#         sale_data = JSONParser().parse(request)
+#         sale_serializer = SaleSerializer(data=sale_data)
+#         if sale_serializer.is_valid():
+#             sale_serializer.save()
+#             return JsonResponse(sale_serializer.data, status=status.HTTP_201_CREATED)
+#         return JsonResponse(sale_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+# @api_view(["GET", "PUT", "DELETE"])
+# def sale_detail(request, pk):
+#     try:
+#         sale = Sale.objects.get(pk=pk)
+#     except Sale.DoesNotExist:
+#         return JsonResponse(
+#             {"message": "The sale record does not exist"},
+#             status=status.HTTP_404_NOT_FOUND,
+#         )
+
+#     if request.method == "GET":
+#         sale_serializer = SaleSerializer(sale)
+#         return JsonResponse(sale_serializer.data)
+
+#     elif request.method == "PUT":
+#         sale_data = JSONParser().parse(request)
+#         sale_serializer = SaleSerializer(data=sale_data)
+#         if sale_serializer.is_valid():
+#             sale_serializer.save()
+#             return JsonResponse(sale_serializer.data)
+#         return JsonResponse(sale_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+#     elif request.method == "DELETE":
+#         sale.delete()
+#         return JsonResponse(
+#             {"message": "sale record was deleted successfully!"},
+#             status=status.HTTP_204_NO_CONTENT,
+#         )
+
+
+# @api_view(["GET"])
+# def sale_count(request):
+#     if request.method == "GET":
+#         cursor = connection.cursor()
+#         query = "SELECT COUNT(id) AS NumberOfSaleRecords FROM training_backend_sale"
+
+#         cursor.execute(query)
+#         r = cursor.fetchone()
+#         print(r)
+#         return JsonResponse(r, safe=False)
+
+
+# @api_view(["GET"])
+# def sale_id(request):
+#     cursor = connection.cursor()
+#     query = "SELECT id FROM training_backend_sale ORDER BY id DESC LIMIT 0,1"
+#     cursor.execute(query)
+#     r = cursor.fetchone()
+#     print(r)
+#     return JsonResponse(r, safe=False)
 
 
 # params=(
@@ -738,3 +735,79 @@ def sale_id(request):
 #             customer_data["cust_due_fee"],
 #             customer_data["cust_id"],
 #         ),
+
+
+@api_view(["GET", "POST"])
+def sale_report(request):
+    if request.method == "GET":
+        report = SaleReport.objects.all()
+
+        report_serializer = SaleReportSerializer(report, many=True)
+        return JsonResponse(report_serializer.data, safe=False)
+
+    elif request.method == "POST":
+        report_data = JSONParser().parse(request)
+        report_serializer = SaleReportSerializer(data=report_data)
+        if report_serializer.is_valid():
+            report_serializer.save()
+            return JsonResponse(report_serializer.data, status=status.HTTP_201_CREATED)
+        return JsonResponse(
+            report_serializer.errors, status=status.HTTP_400_BAD_REQUEST
+        )
+
+
+@api_view(["GET"])
+def sale_list(request):
+    cursor = connection.cursor()
+    query = "SELECT * FROM training_backend_salereport"
+
+    cursor.execute(query)
+    columns = [col[0] for col in cursor.description]
+    return JsonResponse(
+        [dict(zip(columns, row)) for row in cursor.fetchall()], safe=False
+    )
+
+
+@api_view(["GET"])
+def sale_id(request):
+    cursor = connection.cursor()
+    query = "SELECT * FROM training_backend_salereport ORDER BY id DESC LIMIT 0,1"
+    cursor.execute(query)
+    r = cursor.fetchone()
+    print(r)
+    return JsonResponse(r, safe=False)
+
+
+@api_view(["PUT"])
+def sale_update(request):
+    cursor = connection.cursor()
+    customer_data = JSONParser().parse(request)
+    # customer_data = json.load(request)
+    print(customer_data)
+    query = "UPDATE training_backend_salereport  SET installment2=%s,date2=%s,check_date2=%s,check_ref_no2=%s,pay_mode2=%s,installment3=%s,date3=%s,check_date3=%s,check_ref_no3=%s,pay_mode3=%s,installment4=%s,date4=%s,check_date4=%s,check_ref_no4=%s,pay_mode4=%s,paid=%s,due=%s WHERE id=%s"
+
+    cursor.execute(
+        query,
+        params=(
+            customer_data["installment2"],
+            customer_data["date2"],
+            customer_data["check_date2"],
+            customer_data["check_ref_no2"],
+            customer_data["pay_mode2"],
+            customer_data["installment3"],
+            customer_data["date3"],
+            customer_data["check_date3"],
+            customer_data["check_ref_no3"],
+            customer_data["pay_mode3"],
+            customer_data["installment4"],
+            customer_data["date4"],
+            customer_data["check_date4"],
+            customer_data["check_ref_no4"],
+            customer_data["pay_mode4"],
+            customer_data["paid"],
+            customer_data["due"],
+            customer_data["id"],
+        ),
+    )
+    r = cursor.fetchone()
+    return JsonResponse(r, safe=False)

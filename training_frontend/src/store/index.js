@@ -33,6 +33,7 @@ export default createStore({
     saleCount: "",
     saleRecord: "",
     saleid: "",
+    receipt4: "",
   },
   mutations: {
     SET_INSTRUCTOR_LIST(state, instructorList) {
@@ -141,6 +142,10 @@ export default createStore({
 
     SET_SALE_ID(state, saleid) {
       state.saleid = saleid;
+    },
+
+    SET_RECEIPT4(state, receipt4) {
+      state.receipt4 = receipt4;
     },
   },
   actions: {
@@ -271,7 +276,7 @@ export default createStore({
     },
 
     async addRetailCustomer({ commit }, data) {
-      await axios.post("retail-customers", data).then((res) => {
+      await axios.post("customers", data).then((res) => {
         console.log(res.data);
       }),
         (error) => {
@@ -280,7 +285,7 @@ export default createStore({
     },
 
     getRetailCustomerCount({ commit }) {
-      axios("retail-customers-count").then((res) => {
+      axios("customers-count").then((res) => {
         commit("SET_RETAIL_CUSTOMER_COUNT", res.data);
         console.log(res.data);
       }),
@@ -290,7 +295,7 @@ export default createStore({
     },
 
     getRetailCustomer({ commit }, cust_id) {
-      axios("retail-customers/" + cust_id).then((res) => {
+      axios("customers/" + cust_id).then((res) => {
         commit("SET_RETAIL_CUSTOMER", res.data);
         console.log(res.data);
       }),
@@ -300,7 +305,7 @@ export default createStore({
     },
 
     getRetailCustomerList({ commit }) {
-      axios("retail-customers").then((res) => {
+      axios("customers").then((res) => {
         commit("SET_RETAIL_CUSTOMER_LIST", res.data);
         console.log(res.data);
       }),
@@ -417,7 +422,7 @@ export default createStore({
     },
 
     getSaleList({ commit }) {
-      axios("sales").then((res) => {
+      axios("sale-list").then((res) => {
         commit("SET_SALE_LIST", res.data);
         console.log(res.data);
       }),
@@ -448,12 +453,12 @@ export default createStore({
     getSaleId({ commit }) {
       axios("sale-id").then((res) => {
         console.log(res.data);
-        let saleid = [];
         if (res.data == null) {
-          saleid.push(0);
-          commit("SET_SALE_ID", saleid);
+          commit("SET_SALE_ID", 0);
+          commit("SET_RECEIPT4", 0);
         } else {
-          commit("SET_SALE_ID", res.data);
+          commit("SET_SALE_ID", res.data[0]);
+          commit("SET_RECEIPT4", res.data[22]);
         }
       }),
         (error) => {
@@ -461,8 +466,8 @@ export default createStore({
         };
     },
 
-    updateRetailCustomerFees({ commit }, data) {
-      axios.put("retail-fee-update", data).then((res) => {
+    updateCustomerFees({ commit }, data) {
+      axios.put("customer-fee-update", data).then((res) => {
         console.log(res.data);
       }),
         (error) => {
@@ -482,6 +487,15 @@ export default createStore({
     getReceipts({ commit }) {
       axios("receipts").then((res) => {
         commit("SET_RECEIPTS", res.data);
+        console.log(res.data);
+      }),
+        (error) => {
+          console.log(error);
+        };
+    },
+
+    updateSaleRecord({ commit }, data) {
+      axios.put("sale-update", data).then((res) => {
         console.log(res.data);
       }),
         (error) => {
@@ -580,6 +594,9 @@ export default createStore({
 
     saleid: (state) => {
       return state.saleid;
+    },
+    receipt4: (state) => {
+      return state.receipt4;
     },
   },
   modules: {},

@@ -40,7 +40,7 @@
             <select
               name="batch"
               id="batch"
-              v-model="batchId"
+              v-model="batch"
               required
               @change="setBatchFee"
               class="
@@ -58,7 +58,7 @@
             >
               <option
                 v-for="batch in tempBatchList"
-                :value="batch.batch_id"
+                :value="batch"
                 :key="batch.batch_id"
               >
                 {{ batch.batch_id }}
@@ -71,9 +71,8 @@
             <select
               name="user"
               id="user"
-              v-model="userId"
+              v-model="user"
               required
-              @change="setUserName"
               class="
                 bg-white
                 rounded-md
@@ -89,7 +88,7 @@
             >
               <option
                 v-for="user in userList"
-                :value="user.user_id"
+                :value="user"
                 :key="user.user_id"
               >
                 {{ user.user_name }}
@@ -209,7 +208,7 @@
           </div>
 
           <!-- Retail Customer Form -->
-          <div class="space-y-5" v-if="retailCustomer">
+          <div class="space-y-5">
             <div class="grid grid-rows-1 gap-2 place-items-start">
               <label for="custPhone" class="font-semibold ml-2"
                 >Phone Number*
@@ -309,7 +308,10 @@
               />
             </div>
 
-            <div class="grid grid-rows-1 gap-2 place-items-start">
+            <div
+              class="grid grid-rows-1 gap-2 place-items-start"
+              v-if="retailCustomer"
+            >
               <label for="custOrganization" class="font-semibold ml-2"
                 >Organization*</label
               >
@@ -334,7 +336,10 @@
               />
             </div>
 
-            <div class="grid grid-rows-1 gap-2 place-items-start">
+            <div
+              class="grid grid-rows-1 gap-2 place-items-start"
+              v-if="retailCustomer"
+            >
               <label for="custDesignation" class="font-semibold ml-2"
                 >Designation*</label
               >
@@ -406,6 +411,32 @@
                 "
                 placeholder="batch fee"
                 v-model="batchFee"
+              />
+            </div>
+
+            <div
+              class="grid grid-rows-1 gap-2 place-items-start"
+              v-if="corporateCustomer"
+            >
+              <label for="corpUnits" class="font-semibold ml-2">Units*</label>
+              <input
+                type="number"
+                name="corpUnits"
+                required
+                class="
+                  bg-white
+                  rounded-md
+                  px-8
+                  py-4
+                  flex
+                  justify-center
+                  w-600
+                  border-2 border-gray-200
+                  hover:border-navlink hover:ring-0
+                  focus:outline-none focus:border-navlink
+                "
+                placeholder="units"
+                v-model="custUnits"
               />
             </div>
 
@@ -505,438 +536,16 @@
                 v-model="getCustDue"
               />
             </div>
-
-            <button
-              class="
-                bg-navlink
-                rounded-md
-                text-white text-xl
-                px-8
-                py-2
-                w-500
-                mt-10
-                border-2 border-navlink
-                shadow-xl
-                hover:text-navlink hover:bg-transparent
-                transition
-                duration-300
-              "
-              @click="generateSalesReceipt"
-            >
-              show receipt
-            </button>
           </div>
           <!-- Retail Customer Form end -->
-
-          <!-- Corporate Customer Form -->
-          <div class="space-y-5" v-if="corporateCustomer">
-            <div class="grid grid-rows-1 gap-2 place-items-start">
-              <label for="corpPhone" class="font-semibold ml-2"
-                >Phone Number*</label
-              >
-              <input
-                type="tel"
-                name="corpPhone"
-                required
-                @change="filterCorporateCustomer"
-                class="
-                  bg-white
-                  rounded-md
-                  px-8
-                  py-4
-                  flex
-                  justify-center
-                  w-600
-                  border-2 border-gray-200
-                  hover:border-navlink hover:ring-0
-                  focus:outline-none focus:border-navlink
-                "
-                placeholder="phone number"
-                v-model="corpPhone"
-              />
-            </div>
-
-            <div class="grid grid-rows-1 gap-2 place-items-start">
-              <label for="corpName" class="font-semibold ml-2"
-                >Organization*</label
-              >
-              <input
-                type="text"
-                name="corpName"
-                required
-                class="
-                  bg-white
-                  rounded-md
-                  px-8
-                  py-4
-                  flex
-                  justify-center
-                  w-600
-                  border-2 border-gray-200
-                  hover:border-navlink hover:ring-0
-                  focus:outline-none focus:border-navlink
-                "
-                placeholder="organization"
-                v-model="corpName"
-              />
-            </div>
-
-            <div class="grid grid-rows-1 gap-2 place-items-start">
-              <label for="corpEmail" class="font-semibold ml-2">Email*</label>
-              <input
-                type="email"
-                name="corpEmail"
-                required
-                class="
-                  bg-white
-                  rounded-md
-                  px-8
-                  py-4
-                  flex
-                  justify-center
-                  w-600
-                  border-2 border-gray-200
-                  hover:border-navlink hover:ring-0
-                  focus:outline-none focus:border-navlink
-                "
-                placeholder="email"
-                v-model="corpEmail"
-              />
-            </div>
-
-            <div class="grid grid-rows-1 gap-2 place-items-start">
-              <label for="corpAddress" class="font-semibold ml-2"
-                >Address*</label
-              >
-              <input
-                type="text"
-                name="corpAddress"
-                required
-                class="
-                  bg-white
-                  rounded-md
-                  px-8
-                  py-4
-                  flex
-                  justify-center
-                  w-600
-                  border-2 border-gray-200
-                  hover:border-navlink hover:ring-0
-                  focus:outline-none focus:border-navlink
-                "
-                placeholder="address"
-                v-model="corpAddress"
-              />
-            </div>
-
-            <div class="grid grid-rows-1 gap-2 place-items-start">
-              <label for="regularFee" class="font-semibold ml-2"
-                >Regular Fee*</label
-              >
-              <input
-                type="number"
-                name="regularFee"
-                required
-                class="
-                  bg-white
-                  rounded-md
-                  px-8
-                  py-4
-                  flex
-                  justify-center
-                  w-600
-                  border-2 border-gray-200
-                  hover:border-navlink hover:ring-0
-                  focus:outline-none focus:border-navlink
-                "
-                placeholder="regular fee"
-                v-model="regularFee"
-              />
-            </div>
-
-            <div class="grid grid-rows-1 gap-2 place-items-start">
-              <label for="batchFee" class="font-semibold ml-2"
-                >Batch Fee*</label
-              >
-              <input
-                type="number"
-                name="batchFee"
-                required
-                class="
-                  bg-white
-                  rounded-md
-                  px-8
-                  py-4
-                  flex
-                  justify-center
-                  w-600
-                  border-2 border-gray-200
-                  hover:border-navlink hover:ring-0
-                  focus:outline-none focus:border-navlink
-                "
-                placeholder="batch fee"
-                v-model="batchFee"
-              />
-            </div>
-
-            <div class="grid grid-rows-1 gap-2 place-items-start">
-              <label for="corpUnits" class="font-semibold ml-2">Units*</label>
-              <input
-                type="number"
-                name="corpUnits"
-                required
-                class="
-                  bg-white
-                  rounded-md
-                  px-8
-                  py-4
-                  flex
-                  justify-center
-                  w-600
-                  border-2 border-gray-200
-                  hover:border-navlink hover:ring-0
-                  focus:outline-none focus:border-navlink
-                "
-                placeholder="units"
-                v-model="corpUnits"
-              />
-            </div>
-
-            <div class="grid grid-rows-1 gap-2 place-items-start">
-              <label for="discountFee" class="font-semibold ml-2"
-                >Discount*</label
-              >
-              <input
-                type="number"
-                name="discountFee"
-                required
-                class="
-                  bg-white
-                  rounded-md
-                  px-8
-                  py-4
-                  flex
-                  justify-center
-                  w-600
-                  border-2 border-gray-200
-                  hover:border-navlink hover:ring-0
-                  focus:outline-none focus:border-navlink
-                "
-                placeholder="discount"
-                v-model="discountFee"
-              />
-            </div>
-
-            <div class="grid grid-rows-1 gap-2 place-items-start">
-              <label for="corpTotalFee" class="font-semibold ml-2"
-                >Total*</label
-              >
-              <input
-                type="number"
-                name="corpTotalFee"
-                required
-                class="
-                  bg-white
-                  rounded-md
-                  px-8
-                  py-4
-                  flex
-                  justify-center
-                  w-600
-                  border-2 border-gray-200
-                  hover:border-navlink hover:ring-0
-                  focus:outline-none focus:border-navlink
-                "
-                disabled
-                placeholder="total"
-                v-model="getCorpTotal"
-              />
-            </div>
-
-            <div class="grid grid-rows-1 gap-2 place-items-start">
-              <label for="corpPaidFee" class="font-semibold ml-2">Paid*</label>
-              <input
-                type="number"
-                name="corpPaidFee"
-                required
-                class="
-                  bg-white
-                  rounded-md
-                  px-8
-                  py-4
-                  flex
-                  justify-center
-                  w-600
-                  border-2 border-gray-200
-                  hover:border-navlink hover:ring-0
-                  focus:outline-none focus:border-navlink
-                "
-                placeholder="paid"
-                v-model="corpPaidFee"
-              />
-            </div>
-
-            <div class="grid grid-rows-1 gap-2 place-items-start">
-              <label for="corpDueFee" class="font-semibold ml-2">Due*</label>
-              <input
-                type="number"
-                name="corpDueFee"
-                required
-                class="
-                  bg-white
-                  rounded-md
-                  px-8
-                  py-4
-                  flex
-                  justify-center
-                  w-600
-                  border-2 border-gray-200
-                  hover:border-navlink hover:ring-0
-                  focus:outline-none focus:border-navlink
-                "
-                placeholder="due"
-                v-model="getCorpDue"
-              />
-            </div>
-
-            <button
-              class="
-                bg-navlink
-                rounded-md
-                text-white text-xl
-                px-8
-                py-2
-                w-500
-                mt-10
-                border-2 border-navlink
-                shadow-xl
-                hover:text-navlink hover:bg-transparent
-                transition
-                duration-300
-              "
-              @click="generateSalesReceipt"
-            >
-              show receipt
-            </button>
-          </div>
-          <!-- Corporate Customer Form end -->
         </div>
       </form>
     </div>
   </div>
 
   <div class="flex justify-center">
-    <div v-if="retailReceipt">
+    <div>
       <div ref="retailReceiptContent" class="space-y-5">
-        <!-- <h1 class="text-xl">Retail Customer Receipt</h1>
-
-        <table>
-          <tbody>
-            <tr class="border-2 border-b-0">
-              <td class="w-2/5 px-4 py-4 text-center">Customer Name:</td>
-              <td class="w-2/5 px-4 py-4 text-center">
-                {{ custName }}
-              </td>
-            </tr>
-            <tr class="border-2 border-t-0 border-b-0">
-              <td class="w-2/5 px-4 py-4 text-center">Course:</td>
-              <td class="w-2/5 px-4 py-4 text-center">
-                {{ courseName }}
-              </td>
-            </tr>
-            <tr class="border-2 border-t-0 border-b-0">
-              <td class="w-2/5 px-4 py-4 text-center">Batch:</td>
-              <td class="w-2/5 px-4 py-4 text-center">
-                {{ batchId }}
-              </td>
-            </tr>
-
-            <tr class="border-2 border-t-0 border-b-0">
-              <td class="w-2/5 px-4 py-4 text-center">Reference:</td>
-              <td class="w-2/5 px-4 py-4 text-center">
-                {{ userName }}
-              </td>
-            </tr>
-
-            <tr class="border-2 border-t-0 border-b-0">
-              <td class="w-2/5 px-4 py-4 text-center">Phone number:</td>
-              <td class="w-2/5 px-4 py-4 text-center">
-                {{ custPhone }}
-              </td>
-            </tr>
-
-            <tr class="border-2 border-t-0 border-b-0">
-              <td class="w-2/5 px-4 py-4 text-center">email:</td>
-              <td class="w-2/5 px-4 py-4 text-center">
-                {{ custEmail }}
-              </td>
-            </tr>
-
-            <tr class="border-2 border-t-0 border-b-0">
-              <td class="w-2/5 px-4 py-4 text-center">Address:</td>
-              <td class="w-2/5 px-4 py-4 text-center">
-                {{ custAddress }}
-              </td>
-            </tr>
-
-            <tr class="border-2 border-t-0 border-b-0">
-              <td class="w-2/5 px-4 py-4 text-center">Organization:</td>
-              <td class="w-2/5 px-4 py-4 text-center">
-                {{ custOrganization }}
-              </td>
-            </tr>
-
-            <tr class="border-2 border-t-0 border-b-0">
-              <td class="w-2/5 px-4 py-4 text-center">Designation:</td>
-              <td class="w-2/5 px-4 py-4 text-center">
-                {{ custDesignation }}
-              </td>
-            </tr>
-
-            <tr class="border-2 border-t-0 border-b-0">
-              <td class="w-2/5 px-4 py-4 text-center">Regular fee:</td>
-              <td class="w-2/5 px-4 py-4 text-center">
-                {{ regularFee }}
-              </td>
-            </tr>
-
-            <tr class="border-2 border-t-0 border-b-0">
-              <td class="w-2/5 px-4 py-4 text-center">Batch fee:</td>
-              <td class="w-2/5 px-4 py-4 text-center">
-                {{ batchFee }}
-              </td>
-            </tr>
-
-            <tr class="border-2 border-t-0 border-b-0">
-              <td class="w-2/5 px-4 py-4 text-center">Discount:</td>
-              <td class="w-2/5 px-4 py-4 text-center">
-                {{ discountFee }}
-              </td>
-            </tr>
-
-            <tr class="border-2 border-t-0 border-b-0">
-              <td class="w-2/5 px-4 py-4 text-center">Total:</td>
-              <td class="w-2/5 px-4 py-4 text-center">
-                {{ custTotalFee }}
-              </td>
-            </tr>
-
-            <tr class="border-2 border-t-0 border-b-0">
-              <td class="w-2/5 px-4 py-4 text-center">Paid:</td>
-              <td class="w-2/5 px-4 py-4 text-center">
-                {{ custPaidFee }}
-              </td>
-            </tr>
-
-            <tr class="border-2 border-t-0">
-              <td class="w-2/5 px-4 py-4 text-center">Due:</td>
-              <td class="w-2/5 px-4 py-4 text-center">
-                {{ custDueFee }}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <h1>{{ fulldatetime }}</h1> -->
         <!-- Money Receipt -->
         <div class="w-1100 bg-receiptBg">
           <div class="px-10 pt-10">
@@ -972,7 +581,7 @@
                 "
               >
                 SL NO:
-                <p class="text-black font-medium">{{ saleid[0] + 1 }}</p>
+                <p class="text-black font-medium">{{ this.receipt4 + 1 }}</p>
               </h1>
               <div class="flex gap-2 items-center justify-center">
                 <h1
@@ -1078,7 +687,7 @@
                     w-10/12
                   "
                 >
-                  {{ batchId }}
+                  {{ batch.batch_id }}
                 </div>
               </div>
 
@@ -1350,419 +959,6 @@
         Download receipt
       </button>
     </div>
-
-    <div v-if="corporateReceipt">
-      <div ref="corporateReceiptContent" class="space-y-5">
-        <!-- Corporate money receipt -->
-        <div class="w-1100 bg-receiptBg">
-          <div class="px-10 pt-10">
-            <div class="flex justify-between items-center mb-5">
-              <h1
-                class="
-                  border-b-8
-                  font-segoeUI
-                  text-2xl
-                  font-bold
-                  pb-3
-                  text-receiptTextColor
-                  border-receiptBorder
-                "
-              >
-                Money Receipt
-              </h1>
-              <img
-                src="../../assets/images/traininglogo.png"
-                alt="logo"
-                class="w-36 h-10"
-              />
-            </div>
-            <div class="flex justify-between items-center justify-center mb-5">
-              <h1
-                class="
-                  font-segoeUI
-                  text-xl
-                  font-bold
-                  text-receiptTextColor
-                  flex
-                  gap-2
-                "
-              >
-                SL NO:
-                <p class="text-black font-medium">{{ saleid[0] + 1 }}</p>
-              </h1>
-              <div class="flex gap-2 items-center justify-center">
-                <h1
-                  class="font-segoeUI text-xl font-bold text-receiptTextColor"
-                >
-                  DATE:
-                </h1>
-                <div
-                  type="text"
-                  class="
-                    w-40
-                    px-4
-                    py-2
-                    bg-transparent
-                    border-b-2 border-receiptInputBorder
-                    flex
-                    items-start
-                  "
-                >
-                  {{ date }}
-                </div>
-              </div>
-            </div>
-            <div class="grid grid-rows-1 place-items-start w-full mb-14">
-              <div class="flex w-full relative mb-12">
-                <h1
-                  class="
-                    font-poppins
-                    text-lg
-                    font-medium
-                    text-receiptTextColor
-                    left-0
-                    absolute
-                  "
-                >
-                  Received with Thanks From
-                </h1>
-                <div
-                  type="text"
-                  class="
-                    px-4
-                    h-10
-                    py-1
-                    bg-transparent
-                    border-b-2 border-receiptInputBorder
-                    w-9/12
-                    right-0
-                    absolute
-                    flex
-                    items-start
-                  "
-                >
-                  {{ corpName }}
-                </div>
-              </div>
-              <div class="flex item-start w-full">
-                <h1
-                  class="font-poppins text-lg font-medium text-receiptTextColor"
-                >
-                  Address
-                </h1>
-                <div
-                  type="text"
-                  class="
-                    px-4
-                    h-10
-                    py-1
-                    bg-transparent
-                    border-b-2 border-receiptInputBorder
-                    w-full
-                    flex
-                    items-start
-                  "
-                >
-                  {{ corpAddress }}
-                </div>
-              </div>
-              <div class="flex item-start w-full relative mb-12">
-                <h1
-                  class="
-                    font-poppins
-                    text-lg
-                    font-medium
-                    text-receiptTextColor
-                    left-0
-                    absolute
-                  "
-                >
-                  Payment Purpose
-                </h1>
-                <div
-                  type="text"
-                  class="
-                    px-4
-                    h-10
-                    py-1
-                    bg-transparent
-                    border-b-2 border-receiptInputBorder
-                    right-0
-                    absolute
-                    flex
-                    items-start
-                    w-10/12
-                  "
-                >
-                  {{ batchId }}
-                </div>
-              </div>
-
-              <div class="grid grid-cols-3 w-full gap-3 mb-12">
-                <div class="flex relative">
-                  <h1
-                    class="
-                      font-poppins
-                      text-lg
-                      font-medium
-                      text-receiptTextColor
-                      left-0
-                      absolute
-                    "
-                  >
-                    Payment Method
-                  </h1>
-                  <div
-                    type="text"
-                    class="
-                      px-4
-                      h-10
-                      py-1
-                      bg-transparent
-                      border-b-2 border-receiptInputBorder
-                      right-0
-                      absolute
-                      w-1/2
-                      flex
-                      items-start
-                    "
-                  >
-                    {{ paymentMethod }}
-                  </div>
-                </div>
-                <div class="flex relative">
-                  <h1
-                    class="
-                      font-poppins
-                      text-lg
-                      font-medium
-                      text-receiptTextColor
-                      left-0
-                      absolute
-                    "
-                  >
-                    Check/Ref No.
-                  </h1>
-                  <div
-                    type="text"
-                    class="
-                      px-4
-                      h-10
-                      py-1
-                      bg-transparent
-                      border-b-2 border-receiptInputBorder
-                      right-0
-                      absolute
-                      w-2/3
-                      flex
-                      items-start
-                    "
-                  >
-                    {{ checkRefNo }}
-                  </div>
-                </div>
-                <div class="flex w-full relative">
-                  <h1
-                    class="
-                      font-poppins
-                      text-lg
-                      font-medium
-                      text-receiptTextColor
-                      left-0
-                      absolute
-                    "
-                  >
-                    Check Date
-                  </h1>
-                  <div
-                    class="
-                      px-4
-                      h-10
-                      py-1
-                      bg-transparent
-                      border-b-2 border-receiptInputBorder
-                      w-2/3
-                      right-0
-                      absolute
-                      flex
-                      items-start
-                    "
-                  >
-                    {{ checkDate }}
-                  </div>
-                </div>
-              </div>
-
-              <div class="flex item-start w-full">
-                <h1
-                  class="font-poppins text-lg font-medium text-receiptTextColor"
-                >
-                  Amount
-                </h1>
-                <div
-                  type="text"
-                  class="
-                    px-4
-                    h-10
-                    py-1
-                    bg-transparent
-                    border-b-2 border-receiptInputBorder
-                    w-full
-                    flex
-                    items-start
-                  "
-                >
-                  {{ corpTotalFee }}
-                </div>
-              </div>
-
-              <div class="flex w-full relative mb-12">
-                <h1
-                  class="
-                    font-poppins
-                    text-lg
-                    font-medium
-                    text-receiptTextColor
-                    left-0
-                    absolute
-                  "
-                >
-                  Amount in Word
-                </h1>
-                <div
-                  type="text"
-                  class="
-                    px-4
-                    h-10
-                    py-1
-                    bg-transparent
-                    border-b-2 border-receiptInputBorder
-                    w-10/12
-                    right-0
-                    absolute
-                    flex
-                    items-start
-                  "
-                >
-                  {{ corpAmountInWords }}
-                </div>
-              </div>
-              <div class="grid grid-cols-2 w-full gap-2">
-                <div class="flex relative">
-                  <label
-                    class="
-                      font-poppins
-                      text-lg
-                      font-medium
-                      text-receiptTextColor
-                      left-0
-                      absolute
-                    "
-                  >
-                    Previous Receipt No.(If Any)
-                  </label>
-                  <div
-                    type="text"
-                    class="
-                      px-4
-                      h-10
-                      py-1
-                      bg-transparent
-                      border-b-2 border-receiptInputBorder
-                      right-0
-                      absolute
-                      w-1/2
-                      flex
-                      items-start
-                    "
-                  >
-                    N/A
-                  </div>
-                </div>
-                <div class="flex relative">
-                  <label
-                    class="
-                      font-poppins
-                      text-lg
-                      font-medium
-                      text-receiptTextColor
-                      left-0
-                      absolute
-                    "
-                  >
-                    Due Amount
-                  </label>
-                  <div
-                    type="text"
-                    class="
-                      px-4
-                      h-10
-                      py-1
-                      bg-transparent
-                      border-b-2 border-receiptInputBorder
-                      right-0
-                      absolute
-                      w-3/4
-                      flex
-                      items-start
-                    "
-                  >
-                    {{ corpDueFee }}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="flex justify-between mb-5">
-              <div class="flex items-center gap-3">
-                <p class="text-receiptBorder text-xs">
-                  {{ officeAddress }}
-                </p>
-                <p class="text-receiptBorder text-xs">|</p>
-
-                <p class="text-receiptBorder text-xs">
-                  {{ officeEmail }}
-                </p>
-                <p class="text-receiptBorder text-xs">|</p>
-
-                <p class="text-receiptBorder text-xs">
-                  {{ officePhone }}
-                </p>
-              </div>
-              <div>
-                <div class="flex justify-center">
-                  <img
-                    src="../../assets/images/nihalvaiasign.png"
-                    alt=""
-                    class="w-20 h-10"
-                  />
-                </div>
-                <h1
-                  class="
-                    border-t-2 border-receiptInputBorder
-                    text-sm text-receiptTextColor
-                    font-semibold
-                  "
-                >
-                  Authorized Signature
-                </h1>
-              </div>
-            </div>
-          </div>
-          <div class="grid grid-cols-2">
-            <h1 class="border-t-8 border-receiptTextColor"></h1>
-            <h1 class="border-t-8 border-receiptBorder"></h1>
-          </div>
-        </div>
-        <!-- Corporate money receipt end -->
-      </div>
-
-      <button
-        class="px-4 py-2 bg-blue-200 rounded-md text-xl hover:bg-blue-300 mt-10"
-        @click="downloadCorporateReceipt"
-      >
-        Download receipt
-      </button>
-    </div>
   </div>
 
   <button
@@ -1805,32 +1001,22 @@ export default {
       custTotalFee: "",
       custPaidFee: 0,
       custDueFee: "",
-      corpId: "",
-      corpName: "",
-      corpEmail: "",
-      corpPhone: "",
-      corpAddress: "",
-      corpTotalFee: "",
-      corpPaidFee: 0,
-      corpDueFee: "",
-      corpUnits: "",
+      custUnits: 1,
       courseId: "",
       batchId: "",
+      batch: "",
       regularFee: "",
       batchFee: "",
       discountFee: 0,
       selectBatch: true,
       tempBatchList: [],
       newCustomer: true,
-      userId: "",
+      user: "",
       instId: "",
       prevCustTotalFee: "",
       prevCustPaidFee: "",
       prevCustDueFee: "",
-      prevCorpTotalFee: "",
-      prevCorpPaidFee: "",
-      prevCorpDueFee: "",
-      prevCorpUnits: "",
+      prevCustUnits: "",
       notPrinted: true,
       retailReceipt: false,
       corporateReceipt: false,
@@ -1861,9 +1047,7 @@ export default {
     this.$store.dispatch("getCourseList");
     this.$store.dispatch("getBatchList");
     this.$store.dispatch("getRetailCustomerList");
-    this.$store.dispatch("getCorporateCustomerList");
     this.$store.dispatch("getUserList");
-    this.$store.dispatch("getCorporateCustomerCount");
     this.$store.dispatch("getRetailCustomerCount");
     this.$store.dispatch("getSaleId");
     this.date = this.getDate();
@@ -1903,12 +1087,9 @@ export default {
     },
 
     setBatchFee() {
-      this.tempBatchList.filter((batch) => {
-        if (batch.batch_id == this.batchId) {
-          this.batchFee = batch.batch_fee;
-          this.instId = batch.inst_id;
-        }
-      });
+      this.batchFee = this.batch.batch_fee;
+      this.instId = this.batch.inst_id;
+      this.inst_profit = this.batch.inst_profit;
     },
 
     filterRetailCustomer() {
@@ -1924,6 +1105,7 @@ export default {
           this.prevCustTotalFee = customer.cust_total_fee;
           this.prevCustPaidFee = customer.cust_paid_fee;
           this.prevCustDueFee = customer.cust_due_fee;
+          this.prevCustUnits = customer.cust_units;
         }
       });
     },
@@ -1969,184 +1151,129 @@ export default {
     },
 
     async addSaleRecord() {
-      if (this.checkDate == "N/A") this.checkDate = this.date;
-      if (this.customerType == "retail") {
-        if (this.newCustomer == true) {
-          if (this.custName.length >= 3) {
-            let cust_id = new Date().getFullYear();
-            cust_id = cust_id.toString();
-            cust_id = (
-              parseInt(cust_id.substr(2, 4)) * 10000 +
-              this.retailCustomerCount[0] +
-              1
-            ).toString();
+      if (this.checkDate == "N/A") this.checkDate = null;
 
-            const custData = {
-              cust_id: cust_id,
-              cust_name: this.custName,
-              cust_phone: this.custPhone,
-              cust_email: this.custEmail,
-              cust_address: this.custAddress,
-              cust_organization: this.custOrganization,
-              cust_designation: this.custDesignation,
-              cust_total_fee: this.custTotalFee,
-              cust_paid_fee: this.custPaidFee,
-              cust_due_fee: this.custDueFee,
-            };
+      if (this.newCustomer == true) {
+        if (this.custName.length >= 3) {
+          let cust_id = new Date().getFullYear();
+          cust_id = cust_id.toString();
+          cust_id = (
+            parseInt(cust_id.substr(2, 4)) * 10000 +
+            this.retailCustomerCount[0] +
+            1
+          ).toString();
 
-            await this.$store.dispatch("addRetailCustomer", custData);
-            const saleData = {
-              id: this.saleid[0] + 1,
-              batch_id: this.batchId,
-              regular_fee: this.regularFee,
-              sale_fee: this.custTotalFee,
-              installment1: this.custPaidFee,
-              installment2: 0,
-              installment3: 0,
-              installment4: 0,
-              due_fee: this.custDueFee,
-              inst_id: this.instId,
-              user_id: this.userId,
-              cust_id: cust_id,
-              corp_id: this.corpId,
-              pay_method: this.paymentMethod,
-              check_ref_no: this.checkRefNo,
-              curr_date: this.date,
-              check_date: this.checkDate,
-              name: this.custName,
-              address: this.custAddress,
-              prev_receipts: this.prevReceipts,
-            };
-            await this.$store.dispatch("addSaleRecord", saleData);
-
-            // const receiptData = {
-            //   cust_id: cust_id,
-            //   corp_id: this.corpId,
-            //   receipt: this.moneyReceipt,
-            //   batch_id: this.batchId,
-            //   pay_method: this.paymentMethod,
-            //   check_ref_no: this.checkRefNo,
-            // };
-
-            // this.$store.dispatch("addReceipt", receiptData);
+          if (this.customerType == "corporate") {
+            cust_id = cust_id + "C";
           }
-        } else {
+
           const custData = {
-            cust_id: this.custId,
-            cust_total_fee: this.custTotalFee + this.prevCustTotalFee,
-            cust_paid_fee: this.custPaidFee + this.prevCustPaidFee,
-            cust_due_fee: this.custDueFee + this.prevCustDueFee,
+            cust_id: cust_id,
+            cust_name: this.custName,
+            cust_phone: this.custPhone,
+            cust_email: this.custEmail,
+            cust_address: this.custAddress,
+            cust_organization: this.custOrganization,
+            cust_designation: this.custDesignation,
+            cust_total_fee: this.custTotalFee,
+            cust_paid_fee: this.custPaidFee,
+            cust_due_fee: this.custDueFee,
+            cust_units: this.custUnits,
           };
 
-          this.$store.dispatch("updateRetailCustomerFees", custData);
+          await this.$store.dispatch("addRetailCustomer", custData);
           const saleData = {
-            id: this.saleid[0] + 1,
-            batch_id: this.batchId,
+            id: this.receipt4 + 1,
+            cust_id: cust_id,
+            batch_id: this.batch.batch_id,
             regular_fee: this.regularFee,
-            sale_fee: this.custTotalFee,
+            batch_fee: this.custTotalFee,
             installment1: this.custPaidFee,
+            mr_no1: this.receipt4 + 1,
+            date1: this.date,
+            check_date1: this.checkDate,
+            check_ref_no1: this.checkRefNo,
+            pay_mode1: this.paymentMethod,
             installment2: 0,
+            mr_no2: this.receipt4 + 2,
+            date2: null,
+            check_date2: null,
+            check_ref_no2: null,
+            pay_mode2: null,
             installment3: 0,
+            mr_no3: this.receipt4 + 3,
+            date3: null,
+            check_date3: null,
+            check_ref_no3: null,
+            pay_mode3: null,
             installment4: 0,
-            due_fee: this.custDueFee,
+            mr_no4: this.receipt4 + 4,
+            date4: null,
+            check_date4: null,
+            check_ref_no4: null,
+            pay_mode4: null,
+            paid: this.custPaidFee,
+            due: this.custDueFee,
             inst_id: this.instId,
-            user_id: this.userId,
-            cust_id: this.custId,
-            corp_id: this.corpId,
-            pay_method: this.paymentMethod,
-            check_ref_no: this.checkRefNo,
-            curr_date: this.date,
-            check_date: this.checkDate,
-            name: this.custName,
-            address: this.custAddress,
-            prev_receipts: this.prevReceipts,
+            inst_profit: this.inst_profit,
+            user_id: this.user.user_id,
+            user_profit: this.user.user_profit,
+            remarks: "",
           };
-          this.$store.dispatch("addSaleRecord", saleData);
+          await this.$store.dispatch("addSaleRecord", saleData);
         }
-      }
-      if (this.customerType == "corporate") {
-        if (this.newCustomer == true) {
-          if (this.corpName.length >= 3) {
-            let corp_id = this.corpName.substr(0, 3);
-            corp_id = corp_id.toUpperCase();
-            let num = (10000 + (this.corporateCustomerCount[0] + 1)).toString();
-            corp_id = corp_id.concat(num.substr(1, 4));
-
-            const corpData = {
-              corp_id: corp_id,
-              corp_name: this.corpName,
-              corp_phone: this.corpPhone,
-              corp_email: this.corpEmail,
-              corp_address: this.corpAddress,
-              corp_total_fee: this.corpTotalFee,
-              corp_paid_fee: this.corpPaidFee,
-              corp_due_fee: this.corpDueFee,
-              corp_units: this.corpUnits,
-            };
-
-            await this.$store.dispatch("addCorporateCustomer", corpData);
-            const saleData = {
-              id: this.saleid[0] + 1,
-              batch_id: this.batchId,
-              regular_fee: this.regularFee,
-              sale_fee: this.corpTotalFee,
-              installment1: this.corpPaidFee,
-              installment2: 0,
-              installment3: 0,
-              installment4: 0,
-              due_fee: this.corpDueFee,
-              inst_id: this.instId,
-              user_id: this.userId,
-              cust_id: this.custId,
-              corp_id: corp_id,
-              pay_method: this.paymentMethod,
-              check_ref_no: this.checkRefNo,
-              curr_date: this.date,
-              check_date: this.checkDate,
-              name: this.corpName,
-              address: this.corpAddress,
-              prev_receipts: this.prevReceipts,
-            };
-            await this.$store.dispatch("addSaleRecord", saleData);
-
-            // });
-            // this.showModal = true;
-          }
-        } else {
-          const corpData = {
-            corp_id: this.corpId,
-            corp_total_fee: this.corpTotalFee + this.prevCorpTotalFee,
-            corp_paid_fee: this.corpPaidFee + this.prevCorpPaidFee,
-            corp_due_fee: this.corpDueFee + this.prevCorpDueFee,
-            corp_units: this.corpUnits + this.prevCorpUnits,
-          };
-
-          this.$store.dispatch("updateCorporateCustomerFees", corpData);
-
-          const saleData = {
-            id: this.saleid[0] + 1,
-            batch_id: this.batchId,
-            regular_fee: this.regularFee,
-            sale_fee: this.corpTotalFee,
-            installment1: this.corpPaidFee,
-            installment2: 0,
-            installment3: 0,
-            installment4: 0,
-            due_fee: this.corpDueFee,
-            inst_id: this.instId,
-            user_id: this.userId,
-            cust_id: this.custId,
-            corp_id: this.corpId,
-            pay_method: this.paymentMethod,
-            check_ref_no: this.checkRefNo,
-            curr_date: this.date,
-            check_date: this.checkDate,
-            name: this.corpName,
-            address: this.corpAddress,
-            prev_receipts: this.prevReceipts,
-          };
-          this.$store.dispatch("addSaleRecord", saleData);
+      } else {
+        if (this.customerType == "corporate") {
+          this.custUnits = this.custUnits + this.prevCustUnits;
         }
+        const custData = {
+          cust_total_fee: this.custTotalFee + this.prevCustTotalFee,
+          cust_paid_fee: this.custPaidFee + this.prevCustPaidFee,
+          cust_due_fee: this.custDueFee + this.prevCustDueFee,
+          cust_units: this.custUnits,
+          cust_id: this.custId,
+        };
+
+        this.$store.dispatch("updateCustomerFees", custData);
+        const saleData = {
+          id: this.receipt4 + 1,
+          cust_id: this.custId,
+          batch_id: this.batch.batch_id,
+          regular_fee: this.regularFee,
+          batch_fee: this.custTotalFee,
+          installment1: this.custPaidFee,
+          mr_no1: this.receipt4 + 1,
+          date1: this.date,
+          check_date1: this.checkDate,
+          check_ref_no1: this.checkRefNo,
+          pay_mode1: this.paymentMethod,
+          installment2: 0,
+          mr_no2: this.receipt4 + 2,
+          date2: null,
+          check_date2: null,
+          check_ref_no2: null,
+          pay_mode2: null,
+          installment3: 0,
+          mr_no3: this.receipt4 + 3,
+          date3: null,
+          check_date3: null,
+          check_ref_no3: null,
+          pay_mode3: null,
+          installment4: 0,
+          mr_no4: this.receipt4 + 4,
+          date4: null,
+          check_date4: null,
+          check_ref_no4: null,
+          pay_mode4: null,
+          paid: this.custPaidFee,
+          due: this.custDueFee,
+          inst_id: this.instId,
+          inst_profit: this.inst_profit,
+          user_id: this.user.user_id,
+          user_profit: this.user.user_profit,
+          remarks: "",
+        };
+        await this.$store.dispatch("addSaleRecord", saleData);
       }
 
       this.showModal = true;
@@ -2159,18 +1286,6 @@ export default {
     toggleModal() {
       this.showModal = !this.showModal;
       window.location.reload();
-    },
-
-    generateSalesReceipt() {
-      if (this.customerType == "retail") {
-        // alert("hyhyhyh");
-        // this.corporateReceipt = false;
-        this.retailReceipt = true;
-      } else {
-        // this.retailReceipt = false;
-        this.corporateReceipt = true;
-      }
-      // this.notPrinted = false;
     },
 
     setUserName() {
@@ -2320,6 +1435,12 @@ export default {
       },
     },
 
+    receipt4: {
+      get() {
+        return this.$store.getters.receipt4;
+      },
+    },
+
     getCorpTotal() {
       if (this.batchFee && this.corpUnits && this.discountFee) {
         this.corpTotalFee = this.batchFee * this.corpUnits - this.discountFee;
@@ -2352,11 +1473,11 @@ export default {
 
     getCustTotal() {
       if (this.batchFee && this.discountFee) {
-        this.custTotalFee = this.batchFee - this.discountFee;
+        this.custTotalFee = this.batchFee * this.custUnits - this.discountFee;
         this.custAmountInWords =
           numberToWords.toWords(this.custTotalFee).toUpperCase() + " TAKA";
       } else if (this.batchFee) {
-        this.custTotalFee = this.batchFee;
+        this.custTotalFee = this.batchFee * this.custUnits;
         this.custAmountInWords =
           numberToWords.toWords(this.custTotalFee).toUpperCase() + " TAKA";
       }

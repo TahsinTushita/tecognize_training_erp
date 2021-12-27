@@ -63,7 +63,7 @@
           <select
             name="instructor"
             id="instructor"
-            v-model="inst_id"
+            v-model="instructor"
             required
             class="
               bg-white
@@ -80,7 +80,7 @@
           >
             <option
               v-for="instructor in instructorList"
-              :value="instructor.inst_id"
+              :value="instructor"
               :key="instructor.inst_id"
             >
               {{ instructor.inst_name }}
@@ -149,12 +149,13 @@ export default {
   data() {
     return {
       course_id: "",
-      inst_id: "",
+      instructor: "",
       batch_id: "",
       batch_fee: 0,
       admit_closed: false,
       message: "Batch added",
       showModal: false,
+      inst_profit: "",
     };
   },
   mounted() {
@@ -167,9 +168,10 @@ export default {
       const data = {
         batch_id: this.batch_id,
         batch_fee: this.batch_fee,
+        inst_id: this.instructor.inst_id,
         admit_closed: this.admit_closed,
         course_id: this.course_id,
-        inst_id: this.inst_id,
+        inst_profit: this.instructor.inst_profit,
       };
 
       this.$store.dispatch("addBatch", data);

@@ -2,12 +2,13 @@ from rest_framework import serializers
 from training_backend.models import (
     Instructor,
     User,
-    Retail_Customer,
-    Corporate_Customer,
+    Customer,
+    # Corporate_Customer,
     Category,
     Course,
     Batch,
-    Sale,
+    # Sale,
+    SaleReport,
 )
 
 
@@ -48,9 +49,9 @@ class UserSerializer(serializers.ModelSerializer):
         )
 
 
-class RetailCustomerSerializer(serializers.ModelSerializer):
+class CustomerSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Retail_Customer
+        model = Customer
         fields = (
             "cust_id",
             "cust_name",
@@ -62,23 +63,24 @@ class RetailCustomerSerializer(serializers.ModelSerializer):
             "cust_total_fee",
             "cust_paid_fee",
             "cust_due_fee",
+            "cust_units",
         )
 
 
-class CorporateCustomerSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Corporate_Customer
-        fields = (
-            "corp_id",
-            "corp_name",
-            "corp_phone",
-            "corp_email",
-            "corp_address",
-            "corp_total_fee",
-            "corp_paid_fee",
-            "corp_due_fee",
-            "corp_units",
-        )
+# class CorporateCustomerSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Corporate_Customer
+#         fields = (
+#             "corp_id",
+#             "corp_name",
+#             "corp_phone",
+#             "corp_email",
+#             "corp_address",
+#             "corp_total_fee",
+#             "corp_paid_fee",
+#             "corp_due_fee",
+#             "corp_units",
+#         )
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -102,31 +104,73 @@ class BatchSerializer(serializers.ModelSerializer):
             "admit_closed",
             "course_id",
             "inst_id",
+            "inst_profit",
         )
 
+    # class SaleSerializer(serializers.ModelSerializer):
+    # class Meta:
+    #     model = Sale
+    #     fields = (
+    #         "id",
+    #         "batch_id",
+    #         "regular_fee",
+    #         "sale_fee",
+    #         "installment1",
+    #         "installment2",
+    #         "installment3",
+    #         "installment4",
+    #         "due_fee",
+    #         "inst_id",
+    #         "user_id",
+    #         "cust_id",
+    #         "corp_id",
+    #         "pay_method",
+    #         "check_ref_no",
+    #         "curr_date",
+    #         "check_date",
+    #         "name",
+    #         "address",
+    #         "prev_receipts",
+    #     )
 
-class SaleSerializer(serializers.ModelSerializer):
+
+class SaleReportSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Sale
+        model = SaleReport
         fields = (
-            "id",
+            "cust_id",
             "batch_id",
             "regular_fee",
-            "sale_fee",
+            "batch_fee",
             "installment1",
+            "mr_no1",
+            "date1",
+            "check_date1",
+            "check_ref_no1",
+            "pay_mode1",
             "installment2",
+            "mr_no2",
+            "date2",
+            "check_date2",
+            "check_ref_no2",
+            "pay_mode2",
             "installment3",
+            "mr_no3",
+            "date3",
+            "check_date3",
+            "check_ref_no3",
+            "pay_mode3",
             "installment4",
-            "due_fee",
+            "mr_no4",
+            "date4",
+            "check_date4",
+            "check_ref_no4",
+            "pay_mode4",
+            "paid",
+            "due",
             "inst_id",
+            "inst_profit",
             "user_id",
-            "cust_id",
-            "corp_id",
-            "pay_method",
-            "check_ref_no",
-            "curr_date",
-            "check_date",
-            "name",
-            "address",
-            "prev_receipts",
+            "user_profit",
+            "remarks",
         )

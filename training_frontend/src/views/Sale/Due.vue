@@ -4,36 +4,6 @@
     <form @submit.prevent="false">
       <div class="space-y-5">
         <div class="grid grid-rows-1 gap-2 place-items-start">
-          <label for="course" class="font-semibold ml-2">Customer Type*</label>
-          <select
-            name="course"
-            id="course"
-            v-model="customerType"
-            required
-            class="
-              bg-white
-              rounded-md
-              px-8
-              py-4
-              flex
-              justify-center
-              w-600
-              border-2 border-gray-200
-              hover:border-navlink hover:ring-0
-              focus:outline-none focus:border-navlink
-            "
-          >
-            <option
-              v-for="type in customerTypes"
-              :key="type.id"
-              :value="type.type"
-            >
-              {{ type.type }}
-            </option>
-          </select>
-        </div>
-
-        <div class="grid grid-rows-1 gap-2 place-items-start">
           <label for="paymentMethod" class="font-semibold ml-2"
             >Payment Method*</label
           >
@@ -190,6 +160,40 @@
             </option>
           </select>
         </div>
+
+        <div class="grid grid-rows-1 gap-2 place-items-start">
+          <label for="paymentMethod" class="font-semibold ml-2"
+            >Installment Number*</label
+          >
+          <select
+            name="paymentMethod"
+            id="paymentMethod"
+            v-model="installment"
+            required
+            @change="enableInstallmentField"
+            class="
+              bg-white
+              rounded-md
+              px-8
+              py-4
+              flex
+              justify-center
+              w-600
+              border-2 border-gray-200
+              hover:border-navlink hover:ring-0
+              focus:outline-none focus:border-navlink
+            "
+          >
+            <option
+              v-for="(number, index) in installmentNumber"
+              :value="number"
+              :key="index"
+            >
+              {{ number }}
+            </option>
+          </select>
+        </div>
+
         <div class="grid grid-rows-1 gap-2 place-items-start">
           <label for="custTotalFee" class="font-semibold ml-2">Total*</label>
           <input
@@ -246,6 +250,7 @@
             type="number"
             name="custTotalFee"
             required
+            :disabled="installment2Disabled"
             class="
               bg-white
               rounded-md
@@ -270,6 +275,7 @@
             type="number"
             name="custTotalFee"
             required
+            :disabled="installment3Disabled"
             class="
               bg-white
               rounded-md
@@ -294,6 +300,7 @@
             type="number"
             name="custTotalFee"
             required
+            :disabled="installment4Disabled"
             class="
               bg-white
               rounded-md
@@ -373,7 +380,7 @@
               "
             >
               SL NO:
-              <p class="text-black font-medium">{{ saleid[0] + 1 }}</p>
+              <p class="text-black font-medium">{{ slNo }}</p>
             </h1>
             <div class="flex gap-2 items-center justify-center">
               <h1 class="font-segoeUI text-xl font-bold text-receiptTextColor">
@@ -772,11 +779,6 @@ import html2canvas from "html2canvas";
 export default {
   data() {
     return {
-      customerTypes: [
-        { id: 1, type: "Retail" },
-        { id: 2, type: "Corporate" },
-      ],
-      customerType: "",
       date: "",
       officeAddress: "H# B-160,New DOHS Mohakhali,Dhaka-1206",
       officeEmail: "training@tecognize.com",
@@ -799,10 +801,14 @@ export default {
       batchId: "",
       totalFee: 0,
       regularFee: 0,
+      installment: "",
       installment1: 0,
       installment2: 0,
       installment3: 0,
       installment4: 0,
+      installment2Disabled: true,
+      installment3Disabled: true,
+      installment4Disabled: true,
       dueFee: 0,
       instId: "",
       userId: "",
@@ -814,16 +820,34 @@ export default {
       prevCustDueFee: "",
       prevCustPaidFee: "",
       prevDueFee: "",
-      corpUnits: "",
+      custUnits: "",
       tempBatchList: [],
       tempRecords: [],
       prevReceipts: "",
+      installmentNumber: ["2nd", "3rd", "4th"],
+      mrNo1: "",
+      mrNo2: "",
+      mrNo3: "",
+      mrNo4: "",
+      slNo: "",
+      date2: null,
+      date3: null,
+      date4: null,
+      checkDate2: null,
+      checkDate3: null,
+      checkDate4: null,
+      payMode2: null,
+      payMode3: null,
+      payMode4: null,
+      id: "",
+      checkRefNo2: null,
+      checkRefNo3: null,
+      checkRefNo4: null,
     };
   },
 
   mounted() {
     this.$store.dispatch("getRetailCustomerList");
-    this.$store.dispatch("getCorporateCustomerList");
     this.$store.dispatch("getSaleList");
     this.$store.dispatch("getSaleId");
     this.date = this.getDate();
@@ -845,86 +869,29 @@ export default {
     },
 
     filterCustomerAndBatch() {
-      if (this.customerType == this.customerTypes[0].type) {
-        this.retailCustomerList.filter((customer) => {
-          if (customer.cust_phone == this.phone) {
-            this.name = customer.cust_name;
-            this.custid = customer.cust_id;
-            this.address = customer.cust_address;
-            this.prevCustTotalFee = customer.cust_total_fee;
-            this.prevCustPaidFee = customer.cust_paid_fee;
-            this.prevCustDueFee = customer.cust_due_fee;
+      this.retailCustomerList.filter((customer) => {
+        if (customer.cust_phone == this.phone) {
+          this.name = customer.cust_name;
+          this.custid = customer.cust_id;
+          this.address = customer.cust_address;
+          this.prevCustTotalFee = customer.cust_total_fee;
+          this.prevCustPaidFee = customer.cust_paid_fee;
+          this.prevCustDueFee = customer.cust_due_fee;
+          this.custUnits = customer.cust_units;
+        }
+      });
+
+      this.tempBatchList = [];
+      this.tempRecords = [];
+
+      this.saleList.filter((record) => {
+        if (record.cust_id == this.custid) {
+          this.tempRecords.push(record);
+          if (!this.tempBatchList.includes(record.batch_id)) {
+            this.tempBatchList.push(record.batch_id);
           }
-        });
-
-        this.tempBatchList = [];
-        this.tempRecords = [];
-
-        this.saleList.filter((record) => {
-          if (record.cust_id == this.custid) {
-            this.tempRecords.push(record);
-            if (!this.tempBatchList.includes(record.batch_id)) {
-              this.tempBatchList.push(record.batch_id);
-            }
-          }
-        });
-      } else {
-        this.corporateCustomerList.filter((customer) => {
-          if (customer.corp_phone == this.phone) {
-            this.name = customer.corp_name;
-            this.custid = customer.corp_id;
-            this.address = customer.corp_address;
-            this.prevCustTotalFee = customer.corp_total_fee;
-            this.prevCustPaidFee = customer.corp_paid_fee;
-            this.prevCustDueFee = customer.corp_due_fee;
-            this.corpUnits = customer.corp_units;
-          }
-        });
-
-        this.tempBatchList = [];
-        this.tempRecords = [];
-
-        this.saleList.filter((record) => {
-          if (record.corp_id == this.custid) {
-            this.tempRecords.push(record);
-            if (!this.tempBatchList.includes(record.batch_id)) {
-              this.tempBatchList.push(record.batch_id);
-            }
-          }
-        });
-
-        // let tempBatchList = [];
-        // this.batchList = [];
-        // this.saleList.filter((record) => {
-        //   if (record.corp_id == this.custid) {
-        //     if (!tempBatchList.includes(record)) {
-        //       tempBatchList.push(record);
-        //     }
-        //   }
-
-        //   tempBatchList.filter((batch) => {
-        //     let due = 9007199254740991;
-        //     this.saleList.filter((record) => {
-        //       if (record.batch_id == batch.batch_id) {
-        //         if (record.due_fee < due) {
-        //           due = record.due_fee;
-        //         }
-        //       }
-        //     });
-        //     console.log(due);
-        //     if (due != 0 && !this.batchList.includes(batch))
-        //       this.batchList.push(batch);
-        //   });
-        // });
-
-        // this.saleList.filter((record) => {
-        //   if (record.corp_id == this.custid) {
-        //     if (!this.batchList.includes(record)) {
-        //       this.batchList.push(record);
-        //     }
-        //   }
-        // });
-      }
+        }
+      });
     },
 
     setFees() {
@@ -932,22 +899,34 @@ export default {
       this.prevReceipts = "";
       this.tempRecords.filter((record) => {
         if (record.batch_id == this.batchId) {
-          this.totalFee = record.sale_fee;
+          this.id = record.id;
+          this.totalFee = record.batch_fee;
           this.installment1 = record.installment1;
-          if (record.installment2 > 0) {
-            this.installment2 = record.installment2;
-          }
-          if (record.installment3 > 0) {
-            this.installment3 = record.installment3;
-          }
-          if (record.installment4 > 0) {
-            this.installment4 = record.installment4;
-          }
+
+          this.installment2 = record.installment2;
+
+          this.installment3 = record.installment3;
+          this.installment4 = record.installment4;
           this.regularFee = record.regular_fee;
           this.instId = record.inst_id;
           this.userId = record.user_id;
-          this.previousReceipts.push(record.id);
-          this.prevReceipts = this.prevReceipts + " " + String(record.id);
+          this.prevReceipts = this.prevReceipts + String(record.mr_no1);
+          this.mrNo1 = record.mr_no1;
+          this.mrNo2 = record.mr_no2;
+          this.mrNo3 = record.mr_no3;
+          this.mrNo4 = record.mr_no4;
+          this.date2 = record.date2;
+          this.date3 = record.date3;
+          this.date4 = record.date4;
+          this.checkDate2 = record.check_date2;
+          this.checkDate3 = record.check_date3;
+          this.checkDate4 = record.check_date4;
+          this.payMode2 = record.pay_mode2;
+          this.payMode3 = record.pay_mode3;
+          this.payMode4 = record.pay_mode4;
+          this.checkRefNo2 = record.check_ref_no2;
+          this.checkRefNo3 = record.check_ref_no3;
+          this.checkRefNo4 = record.check_ref_no4;
         }
       });
 
@@ -960,60 +939,22 @@ export default {
 
       this.amountInWords =
         numberToWords.toWords(this.totalFee).toUpperCase() + " TAKA";
+    },
 
-      // this.totalFee = this.batchId.sale_fee;
-      // this.installment1 = this.batchId.installment1;
-      // this.installment2 = this.batchId.installment2;
-      // this.installment3 = this.batchId.installment3;
-      // this.installment4 = this.batchId.installment4;
-      // this.regularFee = this.batchId.regular_fee;
-      // this.dueFee = this.batchId.due_fee;
-      // this.instId = this.batchId.inst_id;
-      // this.userId = this.batchId.user_id;
-      // this.prevDueFee = this.batchId.due_fee;
-      // this.amountInWords =
-      //   numberToWords.toWords(this.totalFee).toUpperCase() + " TAKA";
-      // this.previousReceipts = [];
-      // this.saleList.filter((record) => {
-      //   if (record.batch_id == this.batchId.batch_id) {
-      //     if (this.customerType == this.customerTypes[0].type) {
-      //       if (record.cust_id == this.custid) {
-      //         this.previousReceipts.push(record.id);
-      //       }
-      //     } else {
-      //       if (record.corp_id == this.custid) {
-      //         this.previousReceipts.push(record.id);
-      //       }
-      //     }
-      //   }
-      // });
-
-      // this.totalFee = this.batchId.sale_fee;
-      // this.installment1 = this.batchId.installment1;
-      // this.installment2 = this.batchId.installment2;
-      // this.installment3 = this.batchId.installment3;
-      // this.installment4 = this.batchId.installment4;
-      // this.regularFee = this.batchId.regular_fee;
-      // this.dueFee = this.batchId.due_fee;
-      // this.instId = this.batchId.inst_id;
-      // this.userId = this.batchId.user_id;
-      // this.prevDueFee = this.batchId.due_fee;
-      // this.amountInWords =
-      //   numberToWords.toWords(this.totalFee).toUpperCase() + " TAKA";
-      // this.previousReceipts = [];
-      // this.saleList.filter((record) => {
-      //   if (record.batch_id == this.batchId.batch_id) {
-      //     if (this.customerType == this.customerTypes[0].type) {
-      //       if (record.cust_id == this.custid) {
-      //         this.previousReceipts.push(record.id);
-      //       }
-      //     } else {
-      //       if (record.corp_id == this.custid) {
-      //         this.previousReceipts.push(record.id);
-      //       }
-      //     }
-      //   }
-      // });
+    enableInstallmentField() {
+      if (this.installment == "2nd") {
+        this.installment2Disabled = false;
+        this.slNo = this.mrNo2;
+      } else if (this.installment == "3rd") {
+        this.installment3Disabled = false;
+        this.prevReceipts = this.prevReceipts + "," + this.mrNo2;
+        this.slNo = this.mrNo3;
+      } else if (this.installment == "4th") {
+        this.installment4Disabled = false;
+        this.prevReceipts =
+          this.prevReceipts + "," + this.mrNo2 + "," + this.mrNo3;
+        this.slNo = this.mrNo4;
+      }
     },
 
     downloadReceipt() {
@@ -1052,76 +993,66 @@ export default {
     },
 
     clearDue() {
-      if (this.customerType == this.customerTypes[0].type) {
-        const custData = {
-          cust_id: this.custid,
-          cust_total_fee: this.prevCustTotalFee,
-          cust_paid_fee: this.prevCustPaidFee + (this.prevDueFee - this.dueFee),
-          cust_due_fee: this.prevCustDueFee - (this.prevDueFee - this.dueFee),
-        };
+      if (this.checkDate == "N/A") this.checkDate = null;
 
-        this.$store.dispatch("updateRetailCustomerFees", custData);
-        if (this.checkDate == "N/A") this.checkDate = this.date;
-
-        const saleData = {
-          id: this.saleid[0] + 1,
-          batch_id: this.batchId,
-          regular_fee: this.regularFee,
-          sale_fee: this.totalFee,
-          installment1: this.installment1,
-          installment2: this.installment2,
-          installment3: this.installment3,
-          installment4: this.installment4,
-          due_fee: this.dueFee,
-          inst_id: this.instId,
-          user_id: this.userId,
-          cust_id: this.custid,
-          corp_id: "",
-          pay_method: this.paymentMethod,
-          check_ref_no: this.checkRefNo,
-          curr_date: this.date,
-          check_date: this.checkDate,
-          name: this.name,
-          address: this.address,
-          prev_receipts: this.prevReceipts,
-        };
-        this.$store.dispatch("addSaleRecord", saleData);
-      } else {
-        const corpData = {
-          corp_id: this.custid,
-          corp_total_fee: this.prevCustTotalFee,
-          corp_paid_fee: this.prevCustPaidFee + (this.prevDueFee - this.dueFee),
-          corp_due_fee: this.prevCustDueFee - (this.prevDueFee - this.dueFee),
-          corp_units: this.corpUnits,
-        };
-
-        this.$store.dispatch("updateCorporateCustomerFees", corpData);
-        if (this.checkDate == "N/A") this.checkDate = this.date;
-
-        const saleData = {
-          id: this.saleid[0] + 1,
-          batch_id: this.batchId,
-          regular_fee: this.regularFee,
-          sale_fee: this.totalFee,
-          installment1: this.installment1,
-          installment2: this.installment2,
-          installment3: this.installment3,
-          installment4: this.installment4,
-          due_fee: this.dueFee,
-          inst_id: this.instId,
-          user_id: this.userId,
-          cust_id: "",
-          corp_id: this.custid,
-          pay_method: this.paymentMethod,
-          check_ref_no: this.checkRefNo,
-          curr_date: this.date,
-          check_date: this.checkDate,
-          name: this.name,
-          address: this.address,
-          prev_receipts: this.prevReceipts,
-        };
-        this.$store.dispatch("addSaleRecord", saleData);
+      if (this.installment == "2nd") {
+        this.date2 = this.date;
+        this.checkDate2 = this.checkDate;
+        this.checkRefNo2 = this.checkRefNo;
+        this.payMode2 = this.paymentMethod;
+      } else if (this.installment == "3rd") {
+        this.date3 = this.date;
+        this.checkDate3 = this.checkDate;
+        this.checkRefNo3 = this.checkRefNo;
+        this.payMode3 = this.paymentMethod;
+      } else if (this.installment == "4th") {
+        this.date4 = this.date;
+        this.checkDate4 = this.checkDate;
+        this.checkRefNo4 = this.checkRefNo;
+        this.payMode4 = this.paymentMethod;
       }
+
+      const custData = {
+        cust_total_fee: this.prevCustTotalFee,
+        cust_paid_fee: this.prevCustPaidFee + (this.prevDueFee - this.dueFee),
+        cust_due_fee: this.prevCustDueFee - (this.prevDueFee - this.dueFee),
+        cust_units: this.custUnits,
+        cust_id: this.custid,
+      };
+
+      this.$store.dispatch("updateCustomerFees", custData);
+
+      const saleData = {
+        installment2: this.installment2,
+        date2: this.date2,
+        check_date2: this.checkDate2,
+        check_ref_no2: this.checkRefNo2,
+        pay_mode2: this.payMode2,
+        installment3: this.installment3,
+        date3: this.date3,
+        check_date3: this.checkDate3,
+        check_ref_no3: this.checkRefNo3,
+        pay_mode3: this.payMode3,
+        installment4: this.installment4,
+        date4: this.date4,
+        check_date4: this.checkDate4,
+        check_ref_no4: this.checkRefNo4,
+        pay_mode4: this.payMode4,
+        paid:
+          this.installment1 +
+          this.installment2 +
+          this.installment3 +
+          this.installment4,
+        due:
+          this.totalFee -
+          (this.installment1 +
+            this.installment2 +
+            this.installment3 +
+            this.installment4),
+        id: this.id,
+      };
+      this.$store.dispatch("updateSaleRecord", saleData);
+
       window.location.reload();
     },
   },
@@ -1130,12 +1061,6 @@ export default {
     retailCustomerList: {
       get() {
         return this.$store.getters.retailCustomerList;
-      },
-    },
-
-    corporateCustomerList: {
-      get() {
-        return this.$store.getters.corporateCustomerList;
       },
     },
 
@@ -1148,6 +1073,12 @@ export default {
     saleid: {
       get() {
         return this.$store.getters.saleid;
+      },
+    },
+
+    receipt4: {
+      get() {
+        return this.$store.getters.receipt4;
       },
     },
 
