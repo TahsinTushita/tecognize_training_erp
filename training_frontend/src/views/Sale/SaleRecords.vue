@@ -427,36 +427,67 @@
       Download receipt
     </button>
   </div>
-  <div class="grid grid-rows-1 gap-2 place-items-start m-10">
-    <label for="batchId" class="font-semibold ml-2">Batch*</label>
-    <select
-      name="batchId"
-      id="batchId"
-      v-model="batchId"
-      required
-      class="
-        bg-white
-        rounded-md
-        px-8
-        py-4
-        flex
-        justify-center
-        w-600
-        border-2 border-gray-200
-        hover:border-navlink hover:ring-0
-        focus:outline-none focus:border-navlink
-      "
-      @change="filterByBatch"
-    >
-      <option value="None">None</option>
-      <option
-        v-for="batch in batchIds"
-        :value="batch.batch_id"
-        :key="batch.batch_id"
+  <div class="flex items-start">
+    <div class="grid grid-rows-1 gap-2 place-items-start m-10">
+      <label for="batchId" class="font-semibold ml-2">Batch*</label>
+      <select
+        name="batchId"
+        id="batchId"
+        v-model="batchId"
+        required
+        class="
+          bg-white
+          rounded-md
+          px-8
+          py-4
+          flex
+          justify-center
+          w-600
+          border-2 border-gray-200
+          hover:border-navlink hover:ring-0
+          focus:outline-none focus:border-navlink
+        "
+        @change="filterByBatch"
       >
-        {{ batch.batch_id }}
-      </option>
-    </select>
+        <option value="None">None</option>
+        <option
+          v-for="batch in batchIds"
+          :value="batch.batch_id"
+          :key="batch.batch_id"
+        >
+          {{ batch.batch_id }}
+        </option>
+      </select>
+    </div>
+    <table class="m-10">
+      <title>Instructor</title>
+      <thead>
+        <th class="px-4 py-4 text-center border-2">ID</th>
+        <th class="px-4 py-4 text-center border-2">Name</th>
+        <th class="px-4 py-4 text-center border-2">Percentage</th>
+        <th class="px-4 py-4 text-center border-2">Fee</th>
+      </thead>
+      <tbody v-if="instructorPercentages.length">
+        <tr
+          v-for="instructor in instructorPercentages"
+          :key="instructor.inst_id"
+          class="hover:bg-gray-100"
+        >
+          <td class="px-4 py-4 text-center border-2">
+            {{ instructor.inst_id }}
+          </td>
+          <td class="px-4 py-4 text-center border-2">
+            {{ instructor.inst_name }}
+          </td>
+          <td class="px-4 py-4 text-center border-2">
+            {{ instructor.inst_profit }}
+          </td>
+          <td class="px-4 py-4 text-center border-2">
+            {{ instructor.inst_fee }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
   <table class="m-10">
     <thead>
@@ -657,6 +688,7 @@ export default {
   mounted() {
     let batchId = "None";
     this.$store.dispatch("getSaleCustomerList", batchId);
+    this.$store.dispatch("getInstructorPercentages", batchId);
     this.$store.dispatch("getBatchIds");
   },
 
@@ -735,6 +767,7 @@ export default {
 
     filterByBatch() {
       this.$store.dispatch("getSaleCustomerList", this.batchId);
+      this.$store.dispatch("getInstructorPercentages", this.batchId);
     },
 
     downloadReceipt() {
@@ -783,6 +816,12 @@ export default {
     batchIds: {
       get() {
         return this.$store.getters.batchIds;
+      },
+    },
+
+    instructorPercentages: {
+      get() {
+        return this.$store.getters.instructorPercentages;
       },
     },
   },

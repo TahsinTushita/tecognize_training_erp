@@ -127,6 +127,24 @@ def instructor_count(request):
         return JsonResponse(r, safe=False)
 
 
+@api_view(["GET"])
+def instructor_percentage(request, batchId):
+    cursor = connection.cursor()
+
+    query1 = "SELECT training_backend_salereport.inst_id,inst_name,training_backend_instructor.inst_profit,sum((paid*training_backend_salereport.inst_profit)/100) AS inst_fee FROM training_backend_salereport INNER JOIN training_backend_instructor ON training_backend_salereport.inst_id=training_backend_instructor.inst_id GROUP BY training_backend_salereport.inst_id"
+    query2 = "SELECT training_backend_salereport.inst_id,inst_name,training_backend_instructor.inst_profit,sum((paid*training_backend_salereport.inst_profit)/100) AS inst_fee FROM training_backend_salereport INNER JOIN training_backend_instructor ON training_backend_salereport.inst_id=training_backend_instructor.inst_id WHERE batch_id=%s GROUP BY training_backend_salereport.inst_id"
+
+    if batchId == "None":
+        cursor.execute(query1)
+    else:
+        cursor.execute(query2, params=(batchId))
+
+    columns = [col[0] for col in cursor.description]
+    return JsonResponse(
+        [dict(zip(columns, row)) for row in cursor.fetchall()], safe=False
+    )
+
+
 # objectQuerySet = ConventionCard.objects.filter(ownerUser = user)
 # data = serializers.serialize('json', list(objectQuerySet), fields=('fileName','id'))
 

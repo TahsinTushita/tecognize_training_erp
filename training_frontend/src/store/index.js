@@ -36,6 +36,7 @@ export default createStore({
     receipt4: "",
     saleCustomerList: [],
     batchIds: [],
+    instructorPercentages: [],
   },
   mutations: {
     SET_INSTRUCTOR_LIST(state, instructorList) {
@@ -156,6 +157,10 @@ export default createStore({
 
     SET_BATCH_IDS(state, batchIds) {
       state.batchIds = batchIds;
+    },
+
+    SET_INSTRUCTOR_PERCENTAGES(state, instructorPercentages) {
+      state.instructorPercentages = instructorPercentages;
     },
   },
   actions: {
@@ -532,6 +537,16 @@ export default createStore({
           console.log(error);
         };
     },
+
+    getInstructorPercentages({ commit }, batchId) {
+      axios("instructor-percentage/" + batchId).then((res) => {
+        console.log(res.data);
+        commit("SET_INSTRUCTOR_PERCENTAGES", res.data);
+      }),
+        (error) => {
+          console.log(error);
+        };
+    },
   },
   getters: {
     instructorList: (state) => {
@@ -635,6 +650,10 @@ export default createStore({
 
     batchIds: (state) => {
       return state.batchIds;
+    },
+
+    instructorPercentages: (state) => {
+      return state.instructorPercentages;
     },
   },
   modules: {},
