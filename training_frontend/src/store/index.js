@@ -35,6 +35,7 @@ export default createStore({
     saleid: "",
     receipt4: "",
     saleCustomerList: [],
+    batchIds: [],
   },
   mutations: {
     SET_INSTRUCTOR_LIST(state, instructorList) {
@@ -151,6 +152,10 @@ export default createStore({
 
     SET_SALE_CUSTOMER_LIST(state, saleCustomerList) {
       state.saleCustomerList = saleCustomerList;
+    },
+
+    SET_BATCH_IDS(state, batchIds) {
+      state.batchIds = batchIds;
     },
   },
   actions: {
@@ -378,6 +383,16 @@ export default createStore({
         };
     },
 
+    getBatchIds({ commit }) {
+      axios("batch-ids").then((res) => {
+        commit("SET_BATCH_IDS", res.data);
+        console.log(res.data);
+      }),
+        (error) => {
+          console.log(error);
+        };
+    },
+
     getBatch({ commit }, batch_id) {
       axios("batches/" + batch_id).then((res) => {
         commit("SET_BATCH", res.data);
@@ -508,8 +523,8 @@ export default createStore({
         };
     },
 
-    getSaleCustomerList({ commit }) {
-      axios("sale-customer-list").then((res) => {
+    getSaleCustomerList({ commit }, batchId) {
+      axios("sale-customer-list/" + batchId).then((res) => {
         console.log(res.data);
         commit("SET_SALE_CUSTOMER_LIST", res.data);
       }),
@@ -616,6 +631,10 @@ export default createStore({
 
     saleCustomerList: (state) => {
       return state.saleCustomerList;
+    },
+
+    batchIds: (state) => {
+      return state.batchIds;
     },
   },
   modules: {},

@@ -427,6 +427,18 @@ def batch_by_course(request):
 
 
 @api_view(["GET"])
+def batch_ids(request):
+    cursor = connection.cursor()
+    query = "SELECT batch_id,course_id FROM training_backend_batch"
+
+    cursor.execute(query)
+    columns = [col[0] for col in cursor.description]
+    return JsonResponse(
+        [dict(zip(columns, row)) for row in cursor.fetchall()], safe=False
+    )
+
+
+@api_view(["GET"])
 def batch_list_table(request):
     cursor = connection.cursor()
     query = "SELECT training_backend_batch.batch_id,training_backend_batch.batch_fee,training_backend_batch.admit_closed,training_backend_course.course_name,training_backend_instructor.inst_name FROM training_backend_batch INNER JOIN training_backend_course ON training_backend_batch.course_id=training_backend_course.course_id INNER JOIN training_backend_instructor ON training_backend_batch.inst_id=training_backend_instructor.inst_id"
@@ -769,11 +781,17 @@ def sale_list(request):
 
 
 @api_view(["GET"])
-def sale_report_with_customers(request):
+def sale_report_with_customers(request, batchId):
     cursor = connection.cursor()
-    query = "SELECT * FROM training_backend_salereport INNER JOIN training_backend_customer ON training_backend_salereport.cust_id=training_backend_customer.cust_id"
 
-    cursor.execute(query)
+    query1 = "SELECT *,(paid*inst_profit)/100 AS inst_fee,(paid*user_profit)/100 AS user_fee FROM training_backend_salereport INNER JOIN training_backend_customer ON training_backend_salereport.cust_id=training_backend_customer.cust_id"
+    query2 = "SELECT *,(paid*inst_profit)/100 AS inst_fee,(paid*user_profit)/100 AS user_fee FROM training_backend_salereport INNER JOIN training_backend_customer ON training_backend_salereport.cust_id=training_backend_customer.cust_id WHERE batch_id=%s"
+
+    if batchId == "None":
+        cursor.execute(query1)
+    else:
+        cursor.execute(query2, params=(batchId))
+
     columns = [col[0] for col in cursor.description]
     return JsonResponse(
         [dict(zip(columns, row)) for row in cursor.fetchall()], safe=False

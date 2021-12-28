@@ -18,6 +18,7 @@ urlpatterns = [
     url(r"^backend/api/batches-by-course$", views.batch_by_course),
     url(r"^backend/api/batch-list$", views.batch_list_table),
     url(r"^backend/api/batches/(?P<pk>[a-zA-Z0-9_]+)$", views.batch_detail),
+    url(r"^backend/api/batch-ids$", views.batch_ids),
     url(r"^backend/api/batch-admission/(?P<pk>[a-zA-Z0-9_]+)$", views.batch_admission),
     url(r"^backend/api/batches-count$", views.batch_count),
     url(r"^backend/api/customers$", views.customer_list),
@@ -40,5 +41,8 @@ urlpatterns = [
     url(r"^backend/api/sale-id$", views.sale_id),
     url(r"^backend/api/sale-update$", views.sale_update),
     url(r"^backend/api/sale-list$", views.sale_list),
-    url(r"^backend/api/sale-customer-list$", views.sale_report_with_customers),
+    url(
+        r"^backend/api/sale-customer-list/([a-zA-Z0-9_]+)$",
+        views.sale_report_with_customers,
+    ),
 ]

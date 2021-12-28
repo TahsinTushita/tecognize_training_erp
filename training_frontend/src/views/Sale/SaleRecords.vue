@@ -427,6 +427,37 @@
       Download receipt
     </button>
   </div>
+  <div class="grid grid-rows-1 gap-2 place-items-start m-10">
+    <label for="batchId" class="font-semibold ml-2">Batch*</label>
+    <select
+      name="batchId"
+      id="batchId"
+      v-model="batchId"
+      required
+      class="
+        bg-white
+        rounded-md
+        px-8
+        py-4
+        flex
+        justify-center
+        w-600
+        border-2 border-gray-200
+        hover:border-navlink hover:ring-0
+        focus:outline-none focus:border-navlink
+      "
+      @change="filterByBatch"
+    >
+      <option value="None">None</option>
+      <option
+        v-for="batch in batchIds"
+        :value="batch.batch_id"
+        :key="batch.batch_id"
+      >
+        {{ batch.batch_id }}
+      </option>
+    </select>
+  </div>
   <table class="m-10">
     <thead>
       <tr>
@@ -619,11 +650,14 @@ export default {
       mr2: "mr2",
       mr3: "mr3",
       mr4: "mr4",
+      batchId: "",
     };
   },
 
   mounted() {
-    this.$store.dispatch("getSaleCustomerList");
+    let batchId = "None";
+    this.$store.dispatch("getSaleCustomerList", batchId);
+    this.$store.dispatch("getBatchIds");
   },
 
   methods: {
@@ -699,6 +733,10 @@ export default {
       }
     },
 
+    filterByBatch() {
+      this.$store.dispatch("getSaleCustomerList", this.batchId);
+    },
+
     downloadReceipt() {
       const doc = new jsPDF({
         orientation: "l",
@@ -739,6 +777,12 @@ export default {
     saleCustomerList: {
       get() {
         return this.$store.getters.saleCustomerList;
+      },
+    },
+
+    batchIds: {
+      get() {
+        return this.$store.getters.batchIds;
       },
     },
   },
