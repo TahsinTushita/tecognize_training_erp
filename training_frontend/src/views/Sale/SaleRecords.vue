@@ -460,7 +460,9 @@
       </select>
     </div>
     <table class="m-10">
-      <title>Instructor</title>
+      <caption class="text-xl mb-5 font-semibold">
+        Instructor
+      </caption>
       <thead>
         <th class="px-4 py-4 text-center border-2">ID</th>
         <th class="px-4 py-4 text-center border-2">Name</th>
@@ -484,6 +486,37 @@
           </td>
           <td class="px-4 py-4 text-center border-2">
             {{ instructor.inst_fee }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table class="m-10">
+      <caption class="text-xl mb-5 font-semibold">
+        User
+      </caption>
+      <thead>
+        <th class="px-4 py-4 text-center border-2">ID</th>
+        <th class="px-4 py-4 text-center border-2">Name</th>
+        <th class="px-4 py-4 text-center border-2">Percentage</th>
+        <th class="px-4 py-4 text-center border-2">Fee</th>
+      </thead>
+      <tbody v-if="userPercentages.length">
+        <tr
+          v-for="user in userPercentages"
+          :key="user.user_id"
+          class="hover:bg-gray-100"
+        >
+          <td class="px-4 py-4 text-center border-2">
+            {{ user.user_id }}
+          </td>
+          <td class="px-4 py-4 text-center border-2">
+            {{ user.user_name }}
+          </td>
+          <td class="px-4 py-4 text-center border-2">
+            {{ user.user_profit }}
+          </td>
+          <td class="px-4 py-4 text-center border-2">
+            {{ user.user_fee }}
           </td>
         </tr>
       </tbody>
@@ -689,6 +722,7 @@ export default {
     let batchId = "None";
     this.$store.dispatch("getSaleCustomerList", batchId);
     this.$store.dispatch("getInstructorPercentages", batchId);
+    this.$store.dispatch("getUserPercentages", batchId);
     this.$store.dispatch("getBatchIds");
   },
 
@@ -768,6 +802,7 @@ export default {
     filterByBatch() {
       this.$store.dispatch("getSaleCustomerList", this.batchId);
       this.$store.dispatch("getInstructorPercentages", this.batchId);
+      this.$store.dispatch("getUserPercentages", this.batchId);
     },
 
     downloadReceipt() {
@@ -822,6 +857,12 @@ export default {
     instructorPercentages: {
       get() {
         return this.$store.getters.instructorPercentages;
+      },
+    },
+
+    userPercentages: {
+      get() {
+        return this.$store.getters.userPercentages;
       },
     },
   },

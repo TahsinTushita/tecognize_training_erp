@@ -12,6 +12,7 @@ urlpatterns = [
     url(r"^backend/api/users$", views.user_list),
     url(r"^backend/api/users/(?P<pk>[a-zA-Z0-9_]+)$", views.user_detail),
     url(r"^backend/api/users-count$", views.user_count),
+    url(r"^backend/api/user-percentage/([a-zA-Z0-9_]+)$", views.user_percentage),
     url(r"^backend/api/categories$", views.category_list),
     url(r"^backend/api/categories/(?P<pk>[a-zA-Z0-9_]+)$", views.category_detail),
     url(r"^backend/api/categories-count$", views.category_count),

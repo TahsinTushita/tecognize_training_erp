@@ -214,6 +214,24 @@ def user_count(request):
         return JsonResponse(r, safe=False)
 
 
+@api_view(["GET"])
+def user_percentage(request, batchId):
+    cursor = connection.cursor()
+
+    query1 = "SELECT training_backend_salereport.user_id,user_name,training_backend_user.user_profit,sum((paid*training_backend_salereport.user_profit)/100) AS user_fee FROM training_backend_salereport INNER JOIN training_backend_user ON training_backend_salereport.user_id=training_backend_user.user_id GROUP BY training_backend_salereport.user_id"
+    query2 = "SELECT training_backend_salereport.user_id,user_name,training_backend_user.user_profit,sum((paid*training_backend_salereport.user_profit)/100) AS user_fee FROM training_backend_salereport INNER JOIN training_backend_user ON training_backend_salereport.user_id=training_backend_user.user_id WHERE batch_id=%s GROUP BY training_backend_salereport.user_id"
+
+    if batchId == "None":
+        cursor.execute(query1)
+    else:
+        cursor.execute(query2, params=(batchId))
+
+    columns = [col[0] for col in cursor.description]
+    return JsonResponse(
+        [dict(zip(columns, row)) for row in cursor.fetchall()], safe=False
+    )
+
+
 # Category
 
 
