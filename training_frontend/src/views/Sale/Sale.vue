@@ -788,11 +788,18 @@
                 </div>
               </div>
 
-              <div class="flex item-start w-full">
+              <div class="flex relative mb-12 w-full">
                 <h1
-                  class="font-poppins text-lg font-medium text-receiptTextColor"
+                  class="
+                    font-poppins
+                    text-lg
+                    font-medium
+                    text-receiptTextColor
+                    left-0
+                    absolute
+                  "
                 >
-                  Amount
+                  Total Amount
                 </h1>
 
                 <div
@@ -803,12 +810,47 @@
                     py-1
                     bg-transparent
                     border-b-2 border-receiptInputBorder
-                    w-full
+                    w-10/12
+                    right-0
+                    absolute
                     flex
                     items-start
                   "
                 >
                   {{ custTotalFee }}
+                </div>
+              </div>
+
+              <div class="flex relative mb-12 w-full">
+                <h1
+                  class="
+                    font-poppins
+                    text-lg
+                    font-medium
+                    text-receiptTextColor
+                    left-0
+                    absolute
+                  "
+                >
+                  Paid Amount
+                </h1>
+
+                <div
+                  type="text"
+                  class="
+                    px-4
+                    h-10
+                    py-1
+                    bg-transparent
+                    border-b-2 border-receiptInputBorder
+                    w-10/12
+                    right-0
+                    absolute
+                    flex
+                    items-start
+                  "
+                >
+                  {{ custPaidFee }}
                 </div>
               </div>
 
@@ -1474,8 +1516,8 @@ export default {
     getCustTotal() {
       if (this.batchFee && this.discountFee) {
         this.custTotalFee = this.batchFee * this.custUnits - this.discountFee;
-        this.custAmountInWords =
-          numberToWords.toWords(this.custTotalFee).toUpperCase() + " TAKA";
+        // this.custAmountInWords =
+        //   numberToWords.toWords(this.custTotalFee).toUpperCase() + " TAKA";
       } else if (this.batchFee) {
         this.custTotalFee = this.batchFee * this.custUnits;
         this.custAmountInWords =
@@ -1487,8 +1529,11 @@ export default {
     getCustDue() {
       if (this.custTotalFee && this.custPaidFee) {
         this.custDueFee = this.custTotalFee - this.custPaidFee;
+        this.custAmountInWords =
+          numberToWords.toWords(this.custPaidFee).toUpperCase() + " TAKA";
       } else if (this.custTotalFee) {
         this.custDueFee = this.custTotalFee;
+        this.custAmountInWords = "";
       }
       return this.custDueFee;
     },

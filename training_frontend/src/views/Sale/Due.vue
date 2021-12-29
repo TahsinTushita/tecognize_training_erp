@@ -584,11 +584,18 @@
               </div>
             </div>
 
-            <div class="flex item-start w-full">
+            <div class="flex relative mb-12 w-full">
               <h1
-                class="font-poppins text-lg font-medium text-receiptTextColor"
+                class="
+                  font-poppins
+                  text-lg
+                  font-medium
+                  text-receiptTextColor
+                  left-0
+                  absolute
+                "
               >
-                Amount
+                Total Amount
               </h1>
 
               <div
@@ -599,12 +606,47 @@
                   py-1
                   bg-transparent
                   border-b-2 border-receiptInputBorder
-                  w-full
+                  w-10/12
+                  right-0
+                  absolute
                   flex
                   items-start
                 "
               >
                 {{ totalFee }}
+              </div>
+            </div>
+
+            <div class="flex relative mb-12 w-full">
+              <h1
+                class="
+                  font-poppins
+                  text-lg
+                  font-medium
+                  text-receiptTextColor
+                  left-0
+                  absolute
+                "
+              >
+                Paid Amount
+              </h1>
+
+              <div
+                type="text"
+                class="
+                  px-4
+                  h-10
+                  py-1
+                  bg-transparent
+                  border-b-2 border-receiptInputBorder
+                  w-10/12
+                  right-0
+                  absolute
+                  flex
+                  items-start
+                "
+              >
+                {{ getPaidAmount }}
               </div>
             </div>
 
@@ -636,7 +678,7 @@
                   items-start
                 "
               >
-                {{ amountInWords }}
+                {{ getAmountInWords }}
               </div>
             </div>
             <div class="grid grid-cols-2 w-full gap-2">
@@ -843,6 +885,7 @@ export default {
       checkRefNo2: null,
       checkRefNo3: null,
       checkRefNo4: null,
+      paidFee: 0,
     };
   },
 
@@ -937,8 +980,8 @@ export default {
           this.installment3 +
           this.installment4);
 
-      this.amountInWords =
-        numberToWords.toWords(this.totalFee).toUpperCase() + " TAKA";
+      // this.amountInWords =
+      //   numberToWords.toWords(this.totalFee).toUpperCase() + " TAKA";
     },
 
     enableInstallmentField() {
@@ -1094,6 +1137,38 @@ export default {
         this.dueFee = 0;
       }
       return this.dueFee;
+    },
+
+    getPaidAmount() {
+      if (this.installment == "2nd") {
+        this.paidFee = this.installment2;
+      } else if (this.installment == "3rd") {
+        this.paidFee = this.installment3;
+      } else if (this.installment == "4th") {
+        this.paidFee = this.installment4;
+      } else {
+        this.paidFee = 0;
+      }
+      return this.paidFee;
+    },
+
+    getAmountInWords() {
+      // if (this.installment == "2nd") {
+      //   this.amountInWords =
+      //     numberToWords.toWords(this.installment2).toUpperCase() + " TAKA";
+      // } else if (this.installment == "3rd") {
+      //   this.amountInWords =
+      //     numberToWords.toWords(this.installment3).toUpperCase() + " TAKA";
+      // } else if (this.installment == "4th") {
+      //   this.amountInWords =
+      //     numberToWords.toWords(this.installment4).toUpperCase() + " TAKA";
+      // } else {
+      //   this.amountInWords = "";
+      // }
+      this.amountInWords =
+        numberToWords.toWords(this.paidFee).toUpperCase() + " TAKA";
+
+      return this.amountInWords;
     },
   },
 };

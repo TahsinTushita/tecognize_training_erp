@@ -244,11 +244,18 @@
                 </div>
               </div>
 
-              <div class="flex item-start w-full">
+              <div class="flex relative mb-12 w-full">
                 <h1
-                  class="font-poppins text-lg font-medium text-receiptTextColor"
+                  class="
+                    font-poppins
+                    text-lg
+                    font-medium
+                    text-receiptTextColor
+                    left-0
+                    absolute
+                  "
                 >
-                  Amount
+                  Total Amount
                 </h1>
 
                 <div
@@ -259,12 +266,47 @@
                     py-1
                     bg-transparent
                     border-b-2 border-receiptInputBorder
-                    w-full
+                    w-10/12
+                    right-0
+                    absolute
                     flex
                     items-start
                   "
                 >
                   {{ amount }}
+                </div>
+              </div>
+
+              <div class="flex relative mb-12 w-full">
+                <h1
+                  class="
+                    font-poppins
+                    text-lg
+                    font-medium
+                    text-receiptTextColor
+                    left-0
+                    absolute
+                  "
+                >
+                  Paid Amount
+                </h1>
+
+                <div
+                  type="text"
+                  class="
+                    px-4
+                    h-10
+                    py-1
+                    bg-transparent
+                    border-b-2 border-receiptInputBorder
+                    w-10/12
+                    right-0
+                    absolute
+                    flex
+                    items-start
+                  "
+                >
+                  {{ paidFee }}
                 </div>
               </div>
 
@@ -715,6 +757,7 @@ export default {
       mr3: "mr3",
       mr4: "mr4",
       batchId: "",
+      paidFee: "",
     };
   },
 
@@ -732,8 +775,6 @@ export default {
       this.address = record.cust_address;
       this.paymentPurpose = record.batch_id;
       this.amount = record.batch_fee;
-      this.amountInWords =
-        numberToWords.toWords(this.amount).toUpperCase() + " TAKA";
 
       if (event.target.name == this.mr1) {
         this.slNo = record.mr_no1;
@@ -747,6 +788,9 @@ export default {
         }
         this.prevReceipts = "N/A";
         this.due = record.batch_fee - record.installment1;
+        this.paidFee = record.installment1;
+        this.amountInWords =
+          numberToWords.toWords(record.installment1).toUpperCase() + " TAKA";
       } else if (event.target.name == this.mr2) {
         this.slNo = record.mr_no2;
         this.date = record.date2;
@@ -760,6 +804,9 @@ export default {
         this.prevReceipts = String(record.mr_no1);
         this.due =
           record.batch_fee - (record.installment1 + record.installment2);
+        this.paidFee = record.installment2;
+        this.amountInWords =
+          numberToWords.toWords(record.installment2).toUpperCase() + " TAKA";
       } else if (event.target.name == this.mr3) {
         this.slNo = record.mr_no3;
         this.date = record.date3;
@@ -774,6 +821,9 @@ export default {
         this.due =
           record.batch_fee -
           (record.installment1 + record.installment2 + record.installment3);
+        this.paidFee = record.installment3;
+        this.amountInWords =
+          numberToWords.toWords(record.installment3).toUpperCase() + " TAKA";
       } else if (event.target.name == this.mr4) {
         this.slNo = record.mr_no4;
         this.date = record.date4;
@@ -796,6 +846,9 @@ export default {
             record.installment2 +
             record.installment3 +
             record.installment4);
+        this.paidFee = record.installment4;
+        this.amountInWords =
+          numberToWords.toWords(record.installment4).toUpperCase() + " TAKA";
       }
     },
 
