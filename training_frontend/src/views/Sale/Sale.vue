@@ -747,7 +747,7 @@
                       border-b-2 border-receiptInputBorder
                       right-0
                       absolute
-                      w-2/3
+                      w-7/12
                       flex
                       items-start
                     "
