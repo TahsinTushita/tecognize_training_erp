@@ -140,13 +140,13 @@
               "
               v-if="showCustomerOptions"
             >
-              <router-link :to="{ name: 'AddRetailCustomer' }" class="text-lg"
+              <!-- <router-link :to="{ name: 'AddRetailCustomer' }" class="text-lg"
                 >Add Retail Customer
-              </router-link>
+              </router-link> -->
               <router-link :to="{ name: 'RetailCustomerList' }" class="text-lg"
-                >Retail Customer List
+                >Customer List
               </router-link>
-              <router-link
+              <!-- <router-link
                 :to="{ name: 'AddCorporateCustomer' }"
                 class="text-lg"
                 >Add Corporate Customer
@@ -155,7 +155,7 @@
                 :to="{ name: 'CorporateCustomerList' }"
                 class="text-lg"
                 >Corporate Customer List
-              </router-link>
+              </router-link> -->
             </div>
           </div>
           <!-- Customer end -->
@@ -180,11 +180,11 @@
               <router-link :to="{ name: 'Sale' }" class="text-lg">
                 Sale
               </router-link>
-              <router-link :to="{ name: 'SaleRecords' }" class="text-lg"
-                >Sale Records
-              </router-link>
               <router-link :to="{ name: 'Due' }" class="text-lg"
                 >Due
+              </router-link>
+              <router-link :to="{ name: 'SaleRecords' }" class="text-lg"
+                >Sale Records
               </router-link>
             </div>
           </div>
