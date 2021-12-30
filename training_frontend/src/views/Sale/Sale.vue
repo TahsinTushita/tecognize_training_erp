@@ -130,7 +130,7 @@
           </div>
           <div class="grid grid-rows-1 gap-2 place-items-start">
             <label for="checkRefNo" class="font-semibold ml-2"
-              >Check/Ref No*</label
+              >Cheque/Ref No*</label
             >
             <input
               type="text"
@@ -735,7 +735,7 @@
                       absolute
                     "
                   >
-                    Check/Ref No.
+                    Cheque/Ref No.
                   </h1>
                   <div
                     type="text"

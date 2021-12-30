@@ -192,7 +192,7 @@
                       absolute
                     "
                   >
-                    Check/Ref No.
+                    Cheque/Ref No.
                   </h1>
                   <div
                     type="text"
