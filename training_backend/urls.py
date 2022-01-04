@@ -9,6 +9,7 @@ urlpatterns = [
         r"^backend/api/instructor-percentage/([a-zA-Z0-9_]+)$",
         views.instructor_percentage,
     ),
+    url(r"^backend/api/instructor-total$", views.instructor_total),
     url(r"^backend/api/users$", views.user_list),
     url(r"^backend/api/users/(?P<pk>[a-zA-Z0-9_]+)$", views.user_detail),
     url(r"^backend/api/users-count$", views.user_count),

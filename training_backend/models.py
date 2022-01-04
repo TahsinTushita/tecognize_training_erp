@@ -18,6 +18,9 @@ class Instructor(models.Model):
     inst_organization = models.CharField(max_length=200, blank=False)
     inst_designation = models.CharField(max_length=150, blank=False)
     inst_profit = models.FloatField(blank=False)
+    inst_payable = models.IntegerField(blank=True)
+    inst_paid = models.IntegerField(blank=True)
+    inst_due = models.IntegerField(blank=True)
     # photo = models.ImageField(blank=True)
     # inst_cv = models.FileField()
 

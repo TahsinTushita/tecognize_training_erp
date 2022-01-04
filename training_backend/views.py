@@ -145,6 +145,20 @@ def instructor_percentage(request, batchId):
     )
 
 
+@api_view(["GET"])
+def instructor_total(request, inst_id):
+    cursor = connection.cursor()
+
+    query = "SELECT inst_name,inst_payable,inst_paid,inst_due FROM training_backend_instructor WHERE inst_id=%s"
+
+    cursor.execute(query, params=(inst_id))
+
+    columns = [col[0] for col in cursor.description]
+    return JsonResponse(
+        [dict(zip(columns, row)) for row in cursor.fetchall()], safe=False
+    )
+
+
 # objectQuerySet = ConventionCard.objects.filter(ownerUser = user)
 # data = serializers.serialize('json', list(objectQuerySet), fields=('fileName','id'))
 

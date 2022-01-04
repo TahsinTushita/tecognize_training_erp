@@ -223,7 +223,7 @@
                       absolute
                     "
                   >
-                    Check Date
+                    Cheque Date
                   </h1>
                   <div
                     class="

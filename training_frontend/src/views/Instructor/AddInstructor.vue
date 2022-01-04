@@ -219,6 +219,9 @@ export default {
       organization: "",
       designation: "",
       profit: "",
+      payable: "0",
+      paid: "0",
+      due: "0",
       showModal: false,
       message: "Instructor added",
     };
@@ -250,6 +253,9 @@ export default {
           inst_organization: this.organization,
           inst_designation: this.designation,
           inst_profit: this.profit,
+          inst_payable: this.payable,
+          inst_paid: this.paid,
+          inst_due: this.due,
         };
 
         console.log(data);

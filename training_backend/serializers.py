@@ -28,6 +28,9 @@ class InstructorSerializer(serializers.ModelSerializer):
             "inst_organization",
             "inst_designation",
             "inst_profit",
+            "inst_payable",
+            "inst_paid",
+            "inst_due"
             # "photo",
             # "inst_cv",
         )
