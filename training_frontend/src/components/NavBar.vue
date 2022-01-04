@@ -50,6 +50,9 @@
               <router-link :to="{ name: 'InstructorLedger' }" class="text-lg">
                 Instructor Ledger
               </router-link>
+              <router-link :to="{ name: 'InstructorPayment' }" class="text-lg">
+                Instructor Payment
+              </router-link>
             </div>
           </div>
           <!-- Instructor end -->

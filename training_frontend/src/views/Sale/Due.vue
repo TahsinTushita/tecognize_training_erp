@@ -64,7 +64,7 @@
           class="grid grid-rows-1 gap-2 place-items-start"
           v-if="showCheckDate"
         >
-          <label for="checkDate" class="font-semibold ml-2">Check Date*</label>
+          <label for="checkDate" class="font-semibold ml-2">Cheque Date*</label>
           <input
             type="date"
             name="checkDate"
@@ -563,7 +563,7 @@
                     absolute
                   "
                 >
-                  Check Date
+                  Cheque Date
                 </h1>
                 <div
                   class="

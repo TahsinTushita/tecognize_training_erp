@@ -158,7 +158,7 @@
             v-if="showCheckDate"
           >
             <label for="checkDate" class="font-semibold ml-2"
-              >Check Date*</label
+              >Cheque Date*</label
             >
             <input
               type="date"
@@ -766,7 +766,7 @@
                       absolute
                     "
                   >
-                    Check Date
+                    Cheque Date
                   </h1>
                   <div
                     class="

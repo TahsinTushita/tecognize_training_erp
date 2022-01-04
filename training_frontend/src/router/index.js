@@ -4,6 +4,7 @@ import AddInstructor from "../views/Instructor/AddInstructor.vue";
 import InstructorList from "../views/Instructor/InstructorList.vue";
 import InstructorDetails from "../views/Instructor/InstructorDetails.vue";
 import InstructorLedger from "../views/Instructor/InstructorLedger.vue";
+import InstructorPayment from "../views/Instructor/InstructorPayment.vue";
 import AddUser from "../views/User/AddUser.vue";
 import UserList from "../views/User/UserList.vue";
 import UserLedger from "../views/User/UserLedger.vue";
@@ -52,6 +53,11 @@ const routes = [
     path: "/instructor-ledger",
     name: "InstructorLedger",
     component: InstructorLedger,
+  },
+  {
+    path: "/instructor-payment",
+    name: "InstructorPayment",
+    component: InstructorPayment,
   },
   {
     path: "/add-user",
