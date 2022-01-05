@@ -2,7 +2,7 @@
   <h1 class="pt-10 text-xl font-semibold">Instructor Payment</h1>
   <div class="px-28 py-10">
     <div class="flex items-center justify-center">
-      <form @submit.prevent="addInstructor">
+      <form @submit.prevent="addInstructorFee">
         <div class="space-y-5">
           <!-- <div v-for="inputField in inputFields" :key="inputField.id"> -->
           <div class="grid grid-rows-1 gap-2 place-items-start">
@@ -44,6 +44,7 @@
               name="batch"
               id="batch"
               v-model="batchId"
+              @change="getTotalFees"
               required
               class="
                 bg-white
@@ -90,7 +91,7 @@
                 focus:outline-none focus:border-navlink
               "
               placeholder="total sale"
-              v-model="totalSale"
+              v-model="saleTotalPayable.total_sale"
             />
           </div>
 
@@ -116,7 +117,7 @@
                 focus:outline-none focus:border-navlink
               "
               placeholder="total payable"
-              v-model="totalPayable"
+              v-model="saleTotalPayable.inst_payable"
             />
           </div>
 
@@ -142,7 +143,7 @@
                 focus:outline-none focus:border-navlink
               "
               placeholder="total paid"
-              v-model="totalPaid"
+              v-model="instructorPaidDue.paid"
             />
           </div>
 
@@ -166,7 +167,7 @@
                 focus:outline-none focus:border-navlink
               "
               placeholder="total due"
-              v-model="totalDue"
+              v-model="instructorPaidDue.due"
             />
           </div>
 
@@ -312,6 +313,7 @@
 
 <script>
 import Modal from "../../components/Modal.vue";
+import moment from "moment";
 
 export default {
   components: { Modal },
@@ -324,7 +326,7 @@ export default {
       totalPaid: "",
       totalDue: "",
       date: "",
-      checkDate: "",
+      checkDate: null,
       paymentMethod: "",
       payment: "",
       paymentMethodList: [
@@ -333,7 +335,7 @@ export default {
         { id: 3, name: "cash" },
         { id: 4, name: "exim bank" },
         { id: 5, name: "dbbl" },
-        { id: 6, name: "check" },
+        { id: 6, name: "cheque" },
       ],
       showCheckDate: false,
       address: "",
@@ -341,11 +343,13 @@ export default {
       designation: "",
       profit: "",
       showModal: false,
-      message: "Instructor added",
+      message: "Record added",
+      checkRefNo: "",
     };
   },
   mounted() {
     this.$store.dispatch("getInstructorList");
+    this.date = this.getDate();
   },
   computed: {
     instructorList: {
@@ -359,37 +363,64 @@ export default {
         return this.$store.getters.batchesByInstructor;
       },
     },
+
+    saleTotalPayable: {
+      get() {
+        return this.$store.getters.saleTotalPayable;
+      },
+    },
+
+    instructorPaidDue: {
+      get() {
+        return this.$store.getters.instructorPaidDue;
+      },
+    },
   },
   methods: {
     getBatches() {
       this.$store.dispatch("getBatchesByInstructor", this.instId);
     },
 
-    addInstructor() {
-      //   if (this.name.length > 3) {
-      //     let inst_id = this.name.substr(0, 3);
-      //     inst_id = inst_id.toUpperCase();
-      //     let num = (10000 + (this.instructorCount[0] + 1)).toString();
-      //     inst_id = inst_id.concat(num.substr(1, 4));
-      //     const data = {
-      //       inst_id: inst_id,
-      //       inst_name: this.name,
-      //       inst_phone: this.phone,
-      //       inst_email: this.email,
-      //       inst_address: this.address,
-      //       inst_organization: this.organization,
-      //       inst_designation: this.designation,
-      //       inst_profit: this.profit,
-      //     };
-      //     console.log(data);
-      //     this.$store.dispatch("addInstructor", data);
-      //     this.showModal = true;
-      //   }
+    getTotalFees() {
+      this.$store.dispatch("getSaleTotalPayable", this.batchId);
+      this.$store.dispatch("getInstructorPaidDue", this.batchId);
+    },
+
+    addInstructorFee() {
+      let due = 0;
+      if (this.instructorPaidDue.due == null) {
+        due = this.saleTotalPayable.inst_payable - this.payment;
+      } else {
+        due = this.instructorPaidDue.due - this.payment;
+      }
+
+      const data = {
+        inst_id: this.instId,
+        batch_id: this.batchId,
+        total_sale: this.saleTotalPayable.total_sale,
+        pay_received: this.saleTotalPayable.pay_received,
+        total_payable: this.saleTotalPayable.inst_payable,
+        paid: this.payment,
+        due: due,
+        date: this.date,
+        pay_mode: this.paymentMethod,
+        check_date: this.checkDate,
+        check_no: this.checkRefNo,
+      };
+
+      this.$store.dispatch("addInstructorFeeRecord", data);
+      this.showModal = true;
+    },
+
+    getDate: function () {
+      return moment(String(new Date().toLocaleDateString())).format(
+        "YYYY-MM-DD"
+      );
     },
 
     toggleModal() {
-      //   this.showModal = false;
-      //   window.location.reload();
+      this.showModal = false;
+      window.location.reload();
     },
 
     toggleCheckDate() {

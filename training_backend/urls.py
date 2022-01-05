@@ -11,6 +11,8 @@ urlpatterns = [
     ),
     url(r"^backend/api/instructor-total/([a-zA-Z0-9_]+)$", views.instructor_total),
     url(r"^backend/api/instructor-fee-update$", views.instructor_fee_update),
+    url(r"^backend/api/instructor-paid-due/([a-zA-Z0-9_]+)$", views.inst_paid_due),
+    url(r"^backend/api/instructor-fee-report$", views.instructor_fee_report),
     url(r"^backend/api/users$", views.user_list),
     url(r"^backend/api/users/(?P<pk>[a-zA-Z0-9_]+)$", views.user_detail),
     url(r"^backend/api/users-count$", views.user_count),
@@ -55,5 +57,9 @@ urlpatterns = [
     url(
         r"^backend/api/sale-customer-list/([a-zA-Z0-9_]+)$",
         views.sale_report_with_customers,
+    ),
+    url(
+        r"^backend/api/sale-total-payable/([a-zA-Z0-9_]+)$",
+        views.sale_total_payable,
     ),
 ]

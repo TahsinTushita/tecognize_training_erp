@@ -40,6 +40,8 @@ export default createStore({
     userPercentages: [],
     instructorTotal: "",
     batchesByInstructor: [],
+    saleTotalPayable: "",
+    instructorPaidDue: "",
   },
   mutations: {
     SET_INSTRUCTOR_LIST(state, instructorList) {
@@ -176,6 +178,14 @@ export default createStore({
 
     SET_BATCHES_BY_INSTRUCTOR(state, batchesByInstructor) {
       state.batchesByInstructor = batchesByInstructor;
+    },
+
+    SET_SALE_TOTAL_PAYABLE(state, saleTotalPayable) {
+      state.saleTotalPayable = saleTotalPayable;
+    },
+
+    SET_INSTRUCTOR_PAID_DUE(state, instructorPaidDue) {
+      state.instructorPaidDue = instructorPaidDue;
     },
   },
   actions: {
@@ -563,6 +573,26 @@ export default createStore({
         };
     },
 
+    getSaleTotalPayable({ commit }, batchId) {
+      axios("sale-total-payable/" + batchId).then((res) => {
+        console.log(res.data[0]);
+        commit("SET_SALE_TOTAL_PAYABLE", res.data[0]);
+      }),
+        (error) => {
+          console.log(error);
+        };
+    },
+
+    getInstructorPaidDue({ commit }, batchId) {
+      axios("instructor-paid-due/" + batchId).then((res) => {
+        console.log(res.data[0]);
+        commit("SET_INSTRUCTOR_PAID_DUE", res.data[0]);
+      }),
+        (error) => {
+          console.log(error);
+        };
+    },
+
     getInstructorPercentages({ commit }, batchId) {
       axios("instructor-percentage/" + batchId).then((res) => {
         console.log(res.data);
@@ -599,6 +629,15 @@ export default createStore({
 
     updateInstructorFee({ commit }, data) {
       axios.put("instructor-fee-update", data).then((res) => {
+        console.log(res.data);
+      }),
+        (error) => {
+          console.log(error);
+        };
+    },
+
+    addInstructorFeeRecord({ commit }, data) {
+      axios.post("instructor-fee-report", data).then((res) => {
         console.log(res.data);
       }),
         (error) => {
@@ -723,6 +762,14 @@ export default createStore({
 
     batchesByInstructor: (state) => {
       return state.batchesByInstructor;
+    },
+
+    saleTotalPayable: (state) => {
+      return state.saleTotalPayable;
+    },
+
+    instructorPaidDue: (state) => {
+      return state.instructorPaidDue;
     },
   },
   modules: {},

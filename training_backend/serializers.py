@@ -9,6 +9,7 @@ from training_backend.models import (
     Batch,
     # Sale,
     SaleReport,
+    InstructorFeeReport,
 )
 
 
@@ -176,4 +177,23 @@ class SaleReportSerializer(serializers.ModelSerializer):
             "user_id",
             "user_profit",
             "remarks",
+        )
+
+
+class InstructorFeeReportSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = InstructorFeeReport
+        fields = (
+            "id",
+            "inst_id",
+            "batch_id",
+            "total_sale",
+            "pay_received",
+            "total_payable",
+            "paid",
+            "due",
+            "date",
+            "pay_mode",
+            "check_date",
+            "check_no",
         )

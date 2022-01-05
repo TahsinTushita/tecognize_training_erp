@@ -833,7 +833,7 @@ export default {
         { id: 3, name: "cash" },
         { id: 4, name: "exim bank" },
         { id: 5, name: "dbbl" },
-        { id: 6, name: "check" },
+        { id: 6, name: "cheque" },
       ],
       paymentMethod: "",
       checkRefNo: "",

@@ -20,6 +20,7 @@ from training_backend.models import (
     Batch,
     # Sale,
     SaleReport,
+    InstructorFeeReport,
 )
 from training_backend.serializers import (
     InstructorSerializer,
@@ -32,6 +33,7 @@ from training_backend.serializers import (
     # SaleSerializer,
     SaleReportSerializer,
     # NumberSerializer,
+    InstructorFeeReportSerializer,
 )
 from rest_framework.decorators import api_view
 
@@ -923,3 +925,49 @@ def sale_update(request):
     )
     r = cursor.fetchone()
     return JsonResponse(r, safe=False)
+
+
+@api_view(["GET"])
+def sale_total_payable(request, batchId):
+    cursor = connection.cursor()
+    query = "SELECT inst_id,sum(paid) AS pay_received,sum((paid*inst_profit)/100) AS inst_payable,sum(batch_fee) AS total_sale FROM training_backend_salereport WHERE batch_id=%s GROUP BY inst_id"
+
+    cursor.execute(query, params=(batchId))
+    columns = [col[0] for col in cursor.description]
+    return JsonResponse(
+        [dict(zip(columns, row)) for row in cursor.fetchall()], safe=False
+    )
+
+
+# Instructor Fee Report
+
+
+@api_view(["GET"])
+def inst_paid_due(request, batchId):
+    cursor = connection.cursor()
+    query = "SELECT sum(paid) AS paid,MIN(due) as due FROM training_backend_instructorfeereport WHERE batch_id=%s"
+
+    cursor.execute(query, params=(batchId))
+    columns = [col[0] for col in cursor.description]
+    return JsonResponse(
+        [dict(zip(columns, row)) for row in cursor.fetchall()], safe=False
+    )
+
+
+@api_view(["GET", "POST"])
+def instructor_fee_report(request):
+    if request.method == "GET":
+        report = InstructorFeeReport.objects.all()
+
+        report_serializer = InstructorFeeReportSerializer(report, many=True)
+        return JsonResponse(report_serializer.data, safe=False)
+
+    elif request.method == "POST":
+        report_data = JSONParser().parse(request)
+        report_serializer = InstructorFeeReportSerializer(data=report_data)
+        if report_serializer.is_valid():
+            report_serializer.save()
+            return JsonResponse(report_serializer.data, status=status.HTTP_201_CREATED)
+        return JsonResponse(
+            report_serializer.errors, status=status.HTTP_400_BAD_REQUEST
+        )

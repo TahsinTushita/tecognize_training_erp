@@ -186,3 +186,4 @@ class InstructorFeeReport(models.Model):
     date = models.DateField(blank=True, null=True)
     pay_mode = models.CharField(max_length=100, blank=True, null=True)
     check_date = models.DateField(blank=True, null=True)
+    check_no = models.CharField(max_length=100, blank=True, null=True)
