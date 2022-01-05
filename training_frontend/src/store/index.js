@@ -38,6 +38,7 @@ export default createStore({
     batchIds: [],
     instructorPercentages: [],
     userPercentages: [],
+    instructorTotal: "",
   },
   mutations: {
     SET_INSTRUCTOR_LIST(state, instructorList) {
@@ -166,6 +167,10 @@ export default createStore({
 
     SET_USER_PERCENTAGES(state, userPercentages) {
       state.userPercentages = userPercentages;
+    },
+
+    SET_INSTRUCTOR_TOTAL(state, instructorTotal) {
+      state.instructorTotal = instructorTotal;
     },
   },
   actions: {
@@ -562,6 +567,29 @@ export default createStore({
           console.log(error);
         };
     },
+
+    getInstructorTotal({ commit }, instId) {
+      if (instId == "None") {
+        this.state.instructorTotal = [];
+      } else {
+        axios("instructor-total/" + instId).then((res) => {
+          console.log(res.data);
+          commit("SET_INSTRUCTOR_TOTAL", res.data[0]);
+        }),
+          (error) => {
+            console.log(error);
+          };
+      }
+    },
+
+    updateInstructorFee({ commit }, data) {
+      axios.put("instructor-fee-update", data).then((res) => {
+        console.log(res.data);
+      }),
+        (error) => {
+          console.log(error);
+        };
+    },
   },
   getters: {
     instructorList: (state) => {
@@ -673,6 +701,9 @@ export default createStore({
 
     userPercentages: (state) => {
       return state.userPercentages;
+    },
+    instructorTotal: (state) => {
+      return state.instructorTotal;
     },
   },
   modules: {},

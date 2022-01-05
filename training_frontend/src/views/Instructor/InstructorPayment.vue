@@ -6,13 +6,13 @@
         <div class="space-y-5">
           <!-- <div v-for="inputField in inputFields" :key="inputField.id"> -->
           <div class="grid grid-rows-1 gap-2 place-items-start">
-            <label for="inst_name" class="font-semibold ml-2"
+            <label for="instructor" class="font-semibold ml-2"
               >Instructor*</label
             >
             <select
-              name="inst_name"
-              id="inst_name"
-              v-model="inst_name"
+              name="instructor"
+              id="instructor"
+              v-model="instId"
               required
               class="
                 bg-white
@@ -27,13 +27,13 @@
                 focus:outline-none focus:border-navlink
               "
             >
-              <!-- <option
-                v-for="batch in tempBatchList"
-                :value="batch"
-                :key="batch.batch_id"
+              <option
+                v-for="instructor in instructorList"
+                :value="instructor.inst_id"
+                :key="instructor.inst_id"
               >
-                {{ batch.batch_id }}
-              </option> -->
+                {{ instructor.inst_name }}
+              </option>
             </select>
           </div>
 
@@ -316,7 +316,7 @@ export default {
   components: { Modal },
   data() {
     return {
-      inst_name: "",
+      instId: "",
       batchId: "",
       totalSale: "",
       totalPayable: "",
@@ -344,12 +344,12 @@ export default {
     };
   },
   mounted() {
-    this.$store.dispatch("getInstructorCount");
+    this.$store.dispatch("getInstructorList");
   },
   computed: {
-    instructorCount: {
+    instructorList: {
       get() {
-        return this.$store.getters.instructorCount;
+        return this.$store.getters.instructorList;
       },
     },
   },

@@ -1086,12 +1086,14 @@ export default {
     };
   },
   mounted() {
+    let var1 = "None";
     this.$store.dispatch("getCourseList");
     this.$store.dispatch("getBatchList");
     this.$store.dispatch("getRetailCustomerList");
     this.$store.dispatch("getUserList");
     this.$store.dispatch("getRetailCustomerCount");
     this.$store.dispatch("getSaleId");
+    this.$store.dispatch("getInstructorTotal", var1);
     this.date = this.getDate();
   },
   methods: {
@@ -1132,6 +1134,7 @@ export default {
       this.batchFee = this.batch.batch_fee;
       this.instId = this.batch.inst_id;
       this.inst_profit = this.batch.inst_profit;
+      this.$store.dispatch("getInstructorTotal", this.batch.inst_id);
     },
 
     filterRetailCustomer() {
@@ -1262,7 +1265,15 @@ export default {
             user_profit: this.user.user_profit,
             remarks: "",
           };
+
+          const instData = {
+            inst_payable: this.instructorTotal.inst_payable + this.custPaidFee,
+            inst_paid: this.instructorTotal.inst_paid,
+            inst_due: this.instructorTotal.inst_due + this.custPaidFee,
+            inst_id: this.instId,
+          };
           await this.$store.dispatch("addSaleRecord", saleData);
+          this.$store.dispatch("updateInstructorFee", instData);
         }
       } else {
         if (this.customerType == "corporate") {
@@ -1315,7 +1326,15 @@ export default {
           user_profit: this.user.user_profit,
           remarks: "",
         };
+
+        const instData = {
+          inst_payable: this.instructorTotal.inst_payable + this.custPaidFee,
+          inst_paid: this.instructorTotal.inst_paid,
+          inst_due: this.instructorTotal.inst_due + this.custPaidFee,
+          inst_id: this.instId,
+        };
         await this.$store.dispatch("addSaleRecord", saleData);
+        this.$store.dispatch("updateInstructorFee", instData);
       }
 
       this.showModal = true;
@@ -1536,6 +1555,12 @@ export default {
         this.custAmountInWords = "";
       }
       return this.custDueFee;
+    },
+
+    instructorTotal: {
+      get() {
+        return this.$store.getters.instructorTotal;
+      },
     },
   },
 };

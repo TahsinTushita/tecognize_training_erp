@@ -159,6 +159,26 @@ def instructor_total(request, inst_id):
     )
 
 
+@api_view(["PUT"])
+def instructor_fee_update(request):
+    cursor = connection.cursor()
+    instructor_data = JSONParser().parse(request)
+    print(instructor_data)
+    query = "UPDATE training_backend_instructor SET inst_payable=%s,inst_paid=%s,inst_due=%s WHERE inst_id=%s"
+
+    cursor.execute(
+        query,
+        params=(
+            instructor_data["inst_payable"],
+            instructor_data["inst_paid"],
+            instructor_data["inst_due"],
+            instructor_data["inst_id"],
+        ),
+    )
+    r = cursor.fetchone()
+    return JsonResponse(r, safe=False)
+
+
 # objectQuerySet = ConventionCard.objects.filter(ownerUser = user)
 # data = serializers.serialize('json', list(objectQuerySet), fields=('fileName','id'))
 

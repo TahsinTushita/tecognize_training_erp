@@ -890,9 +890,11 @@ export default {
   },
 
   mounted() {
+    let var1 = "None";
     this.$store.dispatch("getRetailCustomerList");
     this.$store.dispatch("getSaleList");
     this.$store.dispatch("getSaleId");
+    this.$store.dispatch("getInstructorTotal", var1);
     this.date = this.getDate();
   },
 
@@ -970,6 +972,7 @@ export default {
           this.checkRefNo2 = record.check_ref_no2;
           this.checkRefNo3 = record.check_ref_no3;
           this.checkRefNo4 = record.check_ref_no4;
+          this.$store.dispatch("getInstructorTotal", record.inst_id);
         }
       });
 
@@ -1094,7 +1097,16 @@ export default {
             this.installment4),
         id: this.id,
       };
+      const instData = {
+        inst_payable:
+          this.instructorTotal.inst_payable + (this.prevDueFee - this.dueFee),
+        inst_paid: this.instructorTotal.inst_paid,
+        inst_due:
+          this.instructorTotal.inst_due + (this.prevDueFee - this.dueFee),
+        inst_id: this.instId,
+      };
       this.$store.dispatch("updateSaleRecord", saleData);
+      this.$store.dispatch("updateInstructorFee", instData);
 
       window.location.reload();
     },
@@ -1169,6 +1181,12 @@ export default {
         numberToWords.toWords(this.paidFee).toUpperCase() + " TAKA";
 
       return this.amountInWords;
+    },
+
+    instructorTotal: {
+      get() {
+        return this.$store.getters.instructorTotal;
+      },
     },
   },
 };
