@@ -14,6 +14,7 @@
               id="instructor"
               v-model="instId"
               required
+              @change="getBatches"
               class="
                 bg-white
                 rounded-md
@@ -57,13 +58,13 @@
                 focus:outline-none focus:border-navlink
               "
             >
-              <!-- <option
-                v-for="batch in tempBatchList"
-                :value="batch"
+              <option
+                v-for="batch in batchesByInstructor"
+                :value="batch.batch_id"
                 :key="batch.batch_id"
               >
                 {{ batch.batch_id }}
-              </option> -->
+              </option>
             </select>
           </div>
 
@@ -352,8 +353,18 @@ export default {
         return this.$store.getters.instructorList;
       },
     },
+
+    batchesByInstructor: {
+      get() {
+        return this.$store.getters.batchesByInstructor;
+      },
+    },
   },
   methods: {
+    getBatches() {
+      this.$store.dispatch("getBatchesByInstructor", this.instId);
+    },
+
     addInstructor() {
       //   if (this.name.length > 3) {
       //     let inst_id = this.name.substr(0, 3);

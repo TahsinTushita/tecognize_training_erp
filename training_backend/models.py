@@ -171,3 +171,18 @@ class SaleReport(models.Model):
     user_id = models.ForeignKey(User, db_column="user_id", on_delete=models.CASCADE)
     user_profit = models.FloatField()
     remarks = models.CharField(max_length=255, blank=True, null=True)
+
+
+class InstructorFeeReport(models.Model):
+    inst_id = models.ForeignKey(
+        Instructor, db_column="inst_id", on_delete=models.CASCADE
+    )
+    batch_id = models.ForeignKey(Batch, db_column="batch_id", on_delete=models.CASCADE)
+    total_sale = models.IntegerField()
+    pay_received = models.IntegerField()
+    total_payable = models.IntegerField()
+    paid = models.IntegerField()
+    due = models.IntegerField()
+    date = models.DateField(blank=True, null=True)
+    pay_mode = models.CharField(max_length=100, blank=True, null=True)
+    check_date = models.DateField(blank=True, null=True)

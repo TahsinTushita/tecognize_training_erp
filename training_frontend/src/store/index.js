@@ -39,6 +39,7 @@ export default createStore({
     instructorPercentages: [],
     userPercentages: [],
     instructorTotal: "",
+    batchesByInstructor: [],
   },
   mutations: {
     SET_INSTRUCTOR_LIST(state, instructorList) {
@@ -171,6 +172,10 @@ export default createStore({
 
     SET_INSTRUCTOR_TOTAL(state, instructorTotal) {
       state.instructorTotal = instructorTotal;
+    },
+
+    SET_BATCHES_BY_INSTRUCTOR(state, batchesByInstructor) {
+      state.batchesByInstructor = batchesByInstructor;
     },
   },
   actions: {
@@ -447,6 +452,16 @@ export default createStore({
         };
     },
 
+    getBatchesByInstructor({ commit }, instId) {
+      axios("batches-by-instructor/" + instId).then((res) => {
+        console.log(res.data);
+        commit("SET_BATCHES_BY_INSTRUCTOR", res.data);
+      }),
+        (error) => {
+          console.log(error);
+        };
+    },
+
     changeBatchAdmissionStatus({ commit }, batch_id) {
       axios.put("batch-admission/" + batch_id).then((res) => {
         console.log(res.data);
@@ -704,6 +719,10 @@ export default createStore({
     },
     instructorTotal: (state) => {
       return state.instructorTotal;
+    },
+
+    batchesByInstructor: (state) => {
+      return state.batchesByInstructor;
     },
   },
   modules: {},

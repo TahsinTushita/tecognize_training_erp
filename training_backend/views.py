@@ -530,6 +530,18 @@ def batch_admission(request, pk):
     return JsonResponse(r, safe=False)
 
 
+@api_view(["GET"])
+def batches_by_instructor(request, instId):
+    cursor = connection.cursor()
+    query = "SELECT batch_id FROM training_backend_batch WHERE inst_id=%s"
+
+    cursor.execute(query, params=(instId))
+    columns = [col[0] for col in cursor.description]
+    return JsonResponse(
+        [dict(zip(columns, row)) for row in cursor.fetchall()], safe=False
+    )
+
+
 # Retail Customer
 
 

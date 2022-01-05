@@ -28,6 +28,10 @@ urlpatterns = [
     url(r"^backend/api/batch-ids$", views.batch_ids),
     url(r"^backend/api/batch-admission/(?P<pk>[a-zA-Z0-9_]+)$", views.batch_admission),
     url(r"^backend/api/batches-count$", views.batch_count),
+    url(
+        r"^backend/api/batches-by-instructor/([a-zA-Z0-9_]+)$",
+        views.batches_by_instructor,
+    ),
     url(r"^backend/api/customers$", views.customer_list),
     url(
         r"^backend/api/customers/(?P<pk>[a-zA-Z0-9_]+)$",
