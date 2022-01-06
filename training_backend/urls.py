@@ -13,6 +13,10 @@ urlpatterns = [
     url(r"^backend/api/instructor-fee-update$", views.instructor_fee_update),
     url(r"^backend/api/instructor-paid-due/([a-zA-Z0-9_]+)$", views.inst_paid_due),
     url(r"^backend/api/instructor-fee-report$", views.instructor_fee_report),
+    url(
+        r"^backend/api/instructor-fee-by-batch/([a-zA-Z0-9_]+)$",
+        views.instructor_fee_by_batch,
+    ),
     url(r"^backend/api/instructor-ledger$", views.instructor_ledger),
     url(r"^backend/api/batch-sale-payable/([a-zA-Z0-9_]+)$", views.batch_sale_payable),
     url(r"^backend/api/batch-paid-due/([a-zA-Z0-9_]+)$", views.batch_paid_due),

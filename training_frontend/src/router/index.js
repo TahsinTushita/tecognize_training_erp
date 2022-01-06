@@ -27,6 +27,7 @@ import Sale from "../views/Sale/Sale.vue";
 import SaleRecords from "../views/Sale/SaleRecords.vue";
 import Due from "../views/Sale/Due.vue";
 import InstructorBatchLedger from "../views/Instructor/InstructorBatchLedger.vue";
+import InstructorLedgerDetails from "../views/Instructor/InstructorLedgerDetails.vue";
 
 const routes = [
   // {
@@ -165,6 +166,12 @@ const routes = [
     path: "/instructor-batch-ledger/:id",
     name: "InstructorBatchLedger",
     component: InstructorBatchLedger,
+    props: true,
+  },
+  {
+    path: "/instructor-ledger-details/:batchid",
+    name: "InstructorLedgerDetails",
+    component: InstructorLedgerDetails,
     props: true,
   },
   {

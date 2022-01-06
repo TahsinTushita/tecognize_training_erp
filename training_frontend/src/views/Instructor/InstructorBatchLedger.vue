@@ -41,6 +41,7 @@
         v-for="record in ledgerPaidDue"
         :key="record.batch_id"
         class="hover:bg-gray-100"
+        @click="navigateToInstructorLedgerDetails(record.batch_id)"
       >
         <td class="w-1/12 px-4 py-4 text-center border-2">
           {{ record.batch_id }}
@@ -67,6 +68,16 @@ export default {
   mounted() {
     this.$store.dispatch("getInstructor", this.id);
     this.$store.dispatch("getLedgerPaidDue", this.id);
+  },
+
+  methods: {
+    navigateToInstructorLedgerDetails(batchId) {
+      // console.log();
+      this.$router.push({
+        name: "InstructorLedgerDetails",
+        params: { batchid: batchId },
+      });
+    },
   },
 
   computed: {

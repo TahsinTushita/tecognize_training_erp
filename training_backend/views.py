@@ -1010,3 +1010,15 @@ def instructor_fee_report(request):
         return JsonResponse(
             report_serializer.errors, status=status.HTTP_400_BAD_REQUEST
         )
+
+
+@api_view(["GET"])
+def instructor_fee_by_batch(request, batchId):
+    cursor = connection.cursor()
+    query = "SELECT * FROM training_backend_instructorfeereport WHERE batch_id=%s"
+
+    cursor.execute(query, params=(batchId))
+    columns = [col[0] for col in cursor.description]
+    return JsonResponse(
+        [dict(zip(columns, row)) for row in cursor.fetchall()], safe=False
+    )

@@ -45,6 +45,7 @@ export default createStore({
     instructorLedger: [],
     ledgerSalePayable: [],
     ledgerPaidDue: [],
+    instructorFeeByBatch: [],
   },
   mutations: {
     SET_INSTRUCTOR_LIST(state, instructorList) {
@@ -201,6 +202,10 @@ export default createStore({
 
     SET_LEDGER_PAID_DUE(state, ledgerPaidDue) {
       state.ledgerPaidDue = ledgerPaidDue;
+    },
+
+    SET_INSTRUCTOR_FEE_BY_BATCH(state, instructorFeeByBatch) {
+      state.instructorFeeByBatch = instructorFeeByBatch;
     },
   },
   actions: {
@@ -706,6 +711,16 @@ export default createStore({
           console.log(error);
         };
     },
+
+    getInstructorFeeByBatch({ commit }, batchId) {
+      axios("instructor-fee-by-batch/" + batchId).then((res) => {
+        console.log(res.data);
+        commit("SET_INSTRUCTOR_FEE_BY_BATCH", res.data);
+      }),
+        (error) => {
+          console.log(error);
+        };
+    },
   },
   getters: {
     instructorList: (state) => {
@@ -844,6 +859,10 @@ export default createStore({
 
     ledgerPaidDue: (state) => {
       return state.ledgerPaidDue;
+    },
+
+    instructorFeeByBatch: (state) => {
+      return state.instructorFeeByBatch;
     },
   },
   modules: {},
