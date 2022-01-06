@@ -14,6 +14,8 @@ urlpatterns = [
     url(r"^backend/api/instructor-paid-due/([a-zA-Z0-9_]+)$", views.inst_paid_due),
     url(r"^backend/api/instructor-fee-report$", views.instructor_fee_report),
     url(r"^backend/api/instructor-ledger$", views.instructor_ledger),
+    url(r"^backend/api/batch-sale-payable/([a-zA-Z0-9_]+)$", views.batch_sale_payable),
+    url(r"^backend/api/batch-paid-due/([a-zA-Z0-9_]+)$", views.batch_paid_due),
     url(r"^backend/api/users$", views.user_list),
     url(r"^backend/api/users/(?P<pk>[a-zA-Z0-9_]+)$", views.user_detail),
     url(r"^backend/api/users-count$", views.user_count),

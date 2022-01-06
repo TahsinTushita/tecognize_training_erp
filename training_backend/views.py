@@ -194,6 +194,32 @@ def instructor_ledger(request):
     )
 
 
+@api_view(["GET"])
+def batch_sale_payable(request, instId):
+    cursor = connection.cursor()
+
+    query = "SELECT batch_id,sum(batch_fee) as sale,sum((paid*inst_profit)/100) as payable FROM training_backend_salereport WHERE inst_id=%s GROUP BY batch_id"
+    cursor.execute(query, params=(instId))
+
+    columns = [col[0] for col in cursor.description]
+    return JsonResponse(
+        [dict(zip(columns, row)) for row in cursor.fetchall()], safe=False
+    )
+
+
+@api_view(["GET"])
+def batch_paid_due(request, instId):
+    cursor = connection.cursor()
+
+    query = "SELECT training_backend_salereport.batch_id,sum(training_backend_instructorfeereport.paid) AS paid,min(training_backend_instructorfeereport.due) as due FROM training_backend_salereport LEFT OUTER JOIN training_backend_instructorfeereport ON training_backend_salereport.batch_id=training_backend_instructorfeereport.batch_id WHERE training_backend_salereport.inst_id=%s GROUP BY training_backend_salereport.batch_id"
+    cursor.execute(query, params=(instId))
+
+    columns = [col[0] for col in cursor.description]
+    return JsonResponse(
+        [dict(zip(columns, row)) for row in cursor.fetchall()], safe=False
+    )
+
+
 # objectQuerySet = ConventionCard.objects.filter(ownerUser = user)
 # data = serializers.serialize('json', list(objectQuerySet), fields=('fileName','id'))
 

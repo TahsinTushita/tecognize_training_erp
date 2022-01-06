@@ -18,6 +18,7 @@
         v-for="record in instructorLedger"
         :key="record.inst_id"
         class="hover:bg-gray-100"
+        @click="navigateToInstructorBatchLedger(record.inst_id)"
       >
         <td class="w-1/12 px-4 py-4 text-center border-2">
           {{ record.inst_id }}
@@ -50,6 +51,16 @@
 export default {
   mounted() {
     this.$store.dispatch("getInstructorLedger");
+  },
+
+  methods: {
+    navigateToInstructorBatchLedger(inst_id) {
+      // console.log();
+      this.$router.push({
+        name: "InstructorBatchLedger",
+        params: { id: inst_id },
+      });
+    },
   },
 
   computed: {

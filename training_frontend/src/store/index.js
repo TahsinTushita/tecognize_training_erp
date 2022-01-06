@@ -43,6 +43,8 @@ export default createStore({
     saleTotalPayable: "",
     instructorPaidDue: "",
     instructorLedger: [],
+    ledgerSalePayable: [],
+    ledgerPaidDue: [],
   },
   mutations: {
     SET_INSTRUCTOR_LIST(state, instructorList) {
@@ -191,6 +193,14 @@ export default createStore({
 
     SET_INSTRUCTOR_LEDGER(state, instructorLedger) {
       state.instructorLedger = instructorLedger;
+    },
+
+    SET_LEDGER_SALE_PAYABLE(state, ledgerSalePayable) {
+      state.ledgerSalePayable = ledgerSalePayable;
+    },
+
+    SET_LEDGER_PAID_DUE(state, ledgerPaidDue) {
+      state.ledgerPaidDue = ledgerPaidDue;
     },
   },
   actions: {
@@ -659,6 +669,43 @@ export default createStore({
           console.log(error);
         };
     },
+
+    getLedgerSalePayable({ commit }, instId) {
+      axios("batch-sale-payable/" + instId).then((res) => {
+        console.log(res.data);
+        commit("SET_LEDGER_SALE_PAYABLE", res.data);
+      }),
+        (error) => {
+          console.log(error);
+        };
+    },
+
+    async getLedgerPaidDue({ commit }, instId) {
+      let arr = [];
+      await this.dispatch("getLedgerSalePayable", instId);
+      axios("batch-paid-due/" + instId).then((res) => {
+        console.log(res.data);
+        console.log(this.state.ledgerSalePayable);
+        res.data.filter((data) => {
+          this.state.ledgerSalePayable.filter((record) => {
+            if (record.batch_id == data.batch_id) {
+              arr.push({
+                batch_id: record.batch_id,
+                sale: record.sale,
+                payable: record.payable,
+                paid: data.paid,
+                due: data.due,
+              });
+            }
+          });
+        });
+        // console.log(arr);
+        commit("SET_LEDGER_PAID_DUE", arr);
+      }),
+        (error) => {
+          console.log(error);
+        };
+    },
   },
   getters: {
     instructorList: (state) => {
@@ -789,6 +836,14 @@ export default createStore({
 
     instructorLedger: (state) => {
       return state.instructorLedger;
+    },
+
+    ledgerSalePayable: (state) => {
+      return state.ledgerSalePayable;
+    },
+
+    ledgerPaidDue: (state) => {
+      return state.ledgerPaidDue;
     },
   },
   modules: {},

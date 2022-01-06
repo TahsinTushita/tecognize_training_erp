@@ -26,6 +26,7 @@ import CorporateCustomerDetails from "../views/CorporateCustomer/CorporateCustom
 import Sale from "../views/Sale/Sale.vue";
 import SaleRecords from "../views/Sale/SaleRecords.vue";
 import Due from "../views/Sale/Due.vue";
+import InstructorBatchLedger from "../views/Instructor/InstructorBatchLedger.vue";
 
 const routes = [
   // {
@@ -159,6 +160,12 @@ const routes = [
     path: "/due",
     name: "Due",
     component: Due,
+  },
+  {
+    path: "/instructor-batch-ledger/:id",
+    name: "InstructorBatchLedger",
+    component: InstructorBatchLedger,
+    props: true,
   },
   {
     path: "/:catchAll(.*)",
