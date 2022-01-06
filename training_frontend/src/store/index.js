@@ -42,6 +42,7 @@ export default createStore({
     batchesByInstructor: [],
     saleTotalPayable: "",
     instructorPaidDue: "",
+    instructorLedger: [],
   },
   mutations: {
     SET_INSTRUCTOR_LIST(state, instructorList) {
@@ -186,6 +187,10 @@ export default createStore({
 
     SET_INSTRUCTOR_PAID_DUE(state, instructorPaidDue) {
       state.instructorPaidDue = instructorPaidDue;
+    },
+
+    SET_INSTRUCTOR_LEDGER(state, instructorLedger) {
+      state.instructorLedger = instructorLedger;
     },
   },
   actions: {
@@ -644,6 +649,16 @@ export default createStore({
           console.log(error);
         };
     },
+
+    getInstructorLedger({ commit }) {
+      axios("instructor-ledger").then((res) => {
+        console.log(res.data);
+        commit("SET_INSTRUCTOR_LEDGER", res.data);
+      }),
+        (error) => {
+          console.log(error);
+        };
+    },
   },
   getters: {
     instructorList: (state) => {
@@ -770,6 +785,10 @@ export default createStore({
 
     instructorPaidDue: (state) => {
       return state.instructorPaidDue;
+    },
+
+    instructorLedger: (state) => {
+      return state.instructorLedger;
     },
   },
   modules: {},

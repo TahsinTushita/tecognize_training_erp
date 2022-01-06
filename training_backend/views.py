@@ -181,6 +181,19 @@ def instructor_fee_update(request):
     return JsonResponse(r, safe=False)
 
 
+@api_view(["GET"])
+def instructor_ledger(request):
+    cursor = connection.cursor()
+
+    query = "SELECT training_backend_instructor.inst_id,inst_name,inst_phone,training_backend_instructor.inst_profit,sum(batch_fee) AS sale,inst_payable,inst_paid,inst_due FROM training_backend_instructor INNER JOIN training_backend_salereport ON training_backend_instructor.inst_id=training_backend_salereport.inst_id GROUP BY training_backend_instructor.inst_id"
+    cursor.execute(query)
+
+    columns = [col[0] for col in cursor.description]
+    return JsonResponse(
+        [dict(zip(columns, row)) for row in cursor.fetchall()], safe=False
+    )
+
+
 # objectQuerySet = ConventionCard.objects.filter(ownerUser = user)
 # data = serializers.serialize('json', list(objectQuerySet), fields=('fileName','id'))
 

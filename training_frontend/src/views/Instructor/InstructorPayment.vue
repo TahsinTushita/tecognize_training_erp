@@ -12,7 +12,7 @@
             <select
               name="instructor"
               id="instructor"
-              v-model="instId"
+              v-model="instructor"
               required
               @change="getBatches"
               class="
@@ -30,7 +30,7 @@
             >
               <option
                 v-for="instructor in instructorList"
-                :value="instructor.inst_id"
+                :value="instructor"
                 :key="instructor.inst_id"
               >
                 {{ instructor.inst_name }}
@@ -345,6 +345,7 @@ export default {
       showModal: false,
       message: "Record added",
       checkRefNo: "",
+      instructor: "",
     };
   },
   mounted() {
@@ -378,7 +379,7 @@ export default {
   },
   methods: {
     getBatches() {
-      this.$store.dispatch("getBatchesByInstructor", this.instId);
+      this.$store.dispatch("getBatchesByInstructor", this.instructor.inst_id);
     },
 
     getTotalFees() {
@@ -395,7 +396,7 @@ export default {
       }
 
       const data = {
-        inst_id: this.instId,
+        inst_id: this.instructor.inst_id,
         batch_id: this.batchId,
         total_sale: this.saleTotalPayable.total_sale,
         pay_received: this.saleTotalPayable.pay_received,
@@ -408,6 +409,13 @@ export default {
         check_no: this.checkRefNo,
       };
 
+      const instData = {
+        inst_payable: this.instructor.inst_payable,
+        inst_paid: this.instructor.inst_paid + this.payment,
+        inst_due: this.instructor.inst_due - this.payment,
+        inst_id: this.instructor.inst_id,
+      };
+      this.$store.dispatch("updateInstructorFee", instData);
       this.$store.dispatch("addInstructorFeeRecord", data);
       this.showModal = true;
     },
@@ -424,7 +432,7 @@ export default {
     },
 
     toggleCheckDate() {
-      if (this.paymentMethod == "check") {
+      if (this.paymentMethod == "cheque") {
         this.showCheckDate = true;
       } else {
         this.showCheckDate = false;

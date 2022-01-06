@@ -906,7 +906,7 @@ export default {
     },
 
     toggleCheckDate() {
-      if (this.paymentMethod == "check") {
+      if (this.paymentMethod == "cheque") {
         this.showCheckDate = true;
       } else {
         this.showCheckDate = false;
