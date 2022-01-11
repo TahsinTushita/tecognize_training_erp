@@ -853,6 +853,7 @@ export default {
       installment4Disabled: true,
       dueFee: 0,
       instId: "",
+      instProfit: "",
       userId: "",
       address: "",
       batchList: [],
@@ -954,6 +955,7 @@ export default {
           this.installment4 = record.installment4;
           this.regularFee = record.regular_fee;
           this.instId = record.inst_id;
+          this.instProfit = record.inst_profit;
           this.userId = record.user_id;
           this.prevReceipts = this.prevReceipts + String(record.mr_no1);
           this.mrNo1 = record.mr_no1;
@@ -1099,10 +1101,12 @@ export default {
       };
       const instData = {
         inst_payable:
-          this.instructorTotal.inst_payable + (this.prevDueFee - this.dueFee),
+          this.instructorTotal.inst_payable +
+          ((this.prevDueFee - this.dueFee) * this.instProfit) / 100,
         inst_paid: this.instructorTotal.inst_paid,
         inst_due:
-          this.instructorTotal.inst_due + (this.prevDueFee - this.dueFee),
+          this.instructorTotal.inst_due +
+          ((this.prevDueFee - this.dueFee) * this.instProfit) / 100,
         inst_id: this.instId,
       };
       this.$store.dispatch("updateSaleRecord", saleData);

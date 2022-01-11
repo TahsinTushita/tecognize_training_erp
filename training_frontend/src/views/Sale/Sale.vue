@@ -1055,6 +1055,7 @@ export default {
       newCustomer: true,
       user: "",
       instId: "",
+      instProfit: "",
       prevCustTotalFee: "",
       prevCustPaidFee: "",
       prevCustDueFee: "",
@@ -1133,7 +1134,7 @@ export default {
     setBatchFee() {
       this.batchFee = this.batch.batch_fee;
       this.instId = this.batch.inst_id;
-      this.inst_profit = this.batch.inst_profit;
+      this.instProfit = this.batch.inst_profit;
       this.$store.dispatch("getInstructorTotal", this.batch.inst_id);
     },
 
@@ -1260,16 +1261,20 @@ export default {
             paid: this.custPaidFee,
             due: this.custDueFee,
             inst_id: this.instId,
-            inst_profit: this.inst_profit,
+            inst_profit: this.instProfit,
             user_id: this.user.user_id,
             user_profit: this.user.user_profit,
             remarks: "",
           };
 
           const instData = {
-            inst_payable: this.instructorTotal.inst_payable + this.custPaidFee,
+            inst_payable:
+              this.instructorTotal.inst_payable +
+              (this.custPaidFee * this.instProfit) / 100,
             inst_paid: this.instructorTotal.inst_paid,
-            inst_due: this.instructorTotal.inst_due + this.custPaidFee,
+            inst_due:
+              this.instructorTotal.inst_due +
+              (this.custPaidFee * this.instProfit) / 100,
             inst_id: this.instId,
           };
           await this.$store.dispatch("addSaleRecord", saleData);
@@ -1321,16 +1326,20 @@ export default {
           paid: this.custPaidFee,
           due: this.custDueFee,
           inst_id: this.instId,
-          inst_profit: this.inst_profit,
+          inst_profit: this.instProfit,
           user_id: this.user.user_id,
           user_profit: this.user.user_profit,
           remarks: "",
         };
 
         const instData = {
-          inst_payable: this.instructorTotal.inst_payable + this.custPaidFee,
+          inst_payable:
+            this.instructorTotal.inst_payable +
+            (this.custPaidFee * this.instProfit) / 100,
           inst_paid: this.instructorTotal.inst_paid,
-          inst_due: this.instructorTotal.inst_due + this.custPaidFee,
+          inst_due:
+            this.instructorTotal.inst_due +
+            (this.custPaidFee * this.instProfit) / 100,
           inst_id: this.instId,
         };
         await this.$store.dispatch("addSaleRecord", saleData);
