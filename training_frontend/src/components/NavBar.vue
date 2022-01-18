@@ -120,6 +120,9 @@
               <router-link :to="{ name: 'BatchList' }" class="text-lg"
                 >Batch List</router-link
               >
+              <router-link :to="{ name: 'Certificate' }" class="text-lg"
+                >Generate Certificate</router-link
+              >
             </div>
           </div>
           <!-- Course end -->

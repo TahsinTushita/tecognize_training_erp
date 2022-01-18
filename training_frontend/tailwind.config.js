@@ -20,6 +20,7 @@ module.exports = {
       fontFamily: {
         segoeUI: "'Segoe UI'",
         poppins: "'poppins', sans-serif",
+        greatVibes: "'Great Vibes', cursive",
       },
       spacing: {
         68: "270px",
