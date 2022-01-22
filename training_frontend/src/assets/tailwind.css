@@ -12,3 +12,8 @@
     font-family: "Segoe UI";
     src: local("Segoe UI"), url(./fonts/Segoe_UI.ttf) format("truetype");
 }
+
+@font-face {
+    font-family: "MyriadPro Bold";
+    src: local("MyriadPro Bold"), url(./fonts/MyriadPro-Bold.otf) format("truetype");
+}
