@@ -121,12 +121,34 @@
       </div>
     </div>
   </div>
-  <button
-    class="px-4 py-2 rounded-md bg-green bg-green-200 hover:bg-green-300 my-10"
-    @click="downloadReceipt"
-  >
-    Download receipt
-  </button>
+  <div class="flex items-center justify-center gap-20">
+    <button
+      class="
+        px-4
+        py-2
+        rounded-md
+        bg-green bg-green-200
+        hover:bg-green-300
+        my-10
+      "
+      @click="downloadReceipt"
+    >
+      Download pdf
+    </button>
+    <button
+      class="
+        px-4
+        py-2
+        rounded-md
+        bg-green bg-green-200
+        hover:bg-green-300
+        my-10
+      "
+      @click="downloadImage"
+    >
+      Download image
+    </button>
+  </div>
 </template>
 
 <script>
@@ -165,7 +187,6 @@ export default {
         height: doc.internal.pageSize.getHeight(),
       }).then((canvas) => {
         const img = canvas.toDataURL("image/png");
-
         doc.addImage(
           img,
           "PNG",
@@ -184,6 +205,40 @@ export default {
           new Date().toLocaleTimeString() +
           ".pdf";
         doc.save(filename);
+      });
+    },
+
+    saveImage(data, filename = "untitled.png") {
+      var a = document.createElement("a");
+      a.href = data;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+    },
+
+    downloadImage() {
+      const doc = new jsPDF({
+        orientation: "l",
+        unit: "px",
+        format: "a4",
+        hotfixes: ["px_scaling"],
+      });
+      html2canvas(this.$refs.receiptContent, {
+        width: doc.internal.pageSize.getWidth(),
+        height: doc.internal.pageSize.getHeight(),
+      }).then((canvas) => {
+        const img = canvas.toDataURL("image/png");
+        this.saveImage(
+          img,
+          this.custName +
+            "_" +
+            this.courseNameShort +
+            "_" +
+            new Date().toLocaleDateString() +
+            "_" +
+            new Date().toLocaleTimeString() +
+            ".png"
+        );
       });
     },
   },
@@ -212,10 +267,24 @@ export default {
     courseNameShort() {
       if (this.courseName == "System Design Level 1") {
         this.courseNameShort = "Sys Design 1";
+      } else if (this.courseName == "System Design Level 2") {
+        this.courseNameShort = "Sys Design 2";
       } else if (
         this.courseName == "Cracking the Coding Interview with Leetcode"
       ) {
         this.courseNameShort = "Leetcode";
+      } else if (this.courseName == "Backend Engineering with Python") {
+        this.courseNameShort = "Python";
+      } else if (this.courseName == "Backend Engineering with Java") {
+        this.courseNameShort = "Java";
+      } else if (this.courseName == "Design Patterns with Python") {
+        this.courseNameShort = "Design Patterns";
+      } else if (this.courseName == "Linux Administration") {
+        this.courseNameShort = "Linux Admin";
+      } else if (this.courseName == "Python with Network Automation") {
+        this.courseNameShort = "Python";
+      } else if (this.courseName == "Leveraging Python") {
+        this.courseNameShort = "Python";
       } else {
         this.courseNameShort = this.courseName;
       }
