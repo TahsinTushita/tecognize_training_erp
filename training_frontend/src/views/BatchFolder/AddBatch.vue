@@ -35,7 +35,7 @@
         </div>
 
         <div class="grid grid-rows-1 gap-2 place-items-start">
-          <label for="batch" class="font-semibold ml-2">Batch id*</label>
+          <label for="batch" class="font-semibold ml-2">Batch number*</label>
           <input
             type="text"
             name="batch"
@@ -53,8 +53,8 @@
               focus:outline-none focus:border-navlink
             "
             disabled
-            placeholder="batch id"
-            v-model="batch_id"
+            placeholder="batch number"
+            v-model="batch_num"
           />
         </div>
 
@@ -150,7 +150,7 @@ export default {
     return {
       course_id: "",
       instructor: "",
-      batch_id: "",
+      batch_num: "",
       batch_fee: 0,
       admit_closed: false,
       message: "Batch added",
@@ -166,7 +166,7 @@ export default {
   methods: {
     addBatch() {
       const data = {
-        batch_id: this.batch_id,
+        batch_num: this.batch_num,
         batch_fee: this.batch_fee,
         inst_id: this.instructor.inst_id,
         admit_closed: this.admit_closed,
@@ -181,17 +181,26 @@ export default {
     generateBatchId() {
       let num = new Date().getFullYear();
       num = num.toString();
-      num = parseInt(num.substr(2, 4)) * 100 + 1;
+      num = parseInt(num.substr(2, 4)) * 100;
+      let prevNum = num;
+      // this.batchList.filter((batch) => {
+      //   if (batch.course_id == this.course_id) {
+      //     if (parseInt(batch.batch_id.substr(3, 7)) >= num)
+      //       num = parseInt(batch.batch_id.substr(3, 7)) + 1;
+      //     console.log(num);
+      //   }
+      // });
+      // let batch_id = this.course_id.substr(0, 3).concat(num.toString());
+      // console.log(batch_id);
+      // this.batch_id = batch_id;
       this.batchList.filter((batch) => {
         if (batch.course_id == this.course_id) {
-          if (parseInt(batch.batch_id.substr(3, 7)) >= num)
-            num = parseInt(batch.batch_id.substr(3, 7)) + 1;
-          console.log(num);
+          if (batch.batch_num > num) num = batch.batch_num;
         }
       });
-      let batch_id = this.course_id.substr(0, 3).concat(num.toString());
-      console.log(batch_id);
-      this.batch_id = batch_id;
+
+      // if (num != prevNum) this.batch_num = num;
+      this.batch_num = num + 1;
     },
 
     // async generateBatchId2() {

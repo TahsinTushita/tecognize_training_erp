@@ -524,13 +524,13 @@ def batch_count(request):
 
 
 @api_view(["GET"])
-def batch_by_course(request):
+def batch_by_course(request, courseId):
     # batches = Batch.objects.all()
-    course_id = request.GET.get("course_id", None)
+    # course_id = request.GET.get("course_id", None)
     cursor = connection.cursor()
-    query = "SELECT batch_id from training_backend_batch WHERE course_id=%s"
+    query = "SELECT batch_id,batch_num,batch_fee,inst_id,inst_profit from training_backend_batch WHERE course_id=%s"
 
-    cursor.execute(query, params=course_id)
+    cursor.execute(query, params=courseId)
     columns = [col[0] for col in cursor.description]
     return JsonResponse(
         [dict(zip(columns, row)) for row in cursor.fetchall()], safe=False
@@ -552,7 +552,7 @@ def batch_ids(request):
 @api_view(["GET"])
 def batch_list_table(request):
     cursor = connection.cursor()
-    query = "SELECT training_backend_batch.batch_id,training_backend_batch.batch_fee,training_backend_batch.admit_closed,training_backend_course.course_name,training_backend_instructor.inst_name FROM training_backend_batch INNER JOIN training_backend_course ON training_backend_batch.course_id=training_backend_course.course_id INNER JOIN training_backend_instructor ON training_backend_batch.inst_id=training_backend_instructor.inst_id"
+    query = "SELECT training_backend_batch.batch_id,training_backend_batch.batch_num,training_backend_batch.batch_fee,training_backend_batch.admit_closed,training_backend_course.course_name,training_backend_instructor.inst_name FROM training_backend_batch INNER JOIN training_backend_course ON training_backend_batch.course_id=training_backend_course.course_id INNER JOIN training_backend_instructor ON training_backend_batch.inst_id=training_backend_instructor.inst_id"
 
     cursor.execute(query)
     columns = [col[0] for col in cursor.description]
@@ -972,6 +972,18 @@ def sale_total_payable(request, batchId):
     query = "SELECT inst_id,sum(paid) AS pay_received,sum((paid*inst_profit)/100) AS inst_payable,sum(batch_fee) AS total_sale FROM training_backend_salereport WHERE batch_id=%s GROUP BY inst_id"
 
     cursor.execute(query, params=(batchId))
+    columns = [col[0] for col in cursor.description]
+    return JsonResponse(
+        [dict(zip(columns, row)) for row in cursor.fetchall()], safe=False
+    )
+
+
+@api_view(["GET"])
+def sale_report_with_customer_batch(request, custId):
+    cursor = connection.cursor()
+    query = "select * from training_backend_salereport inner join training_backend_batch on training_backend_salereport.batch_id=training_backend_batch.batch_id inner join training_backend_course on training_backend_salereport.course_id=training_backend_course.course_id where cust_id=%s"
+
+    cursor.execute(query, params=(custId))
     columns = [col[0] for col in cursor.description]
     return JsonResponse(
         [dict(zip(columns, row)) for row in cursor.fetchall()], safe=False

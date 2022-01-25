@@ -1,8 +1,8 @@
 import { createStore } from "vuex";
 import axios from "axios";
 
-axios.defaults.baseURL = "http://18.140.55.67/backend/api/";
-// axios.defaults.baseURL = "http://localhost:8080/backend/api/";
+// axios.defaults.baseURL = "http://18.140.55.67/backend/api/";
+axios.defaults.baseURL = "http://localhost:8080/backend/api/";
 
 export default createStore({
   state: {
@@ -46,6 +46,8 @@ export default createStore({
     ledgerSalePayable: [],
     ledgerPaidDue: [],
     instructorFeeByBatch: [],
+    saleCustomerBatchList: [],
+    customer: "",
   },
   mutations: {
     SET_INSTRUCTOR_LIST(state, instructorList) {
@@ -207,6 +209,14 @@ export default createStore({
     SET_INSTRUCTOR_FEE_BY_BATCH(state, instructorFeeByBatch) {
       state.instructorFeeByBatch = instructorFeeByBatch;
     },
+
+    SET_SALE_CUSTOMER_BATCH_LIST(state, saleCustomerBatchList) {
+      state.saleCustomerBatchList = saleCustomerBatchList;
+    },
+
+    SET_SINGLE_CUSTOMER(state, customer) {
+      state.customer = customer;
+    },
   },
   actions: {
     getInstructorList({ commit }) {
@@ -364,6 +374,16 @@ export default createStore({
         };
     },
 
+    async getCustomerByPhone({ commit }, cust_phone) {
+      await axios("customers?cust_phone=" + cust_phone).then((res) => {
+        commit("SET_SINGLE_CUSTOMER", res.data[0]);
+        console.log(res.data);
+      }),
+        (error) => {
+          console.log(error);
+        };
+    },
+
     getRetailCustomerList({ commit }) {
       axios("customers").then((res) => {
         commit("SET_RETAIL_CUSTOMER_LIST", res.data);
@@ -463,7 +483,7 @@ export default createStore({
     },
 
     getBatchesByCourse({ commit }, course_id) {
-      axios("batches-by-course?course_id=" + course_id).then((res) => {
+      axios("batches-by-course/" + course_id).then((res) => {
         commit("SET_BACTHES_BY_COURSE", res.data);
         console.log(res.data);
       }),
@@ -587,6 +607,16 @@ export default createStore({
       axios("sale-customer-list/" + batchId).then((res) => {
         console.log(res.data);
         commit("SET_SALE_CUSTOMER_LIST", res.data);
+      }),
+        (error) => {
+          console.log(error);
+        };
+    },
+
+    getSaleCustomerBatchList({ commit }, custId) {
+      axios("sale-customer-batch-list/" + custId).then((res) => {
+        console.log(res.data);
+        commit("SET_SALE_CUSTOMER_BATCH_LIST", res.data);
       }),
         (error) => {
           console.log(error);
@@ -863,6 +893,14 @@ export default createStore({
 
     instructorFeeByBatch: (state) => {
       return state.instructorFeeByBatch;
+    },
+
+    saleCustomerBatchList: (state) => {
+      return state.saleCustomerBatchList;
+    },
+
+    customer: (state) => {
+      return state.customer;
     },
   },
   modules: {},

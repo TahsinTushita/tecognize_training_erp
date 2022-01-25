@@ -104,6 +104,7 @@ class BatchSerializer(serializers.ModelSerializer):
         model = Batch
         fields = (
             "batch_id",
+            "batch_num",
             "batch_fee",
             "admit_closed",
             "course_id",
@@ -144,6 +145,7 @@ class SaleReportSerializer(serializers.ModelSerializer):
         fields = (
             "cust_id",
             "batch_id",
+            "course_id",
             "regular_fee",
             "batch_fee",
             "installment1",
@@ -187,6 +189,7 @@ class InstructorFeeReportSerializer(serializers.ModelSerializer):
             "id",
             "inst_id",
             "batch_id",
+            "course_id",
             "total_sale",
             "pay_received",
             "total_payable",

@@ -83,9 +83,8 @@ class Course(models.Model):
 
 
 class Batch(models.Model):
-    batch_id = models.CharField(
-        max_length=10, blank=False, primary_key=True, unique=True
-    )
+    batch_id = models.BigAutoField(blank=False, primary_key=True, unique=True)
+    batch_num = models.IntegerField(blank=False)
     batch_fee = models.IntegerField()
     inst_id = models.ForeignKey(
         Instructor, db_column="inst_id", on_delete=models.CASCADE
@@ -136,6 +135,9 @@ class Batch(models.Model):
 class SaleReport(models.Model):
     cust_id = models.ForeignKey(Customer, db_column="cust_id", on_delete=models.CASCADE)
     batch_id = models.ForeignKey(Batch, db_column="batch_id", on_delete=models.CASCADE)
+    course_id = models.ForeignKey(
+        Course, db_column="course_id", on_delete=models.CASCADE
+    )
     regular_fee = models.IntegerField()
     batch_fee = models.IntegerField()
     installment1 = models.IntegerField()
@@ -178,6 +180,9 @@ class InstructorFeeReport(models.Model):
         Instructor, db_column="inst_id", on_delete=models.CASCADE
     )
     batch_id = models.ForeignKey(Batch, db_column="batch_id", on_delete=models.CASCADE)
+    course_id = models.ForeignKey(
+        Course, db_column="course_id", on_delete=models.CASCADE
+    )
     total_sale = models.IntegerField()
     pay_received = models.IntegerField()
     total_payable = models.IntegerField()

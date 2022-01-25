@@ -90,7 +90,7 @@
             type="tel"
             name="phone"
             required
-            @change="filterCustomerAndBatch"
+            @change="filterCustomer"
             class="
               bg-white
               rounded-md
@@ -127,7 +127,7 @@
             "
             disabled
             placeholder="name"
-            v-model="name"
+            v-model="customer.cust_name"
           />
         </div>
         <div class="grid grid-rows-1 gap-2 place-items-start">
@@ -135,7 +135,7 @@
           <select
             name="batch"
             id="batch"
-            v-model="batchId"
+            v-model="record"
             required
             class="
               bg-white
@@ -151,12 +151,20 @@
             "
             @change="setFees"
           >
-            <option
+            <!-- <option
               v-for="(batch, index) in tempBatchList"
               :value="batch"
               :key="index"
             >
               {{ batch }}
+            </option> -->
+
+            <option
+              v-for="record in saleCustomerBatchList"
+              :value="record"
+              :key="record.id"
+            >
+              {{ record.course_name }} {{ record.batch_num }}
             </option>
           </select>
         </div>
@@ -431,7 +439,7 @@
                   items-start
                 "
               >
-                {{ name }}
+                {{ customer.cust_name }}
               </div>
             </div>
             <div class="flex item-start w-full">
@@ -453,7 +461,7 @@
                   items-start
                 "
               >
-                {{ address }}
+                {{ customer.cust_address }}
               </div>
             </div>
             <div class="flex item-start w-full relative mb-12">
@@ -484,7 +492,7 @@
                   w-10/12
                 "
               >
-                {{ batchId }}
+                {{ record.course_name }} ({{ record.batch_num }})
               </div>
             </div>
 
@@ -887,12 +895,13 @@ export default {
       checkRefNo3: null,
       checkRefNo4: null,
       paidFee: 0,
+      record: "",
     };
   },
 
   mounted() {
     let var1 = "None";
-    this.$store.dispatch("getRetailCustomerList");
+    // this.$store.dispatch("getRetailCustomerList");
     this.$store.dispatch("getSaleList");
     this.$store.dispatch("getSaleId");
     this.$store.dispatch("getInstructorTotal", var1);
@@ -914,37 +923,54 @@ export default {
       }
     },
 
-    filterCustomerAndBatch() {
-      this.retailCustomerList.filter((customer) => {
-        if (customer.cust_phone == this.phone) {
-          this.name = customer.cust_name;
-          this.custid = customer.cust_id;
-          this.address = customer.cust_address;
-          this.prevCustTotalFee = customer.cust_total_fee;
-          this.prevCustPaidFee = customer.cust_paid_fee;
-          this.prevCustDueFee = customer.cust_due_fee;
-          this.custUnits = customer.cust_units;
-        }
-      });
+    async filterCustomer() {
+      // this.retailCustomerList.filter((customer) => {
+      //   if (customer.cust_phone == this.phone) {
+      // this.name = customer.cust_name;
+      // this.custid = customer.cust_id;
+      // this.address = customer.cust_address;
+      // this.prevCustTotalFee = customer.cust_total_fee;
+      // this.prevCustPaidFee = customer.cust_paid_fee;
+      // this.prevCustDueFee = customer.cust_due_fee;
+      // this.custUnits = customer.cust_units;
+      //   }
+      // });
 
-      this.tempBatchList = [];
-      this.tempRecords = [];
+      // this.tempBatchList = [];
+      // this.tempRecords = [];
 
-      this.saleList.filter((record) => {
-        if (record.cust_id == this.custid) {
-          this.tempRecords.push(record);
-          if (!this.tempBatchList.includes(record.batch_id)) {
-            this.tempBatchList.push(record.batch_id);
-          }
-        }
-      });
+      // this.saleList.filter((record) => {
+      //   if (record.cust_id == this.custid) {
+      //     this.tempRecords.push(record);
+      //     if (!this.tempBatchList.includes(record.batch_num)) {
+      //       this.tempBatchList.push(record.batch_num);
+      //     }
+      //   }
+      // });
+
+      await this.$store.dispatch("getCustomerByPhone", this.phone);
+      this.$store.dispatch("getSaleCustomerBatchList", this.customer.cust_id);
+
+      // this.name = retailCustomer.cust_name;
+
+      // this.setCustomerInfo();
+    },
+
+    setCustomerInfo() {
+      this.name = retailCustomer.cust_name;
+      this.custid = retailCustomer.cust_id;
+      this.address = retailCustomer.cust_address;
+      this.prevCustTotalFee = retailCustomer.cust_total_fee;
+      this.prevCustPaidFee = retailCustomer.cust_paid_fee;
+      this.prevCustDueFee = retailCustomer.cust_due_fee;
+      this.custUnits = retailCustomer.cust_units;
     },
 
     setFees() {
       this.previousReceipts = [];
       this.prevReceipts = "";
-      this.tempRecords.filter((record) => {
-        if (record.batch_id == this.batchId) {
+      this.saleCustomerBatchList.filter((record) => {
+        if (record.batch_id == this.record.batch_id) {
           this.id = record.id;
           this.totalFee = record.batch_fee;
           this.installment1 = record.installment1;
@@ -1028,13 +1054,11 @@ export default {
           doc.internal.pageSize.getHeight()
         );
         let filename =
-          this.name +
+          this.customer.cust_name +
+          "_E_money_receipt_of_" +
+          this.record.course_name +
           "_" +
-          this.batchId +
-          "_" +
-          new Date().toLocaleDateString() +
-          "_" +
-          new Date().toLocaleTimeString() +
+          this.record.batch_num +
           ".pdf";
         doc.save(filename);
       });
@@ -1117,9 +1141,21 @@ export default {
   },
 
   computed: {
-    retailCustomerList: {
+    // retailCustomerList: {
+    //   get() {
+    //     return this.$store.getters.retailCustomerList;
+    //   },
+    // },
+
+    customer: {
       get() {
-        return this.$store.getters.retailCustomerList;
+        return this.$store.getters.customer;
+      },
+    },
+
+    saleCustomerBatchList: {
+      get() {
+        return this.$store.getters.saleCustomerBatchList;
       },
     },
 

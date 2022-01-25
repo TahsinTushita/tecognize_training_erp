@@ -20,7 +20,7 @@
           class="hover:bg-gray-100"
         >
           <td class="w-1/5 px-4 py-4 text-center border-2">
-            {{ batch.batch_id }}
+            {{ batch.batch_num }}
           </td>
           <td class="w-1/5 px-4 py-4 text-center border-2">
             {{ batch.course_name }}

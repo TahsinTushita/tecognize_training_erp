@@ -9,7 +9,7 @@
             <select
               name="course"
               id="course"
-              v-model="courseId"
+              v-model="course"
               required
               @change="filterBatch"
               class="
@@ -27,7 +27,7 @@
             >
               <option
                 v-for="course in courseList"
-                :value="course.course_id"
+                :value="course"
                 :key="course.course_id"
               >
                 {{ course.course_name }}
@@ -56,12 +56,20 @@
                 focus:outline-none focus:border-navlink
               "
             >
-              <option
+              <!-- <option
                 v-for="batch in tempBatchList"
                 :value="batch"
                 :key="batch.batch_id"
               >
                 {{ batch.batch_id }}
+              </option> -->
+
+              <option
+                v-for="batch in batchesByCourse"
+                :value="batch"
+                :key="batch.batch_id"
+              >
+                {{ batch.batch_num }}
               </option>
             </select>
           </div>
@@ -372,6 +380,7 @@
                 type="number"
                 name="regularFee"
                 required
+                disabled
                 class="
                   bg-white
                   rounded-md
@@ -397,6 +406,7 @@
                 type="number"
                 name="batchFee"
                 required
+                disabled
                 class="
                   bg-white
                   rounded-md
@@ -520,6 +530,7 @@
                 type="number"
                 name="custDueFee"
                 required
+                disabled
                 class="
                   bg-white
                   rounded-md
@@ -687,7 +698,7 @@
                     w-10/12
                   "
                 >
-                  {{ batch.batch_id }}
+                  {{ courseName }} ({{ batchNum }})
                 </div>
               </div>
 
@@ -1045,8 +1056,11 @@ export default {
       custDueFee: "",
       custUnits: 1,
       courseId: "",
+      course: "",
+      courseName: "",
       batchId: "",
       batch: "",
+      batchNum: "",
       regularFee: "",
       batchFee: "",
       discountFee: 0,
@@ -1063,7 +1077,6 @@ export default {
       notPrinted: true,
       retailReceipt: false,
       corporateReceipt: false,
-      courseName: "",
       userName: "",
       date: "",
       officeAddress: "H# B-160,New DOHS Mohakhali,Dhaka-1206",
@@ -1089,7 +1102,6 @@ export default {
   mounted() {
     let var1 = "None";
     this.$store.dispatch("getCourseList");
-    this.$store.dispatch("getBatchList");
     this.$store.dispatch("getRetailCustomerList");
     this.$store.dispatch("getUserList");
     this.$store.dispatch("getRetailCustomerCount");
@@ -1113,28 +1125,17 @@ export default {
     },
 
     filterBatch() {
-      let course = this.courseId.substr(0, 3);
-      this.tempBatchList.length = 0;
-      this.batchList.filter((batch) => {
-        if (course == batch.batch_id.substr(0, 3) && batch.admit_closed == 0) {
-          this.tempBatchList.push(batch);
-        }
-      });
-
-      this.courseList.filter((course) => {
-        if (course.course_id == this.courseId) {
-          this.regularFee = course.regular_price;
-          this.courseName = course.course_name;
-        }
-      });
-      console.log(course);
-      // this.selectBatch = false;
+      this.$store.dispatch("getBatchesByCourse", this.course.course_id);
+      this.courseId = this.course.course_id;
+      this.courseName = this.course.course_name;
+      this.regularFee = this.course.regular_price;
     },
 
     setBatchFee() {
       this.batchFee = this.batch.batch_fee;
       this.instId = this.batch.inst_id;
       this.instProfit = this.batch.inst_profit;
+      this.batchNum = this.batch.batch_num;
       this.$store.dispatch("getInstructorTotal", this.batch.inst_id);
     },
 
@@ -1232,6 +1233,7 @@ export default {
             id: this.receipt4 + 1,
             cust_id: cust_id,
             batch_id: this.batch.batch_id,
+            course_id: this.courseId,
             regular_fee: this.regularFee,
             batch_fee: this.custTotalFee,
             installment1: this.custPaidFee,
@@ -1297,6 +1299,7 @@ export default {
           id: this.receipt4 + 1,
           cust_id: this.custId,
           batch_id: this.batch.batch_id,
+          course_id: this.courseId,
           regular_fee: this.regularFee,
           batch_fee: this.custTotalFee,
           installment1: this.custPaidFee,
@@ -1394,14 +1397,10 @@ export default {
         );
         let filename =
           this.custName +
-          "_" +
+          "_E_money_receipt_of_" +
           this.courseName +
           "_" +
-          this.batchId +
-          "_" +
-          new Date().toLocaleDateString() +
-          "_" +
-          new Date().toLocaleTimeString() +
+          this.batchNum +
           ".pdf";
         doc.save(filename);
       });
@@ -1457,15 +1456,9 @@ export default {
       },
     },
 
-    // batchesByCourse: {
-    //   get() {
-    //     return this.$store.getters.batchesByCourse;
-    //   },
-    // },
-
-    batchList: {
+    batchesByCourse: {
       get() {
-        return this.$store.getters.batchList;
+        return this.$store.getters.batchesByCourse;
       },
     },
 
