@@ -475,7 +475,7 @@
       <select
         name="batchId"
         id="batchId"
-        v-model="batchId"
+        v-model="batch"
         required
         class="
           bg-white
@@ -492,12 +492,8 @@
         @change="filterByBatch"
       >
         <option value="None">None</option>
-        <option
-          v-for="batch in batchIds"
-          :value="batch.batch_id"
-          :key="batch.batch_id"
-        >
-          {{ batch.batch_id }}
+        <option v-for="batch in batchIds" :value="batch" :key="batch.batch_id">
+          {{ batch.course_name }} {{ batch.batch_num }}
         </option>
       </select>
     </div>
@@ -630,7 +626,7 @@
           {{ record.cust_designation }}
         </td>
         <td class="px-4 py-4 text-sm text-center border-2">
-          {{ record.batch_id }}
+          {{ record.course_name }} {{ record.batch_num }}
         </td>
         <td class="px-4 py-4 text-sm text-center border-2">
           {{ record.batch_fee }}
@@ -757,13 +753,18 @@ export default {
       mr3: "mr3",
       mr4: "mr4",
       batchId: "",
+      batch: "",
       paidFee: "",
+      record: "",
+      batchNum: "",
+      courseName: "",
     };
   },
 
   mounted() {
     let batchId = "None";
-    this.$store.dispatch("getSaleCustomerList", batchId);
+    // this.$store.dispatch("getSaleCustomerList", batchId);
+    this.$store.dispatch("getSaleBatchList", batchId);
     this.$store.dispatch("getInstructorPercentages", batchId);
     this.$store.dispatch("getUserPercentages", batchId);
     this.$store.dispatch("getBatchIds");
@@ -773,8 +774,10 @@ export default {
     setData(event, record) {
       this.name = record.cust_name;
       this.address = record.cust_address;
-      this.paymentPurpose = record.batch_id;
+      this.paymentPurpose = record.course_name + " (" + record.batch_num + ")";
       this.amount = record.batch_fee;
+      this.courseName = record.course_name;
+      this.batchNum = record.batch_num;
 
       if (event.target.name == this.mr1) {
         this.slNo = record.mr_no1;
@@ -853,9 +856,17 @@ export default {
     },
 
     filterByBatch() {
-      this.$store.dispatch("getSaleCustomerList", this.batchId);
-      this.$store.dispatch("getInstructorPercentages", this.batchId);
-      this.$store.dispatch("getUserPercentages", this.batchId);
+      if (this.batch == "None") {
+        // this.$store.dispatch("getSaleCustomerList", this.batch);
+        this.$store.dispatch("getSaleBatchList", this.batch);
+        this.$store.dispatch("getInstructorPercentages", this.batch);
+        this.$store.dispatch("getUserPercentages", this.batch);
+      } else {
+        // this.$store.dispatch("getSaleCustomerList", this.batch.batch_id);
+        this.$store.dispatch("getSaleBatchList", this.batch.batch_id);
+        this.$store.dispatch("getInstructorPercentages", this.batch.batch_id);
+        this.$store.dispatch("getUserPercentages", this.batch.batch_id);
+      }
     },
 
     downloadReceipt() {
@@ -882,12 +893,10 @@ export default {
         );
         let filename =
           this.name +
+          "_E_money_receipt_of_" +
+          this.courseName +
           "_" +
-          this.paymentPurpose +
-          "_" +
-          new Date().toLocaleDateString() +
-          "_" +
-          new Date().toLocaleTimeString() +
+          this.batchNum +
           ".pdf";
         doc.save(filename);
       });

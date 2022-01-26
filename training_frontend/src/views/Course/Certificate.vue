@@ -52,7 +52,8 @@
           <select
             name="courseName"
             id="courseName"
-            v-model="courseName"
+            v-model="course"
+            @change="filterBatch"
             required
             class="
               bg-white
@@ -69,10 +70,40 @@
           >
             <option
               v-for="course in courseList"
-              :value="course.course_name"
+              :value="course"
               :key="course.course_id"
             >
               {{ course.course_name }}
+            </option>
+          </select>
+        </div>
+
+        <div class="grid grid-rows-1 gap-2 place-items-start">
+          <label for="batch" class="font-semibold ml-2">Batch*</label>
+          <select
+            name="batch"
+            id="batch"
+            v-model="batch"
+            required
+            class="
+              bg-white
+              rounded-md
+              px-8
+              py-4
+              flex
+              justify-center
+              w-600
+              border-2 border-gray-200
+              hover:border-navlink hover:ring-0
+              focus:outline-none focus:border-navlink
+            "
+          >
+            <option
+              v-for="batch in batchesByCourse"
+              :value="batch"
+              :key="batch.batch_id"
+            >
+              {{ batch.batch_num }}
             </option>
           </select>
         </div>
@@ -95,7 +126,7 @@
           has been awarded this certificate for successfully
         </h1>
         <h1 class="absolute text-white text-3xl mt-36">
-          completing the course of {{ courseName }}
+          completing the course of {{ course.course_name }}
         </h1>
         <h1 class="absolute text-white text-2xl left-20 bottom-24">
           {{ getCertDate }}
@@ -131,7 +162,7 @@
         hover:bg-green-300
         my-10
       "
-      @click="downloadReceipt"
+      @click="downloadCertificate"
     >
       Download pdf
     </button>
@@ -170,11 +201,13 @@ export default {
       month: "",
       day: "",
       year: "",
+      batch: "",
+      course: "",
     };
   },
 
   methods: {
-    downloadReceipt() {
+    downloadCertificate() {
       const doc = new jsPDF({
         orientation: "l",
         unit: "px",
@@ -197,12 +230,10 @@ export default {
         );
         let filename =
           this.custName +
+          "_Certificate_of_" +
+          this.course.course_name +
           "_" +
-          this.courseNameShort +
-          "_" +
-          new Date().toLocaleDateString() +
-          "_" +
-          new Date().toLocaleTimeString() +
+          this.batch.batch_num +
           ".pdf";
         doc.save(filename);
       });
@@ -231,15 +262,17 @@ export default {
         this.saveImage(
           img,
           this.custName +
+            "_Certificate_of_" +
+            this.course.course_name +
             "_" +
-            this.courseNameShort +
-            "_" +
-            new Date().toLocaleDateString() +
-            "_" +
-            new Date().toLocaleTimeString() +
+            this.batch.batch_num +
             ".png"
         );
       });
+    },
+
+    filterBatch() {
+      this.$store.dispatch("getBatchesByCourse", this.course.course_id);
     },
   },
 
@@ -247,6 +280,12 @@ export default {
     courseList: {
       get() {
         return this.$store.getters.courseList;
+      },
+    },
+
+    batchesByCourse: {
+      get() {
+        return this.$store.getters.batchesByCourse;
       },
     },
 
@@ -265,28 +304,28 @@ export default {
     },
 
     courseNameShort() {
-      if (this.courseName == "System Design Level 1") {
+      if (this.course.course_name == "System Design: Level 1") {
         this.courseNameShort = "Sys Design 1";
-      } else if (this.courseName == "System Design Level 2") {
+      } else if (this.course.course_name == "System Design: Level 2") {
         this.courseNameShort = "Sys Design 2";
       } else if (
-        this.courseName == "Cracking the Coding Interview with Leetcode"
+        this.course.course_name == "Cracking the Coding Interview with Leetcode"
       ) {
         this.courseNameShort = "Leetcode";
-      } else if (this.courseName == "Backend Engineering with Python") {
+      } else if (this.course.course_name == "Backend Engineering with Python") {
         this.courseNameShort = "Python";
-      } else if (this.courseName == "Backend Engineering with Java") {
+      } else if (this.course.course_name == "Backend Engineering with Java") {
         this.courseNameShort = "Java";
-      } else if (this.courseName == "Design Patterns with Python") {
+      } else if (this.course.course_name == "Design Patterns with Python") {
         this.courseNameShort = "Design Patterns";
-      } else if (this.courseName == "Linux Administration") {
+      } else if (this.course.course_name == "Linux Administration") {
         this.courseNameShort = "Linux Admin";
-      } else if (this.courseName == "Python with Network Automation") {
+      } else if (this.course.course_name == "Python with Network Automation") {
         this.courseNameShort = "Python";
-      } else if (this.courseName == "Leveraging Python") {
+      } else if (this.course.course_name == "Leveraging Python") {
         this.courseNameShort = "Python";
       } else {
-        this.courseNameShort = this.courseName;
+        this.courseNameShort = this.course.course_name;
       }
       return this.courseNameShort;
     },

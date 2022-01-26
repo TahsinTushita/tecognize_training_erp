@@ -66,6 +66,10 @@ urlpatterns = [
         views.sale_report_with_customers,
     ),
     url(
+        r"^backend/api/sale-batch-list/([a-zA-Z0-9_]+)$",
+        views.sale_report_with_batch,
+    ),
+    url(
         r"^backend/api/sale-customer-batch-list/([a-zA-Z0-9_]+)$",
         views.sale_report_with_customer_batch,
     ),

@@ -902,7 +902,7 @@ export default {
   mounted() {
     let var1 = "None";
     // this.$store.dispatch("getRetailCustomerList");
-    this.$store.dispatch("getSaleList");
+    // this.$store.dispatch("getSaleList");
     this.$store.dispatch("getSaleId");
     this.$store.dispatch("getInstructorTotal", var1);
     this.date = this.getDate();
@@ -953,17 +953,17 @@ export default {
 
       // this.name = retailCustomer.cust_name;
 
-      // this.setCustomerInfo();
+      this.setCustomerInfo();
     },
 
     setCustomerInfo() {
-      this.name = retailCustomer.cust_name;
-      this.custid = retailCustomer.cust_id;
-      this.address = retailCustomer.cust_address;
-      this.prevCustTotalFee = retailCustomer.cust_total_fee;
-      this.prevCustPaidFee = retailCustomer.cust_paid_fee;
-      this.prevCustDueFee = retailCustomer.cust_due_fee;
-      this.custUnits = retailCustomer.cust_units;
+      this.name = this.customer.cust_name;
+      this.custid = this.customer.cust_id;
+      this.address = this.customer.cust_address;
+      this.prevCustTotalFee = this.customer.cust_total_fee;
+      this.prevCustPaidFee = this.customer.cust_paid_fee;
+      this.prevCustDueFee = this.customer.cust_due_fee;
+      this.custUnits = this.customer.cust_units;
     },
 
     setFees() {
@@ -1159,11 +1159,11 @@ export default {
       },
     },
 
-    saleList: {
-      get() {
-        return this.$store.getters.saleList;
-      },
-    },
+    // saleList: {
+    //   get() {
+    //     return this.$store.getters.saleList;
+    //   },
+    // },
 
     saleid: {
       get() {

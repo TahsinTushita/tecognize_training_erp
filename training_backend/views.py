@@ -540,7 +540,7 @@ def batch_by_course(request, courseId):
 @api_view(["GET"])
 def batch_ids(request):
     cursor = connection.cursor()
-    query = "SELECT batch_id,course_id FROM training_backend_batch"
+    query = "SELECT batch_id,training_backend_batch.course_id,batch_num,course_name FROM training_backend_batch INNER JOIN training_backend_course ON training_backend_batch.course_id=training_backend_course.course_id"
 
     cursor.execute(query)
     columns = [col[0] for col in cursor.description]
@@ -981,9 +981,26 @@ def sale_total_payable(request, batchId):
 @api_view(["GET"])
 def sale_report_with_customer_batch(request, custId):
     cursor = connection.cursor()
-    query = "select * from training_backend_salereport inner join training_backend_batch on training_backend_salereport.batch_id=training_backend_batch.batch_id inner join training_backend_course on training_backend_salereport.course_id=training_backend_course.course_id where cust_id=%s"
+    query = "select training_backend_salereport.id,regular_fee,training_backend_salereport.batch_fee,installment1,mr_no1,date1,check_date1,check_ref_no1,pay_mode1,installment2,mr_no2,date2,check_date2,check_ref_no2,pay_mode2,installment3,mr_no3,date3,check_date3,check_ref_no3,pay_mode3,installment4,mr_no4,date4,check_date4,check_ref_no4,pay_mode4,paid,due,training_backend_salereport.inst_profit,training_backend_salereport.user_profit,remarks,training_backend_salereport.batch_id,training_backend_salereport.course_id,cust_id,training_backend_salereport.inst_id,training_backend_salereport.user_id,training_backend_batch.batch_num,training_backend_course.course_name from training_backend_salereport inner join training_backend_batch on training_backend_salereport.batch_id=training_backend_batch.batch_id inner join training_backend_course on training_backend_salereport.course_id=training_backend_course.course_id where cust_id=%s"
 
     cursor.execute(query, params=(custId))
+    columns = [col[0] for col in cursor.description]
+    return JsonResponse(
+        [dict(zip(columns, row)) for row in cursor.fetchall()], safe=False
+    )
+
+
+@api_view(["GET"])
+def sale_report_with_batch(request, batchId):
+    cursor = connection.cursor()
+
+    query1 = "select training_backend_salereport.id,regular_fee,training_backend_salereport.batch_fee,installment1,mr_no1,date1,check_date1,check_ref_no1,pay_mode1,installment2,mr_no2,date2,check_date2,check_ref_no2,pay_mode2,installment3,mr_no3,date3,check_date3,check_ref_no3,pay_mode3,installment4,mr_no4,date4,check_date4,check_ref_no4,pay_mode4,paid,due,training_backend_salereport.inst_profit,training_backend_salereport.user_profit,remarks,training_backend_salereport.batch_id,training_backend_salereport.course_id,training_backend_salereport.cust_id,training_backend_salereport.inst_id,training_backend_salereport.user_id,training_backend_batch.batch_num,training_backend_course.course_name,cust_name,cust_address,cust_email,cust_phone,cust_organization,cust_designation,(paid*training_backend_salereport.inst_profit)/100 AS inst_fee,(paid*training_backend_salereport.user_profit)/100 AS user_fee from training_backend_salereport inner join training_backend_batch on training_backend_salereport.batch_id=training_backend_batch.batch_id inner join training_backend_course on training_backend_salereport.course_id=training_backend_course.course_id inner join training_backend_customer on training_backend_salereport.cust_id=training_backend_customer.cust_id"
+    query2 = "select training_backend_salereport.id,regular_fee,training_backend_salereport.batch_fee,installment1,mr_no1,date1,check_date1,check_ref_no1,pay_mode1,installment2,mr_no2,date2,check_date2,check_ref_no2,pay_mode2,installment3,mr_no3,date3,check_date3,check_ref_no3,pay_mode3,installment4,mr_no4,date4,check_date4,check_ref_no4,pay_mode4,paid,due,training_backend_salereport.inst_profit,training_backend_salereport.user_profit,remarks,training_backend_salereport.batch_id,training_backend_salereport.course_id,training_backend_salereport.cust_id,training_backend_salereport.inst_id,training_backend_salereport.user_id,training_backend_batch.batch_num,training_backend_course.course_name,cust_name,cust_address,cust_email,cust_phone,cust_organization,cust_designation,(paid*training_backend_salereport.inst_profit)/100 AS inst_fee,(paid*training_backend_salereport.user_profit)/100 AS user_fee from training_backend_salereport inner join training_backend_batch on training_backend_salereport.batch_id=training_backend_batch.batch_id inner join training_backend_course on training_backend_salereport.course_id=training_backend_course.course_id inner join training_backend_customer on training_backend_salereport.cust_id=training_backend_customer.cust_id where training_backend_salereport.batch_id=%s"
+    if batchId == "None":
+        cursor.execute(query1)
+    else:
+        cursor.execute(query2, params=(batchId))
+
     columns = [col[0] for col in cursor.description]
     return JsonResponse(
         [dict(zip(columns, row)) for row in cursor.fetchall()], safe=False
