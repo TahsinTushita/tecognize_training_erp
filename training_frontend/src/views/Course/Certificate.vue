@@ -146,7 +146,7 @@
         </h1>
         <img
           class="absolute right-20 bottom-24 w-24 h-24"
-          src="../../assets/images/shajalvai.png"
+          :src="require(`../../assets/images/${getSign}`)"
           alt="signature"
         />
       </div>
@@ -203,6 +203,7 @@ export default {
       year: "",
       batch: "",
       course: "",
+      image: "shajalvai.png",
     };
   },
 
@@ -328,6 +329,14 @@ export default {
         this.courseNameShort = this.course.course_name;
       }
       return this.courseNameShort;
+    },
+    getSign() {
+      if (this.course.course_name == "Backend Engineering with Python") {
+        this.image = "sadmanaminvai.png";
+      } else if (this.course.course_name == "AWS") {
+        this.image = "shahedvai.png";
+      } else this.image = "shajalvai.png";
+      return this.image;
     },
     getYear() {
       if (this.date) {
