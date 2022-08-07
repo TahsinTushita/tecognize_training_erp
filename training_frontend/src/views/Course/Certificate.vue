@@ -275,8 +275,15 @@ export default {
     getSign() {
       if (this.course.course_name == "Backend Engineering with Python") {
         this.image = "sadmanaminvai.png";
-      } else if (this.course.course_name == "AWS") {
-        this.image = "shahedvai.png";
+      } else if (
+        this.course.course_name == "Mongo DB" ||
+        this.course.course_name == "DevOps" ||
+        this.course.course_name ==
+          "Cracking the Coding Interview with Leetcode" ||
+        this.course.course_name == "System Design: Level 1" ||
+        this.course.course_name == "System Design: Level 2"
+      ) {
+        this.image = "shajalvai.png";
       } else if (
         this.course.course_name == "QaOps" ||
         this.course.course_name == "Software Quality Assurance"
