@@ -253,6 +253,8 @@ export default {
         this.courseNameShort = "Sys Design 2";
       } else if (this.course.course_name == "Software Quality Assurance") {
         this.courseNameShort = "SQA";
+      } else if (this.course.course_name == "Backend Development with Java") {
+        this.courseNameShort = "Java";
       } else if (
         this.course.course_name == "Cracking the Coding Interview with Leetcode"
       ) {
