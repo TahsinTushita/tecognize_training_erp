@@ -11,18 +11,7 @@
             type="text"
             name="custName"
             required
-            class="
-              bg-white
-              rounded-md
-              px-8
-              py-4
-              flex
-              justify-center
-              w-600
-              border-2 border-gray-200
-              hover:border-navlink hover:ring-0
-              focus:outline-none focus:border-navlink
-            "
+            class="bg-white rounded-md px-8 py-4 flex justify-center w-600 border-2 border-gray-200 hover:border-navlink hover:ring-0 focus:outline-none focus:border-navlink"
             placeholder="customer name"
             v-model="custName"
           />
@@ -32,18 +21,7 @@
           <input
             type="date"
             name="date"
-            class="
-              bg-white
-              rounded-md
-              px-8
-              py-4
-              flex
-              justify-center
-              w-600
-              border-2 border-gray-200
-              hover:border-navlink hover:ring-0
-              focus:outline-none focus:border-navlink
-            "
+            class="bg-white rounded-md px-8 py-4 flex justify-center w-600 border-2 border-gray-200 hover:border-navlink hover:ring-0 focus:outline-none focus:border-navlink"
             v-model="date"
           />
         </div>
@@ -55,18 +33,7 @@
             v-model="course"
             @change="filterBatch"
             required
-            class="
-              bg-white
-              rounded-md
-              px-8
-              py-4
-              flex
-              justify-center
-              w-600
-              border-2 border-gray-200
-              hover:border-navlink hover:ring-0
-              focus:outline-none focus:border-navlink
-            "
+            class="bg-white rounded-md px-8 py-4 flex justify-center w-600 border-2 border-gray-200 hover:border-navlink hover:ring-0 focus:outline-none focus:border-navlink"
           >
             <option
               v-for="course in courseList"
@@ -85,18 +52,7 @@
             id="batch"
             v-model="batch"
             required
-            class="
-              bg-white
-              rounded-md
-              px-8
-              py-4
-              flex
-              justify-center
-              w-600
-              border-2 border-gray-200
-              hover:border-navlink hover:ring-0
-              focus:outline-none focus:border-navlink
-            "
+            class="bg-white rounded-md px-8 py-4 flex justify-center w-600 border-2 border-gray-200 hover:border-navlink hover:ring-0 focus:outline-none focus:border-navlink"
           >
             <option
               v-for="batch in batchesByCourse"
@@ -154,27 +110,13 @@
   </div>
   <div class="flex items-center justify-center gap-20">
     <button
-      class="
-        px-4
-        py-2
-        rounded-md
-        bg-green bg-green-200
-        hover:bg-green-300
-        my-10
-      "
+      class="px-4 py-2 rounded-md bg-green bg-green-200 hover:bg-green-300 my-10"
       @click="downloadCertificate"
     >
       Download pdf
     </button>
     <button
-      class="
-        px-4
-        py-2
-        rounded-md
-        bg-green bg-green-200
-        hover:bg-green-300
-        my-10
-      "
+      class="px-4 py-2 rounded-md bg-green bg-green-200 hover:bg-green-300 my-10"
       @click="downloadImage"
     >
       Download image
@@ -203,7 +145,7 @@ export default {
       year: "",
       batch: "",
       course: "",
-      image: "shajalvai.png",
+      image: "shahedvai.png",
     };
   },
 
@@ -335,7 +277,14 @@ export default {
         this.image = "sadmanaminvai.png";
       } else if (this.course.course_name == "AWS") {
         this.image = "shahedvai.png";
-      } else this.image = "shajalvai.png";
+      } else if (
+        this.course.course_name == "QaOps" ||
+        this.course.course_name == "Software Quality Assurance"
+      ) {
+        this.image = "imransign.png";
+      } else if (this.course.course_name == "Backend Development with Java") {
+        this.image = "ahsan.png";
+      } else this.image = "shahedvai.png";
       return this.image;
     },
     getYear() {
