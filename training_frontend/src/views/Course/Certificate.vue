@@ -251,6 +251,8 @@ export default {
         this.courseNameShort = "Sys Design 1";
       } else if (this.course.course_name == "System Design: Level 2") {
         this.courseNameShort = "Sys Design 2";
+      } else if (this.course.course_name == "Software Quality Assurance") {
+        this.courseNameShort = "SQA";
       } else if (
         this.course.course_name == "Cracking the Coding Interview with Leetcode"
       ) {
