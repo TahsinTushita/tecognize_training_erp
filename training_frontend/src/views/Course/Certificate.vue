@@ -263,6 +263,10 @@ export default {
         this.courseNameShort = "Python";
       } else if (this.course.course_name == "Backend Engineering with Java") {
         this.courseNameShort = "Java";
+      } else if (
+        this.course.course_name == "Backend Engineering with Node.js"
+      ) {
+        this.courseNameShort = "Node.js";
       } else if (this.course.course_name == "Design Patterns with Python") {
         this.courseNameShort = "Design Patterns";
       } else if (this.course.course_name == "Linux Administration") {
@@ -295,6 +299,10 @@ export default {
         this.image = "imransign.png";
       } else if (this.course.course_name == "Backend Development with Java") {
         this.image = "ahsan.png";
+      } else if (
+        this.course.course_name == "Backend Engineering with Node.js"
+      ) {
+        this.image = "simanta.png";
       } else this.image = "shahedvai.png";
       return this.image;
     },
