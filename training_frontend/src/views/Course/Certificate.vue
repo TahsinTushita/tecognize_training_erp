@@ -268,13 +268,17 @@ export default {
       ) {
         this.courseNameShort = "Node.js";
       } else if (this.course.course_name == "Design Patterns with Python") {
-        this.courseNameShort = "Design Patterns";
+        this.courseNameShort = "Python";
       } else if (this.course.course_name == "Linux Administration") {
         this.courseNameShort = "Linux Admin";
       } else if (this.course.course_name == "Python with Network Automation") {
         this.courseNameShort = "Python";
       } else if (this.course.course_name == "Leveraging Python") {
         this.courseNameShort = "Python";
+      } else if (
+        this.course.course_name == "Design Patterns (ES6 & React.js)"
+      ) {
+        this.courseNameShort = "React.js";
       } else {
         this.courseNameShort = this.course.course_name;
       }
