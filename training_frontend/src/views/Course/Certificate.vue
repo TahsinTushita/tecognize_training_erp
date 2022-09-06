@@ -303,6 +303,10 @@ export default {
         this.course.course_name == "Backend Engineering with Node.js"
       ) {
         this.image = "simanta.png";
+      } else if (
+        this.course.course_name == "Design Patterns (ES6 & React.js)"
+      ) {
+        this.image = "samnan-rahee-sign.png";
       } else this.image = "shahedvai.png";
       return this.image;
     },
