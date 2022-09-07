@@ -301,6 +301,8 @@ export default {
         this.course.course_name == "Software Quality Assurance"
       ) {
         this.image = "imransign.png";
+      } else if (this.course.course_name == "Backend Engineering with Java") {
+        this.image = "dipanjal-sign.png";
       } else if (this.course.course_name == "Backend Development with Java") {
         this.image = "ahsan.png";
       } else if (
