@@ -27,7 +27,7 @@ SECRET_KEY = "django-insecure-n@iobuun&+)k3^haq&q=&)r2(aaq^ibie(@gy(pic4af^%fa7@
 DEBUG = True
 
 # ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ["103.121.60.222"]
+ALLOWED_HOSTS = ["103.121.60.222","erp.tecognize.com"]
 
 
 # Application definition

@@ -1,7 +1,7 @@
 import { createStore } from "vuex";
 import axios from "axios";
 
-axios.defaults.baseURL = "http://103.121.60.222/backend/api/";
+axios.defaults.baseURL = "http://berp.tecognize.com/backend/api/";
 // axios.defaults.baseURL = "http://localhost:8000/backend/api/";
 
 export default createStore({
