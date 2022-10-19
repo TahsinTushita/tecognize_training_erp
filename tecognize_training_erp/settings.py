@@ -58,7 +58,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "tecognize_training_erp.urls"
 
-CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:8081',
     'http://127.0.0.1:8000',
