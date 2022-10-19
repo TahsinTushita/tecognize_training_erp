@@ -60,7 +60,21 @@ MIDDLEWARE = [
 ROOT_URLCONF = "tecognize_training_erp.urls"
 
 CORS_ORIGIN_ALLOW_ALL = False
-CORS_ORIGIN_WHITELIST = ("http://localhost:8081")
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:8081',
+    'http://127.0.0.1:8000',
+    'http://103.121.60.222',
+    'http://erp.tecognize.com',
+    'http://berp.tecognize.com',
+    'http://wwww.erp.tecognize.com',
+    'http://wwww.berp.tecognize.com',
+    'https://erp.tecognize.com',
+    'https://berp.tecognize.com',
+    'https://www.erp.tecognize.com',
+    'https://www.berp.tecognize.com',
+    'https://www.facebook.com',
+    'https://www.linkedin.com',
+)
 
 TEMPLATES = [
     {
