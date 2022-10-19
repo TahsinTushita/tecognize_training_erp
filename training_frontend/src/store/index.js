@@ -303,13 +303,13 @@ export default createStore({
     },
 
     getCategoryList({ commit }) {
-      const config = {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-        },
-      };
-      axios("categories", config).then((res) => {
+      // const config = {
+      //   headers: {
+      //     "Access-Control-Allow-Origin": "*",
+      //     "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+      //   },
+      // };
+      axios("categories").then((res) => {
         commit("SET_CATEGORY_LIST", res.data);
         console.log(res.data);
       }),

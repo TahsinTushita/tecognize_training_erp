@@ -27,7 +27,7 @@ SECRET_KEY = "django-insecure-n@iobuun&+)k3^haq&q=&)r2(aaq^ibie(@gy(pic4af^%fa7@
 DEBUG = True
 
 # ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ["103.121.60.222","erp.tecognize.com","berp.tecognize.com"]
+ALLOWED_HOSTS = ["103.121.60.222","erp.tecognize.com","berp.tecognize.com","localhost"]
 
 
 # Application definition
@@ -46,10 +46,9 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    # CORS
-    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -60,7 +59,7 @@ MIDDLEWARE = [
 ROOT_URLCONF = "tecognize_training_erp.urls"
 
 CORS_ORIGIN_ALLOW_ALL = False
-CORS_ORIGIN_WHITELIST = (
+CORS_ALLOWED_ORIGINS = [
     'http://localhost:8081',
     'http://127.0.0.1:8000',
     'http://103.121.60.222',
@@ -74,7 +73,7 @@ CORS_ORIGIN_WHITELIST = (
     'https://www.berp.tecognize.com',
     'https://www.facebook.com',
     'https://www.linkedin.com',
-)
+]
 
 TEMPLATES = [
     {
@@ -159,18 +158,3 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:8081',
-    'http://127.0.0.1:8000',
-    'http://103.121.60.222',
-    'http://erp.tecognize.com',
-    'http://berp.tecognize.com',
-    'http://wwww.erp.tecognize.com',
-    'http://wwww.berp.tecognize.com',
-    'https://erp.tecognize.com',
-    'https://berp.tecognize.com',
-    'https://www.erp.tecognize.com',
-    'https://www.berp.tecognize.com',
-    'https://www.facebook.com',
-    'https://www.linkedin.com',
-]
