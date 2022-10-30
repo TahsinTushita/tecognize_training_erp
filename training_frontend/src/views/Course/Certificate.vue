@@ -1,5 +1,6 @@
 <template>
-  <h1 class="pt-10 text-2xl font-semibold">Generate certificate</h1>
+  <div>
+    <h1 class="pt-10 text-2xl font-semibold">Generate certificate</h1>
   <div class="flex items-center justify-center mb-10">
     <form @submit.prevent="">
       <div class="space-y-5">
@@ -121,6 +122,7 @@
     >
       Download image
     </button>
+  </div>
   </div>
 </template>
 
@@ -251,8 +253,8 @@ export default {
         this.courseNameShort = "Sys Design 1";
       } else if (this.course.course_name == "System Design: Level 2") {
         this.courseNameShort = "Sys Design 2";
-      } else if (this.course.course_name == "Software Quality Assurance") {
-        this.courseNameShort = "SQA";
+      } else if (this.course.course_name == "QAOps") {
+        this.courseNameShort = "QAOps";
       } else if (this.course.course_name == "Backend Development with Java") {
         this.courseNameShort = "Java";
       } else if (
@@ -297,7 +299,7 @@ export default {
       ) {
         this.image = "shajalvai.png";
       } else if (
-        this.course.course_name == "QaOps" ||
+        this.course.course_name == "QAOps" ||
         this.course.course_name == "Software Quality Assurance"
       ) {
         this.image = "imransign.png";
