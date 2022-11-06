@@ -295,7 +295,8 @@ export default {
         this.course.course_name ==
           "Cracking the Coding Interview with Leetcode" ||
         this.course.course_name == "System Design: Level 1" ||
-        this.course.course_name == "System Design: Level 2"
+        this.course.course_name == "System Design: Level 2" ||
+        this.course.course_name == "LeetCode"
       ) {
         this.image = "shajalvai.png";
       } else if (
